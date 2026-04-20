@@ -1,0 +1,83 @@
+.bg-nav {
+  background-color: white;
+}
+
+/* Ajusta el tamaño del logo en móviles */
+.logo-custom {
+  width: 200px; /* Tamaño pequeño para que quepa el botón al lado */
+  height: auto;
+}
+
+/* Alinea verticalmente el logo y el botón */
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Usamos tres clases para asegurar que el color se aplique */
+.navbar-nav .nav-link.nav-button {
+  color: #0318a2 !important;
+  font-weight: bold; /* Opcional: para que resalte más */
+}
+
+/* Para que no cambie a un gris feo cuando pasas el mouse */
+.navbar-nav .nav-link.nav-button:hover {
+  color: gray !important;
+}
+
+/* Suaviza el cambio de tamaño */
+.navbar,
+.logo-custom {
+  transition: all 0.4s ease;
+}
+
+/* Lo que cambia al bajar */
+.navbar-scrolled {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-scrolled .logo-custom {
+  width: 120px; /* Tamaño reducido del logo */
+}
+
+.my-bg {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(../img/lubri-abierto.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-top: 80px; /* Evita que la navbar tape el título */
+}
+
+.my-bg .container .row {
+  width: 100%;
+  margin: 0;
+}
+
+.img-lubri-interior {
+  width: 800px;
+}
+
+.container-2 {
+  background-color: gray; /* Un color suave para diferenciar las secciones */
+  color: white;
+  overflow: hidden;
+}
+.quienes-somos {
+  font-weight: bold;
+}
+
+/* Cuando la pantalla sea grande (Escritorio), el logo vuelve a ser grande */
+@media (min-width: 992px) {
+  .logo-custom {
+    width: 220px;
+  }
+}
