@@ -1,3 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.bg-header {
+  background-color: #0318a2;
+  height: 50px;
+  font-size: 1rem;
+  color: white;
+  border-bottom: 1px solid red;
+}
 .bg-nav {
   background-color: white;
 }
