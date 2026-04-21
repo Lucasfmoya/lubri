@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body class="body">
-    <header class="bg-header d-flex align-items-center">
+     <header class="bg-header align-items-center d-none d-lg-flex">
       <ul
         class="container-fluid d-flex justify-content-start align-items-center gap-4 m-0 list-unstyled"
       >
@@ -43,7 +43,6 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto ms-lg-4">
             <li class="nav-item color-buttons">
@@ -59,7 +58,6 @@
               <a class="nav-link nav-button" href="#">Contacto</a>
             </li>
           </ul>
-
           <div class="d-flex mt-3 mt-lg-0">
             <a href="#" class="btn btn-danger">
               <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
@@ -69,12 +67,9 @@
       </div>
     </nav>
     <main>
-      <div class="container-fluid my-bg">
+      <section class="container-fluid my-bg">
         <!-- Contenedor padre -->
         <div class="row align-items-center m-5">
-          <!-- Fila con alineación vertical -->
-
-          <!-- Columna Izquierda -->
           <div class="col-md-6 col-sm-12 text-md-start text-center">
             <h1 class="display-4 fw-bold">Lubricentro O'Higgins</h1>
             <h2 class="h4">
@@ -86,8 +81,6 @@
               asesoramiento.
             </p>
           </div>
-
-          <!-- Columna Derecha -->
           <div class="col-md-6 col-sm-12">
             <div class="p-0 bg-dark bg-opacity-50 rounded">
               <p>
@@ -98,33 +91,192 @@
                 atque assumenda in! Possimus, totam quo ipsa quos nulla debitis
                 tenetur, corporis eos magni minima eligendi! Reprehenderit.
               </p>
-              <h5>Hola</h5>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="container-fluid p-4 container-2 d-flex flex-wrap align-items-center p-0"
-      >
-        <div class="col-md-6 col-sm-12">
-          <img
-            class="img-lubri-interior"
-            src="./img/lubri-abierto.jpg"
-            alt="foto del lubricentro por dentro"
-          />
+      </section>
+      <section class="container-fluid p-4 container-2">
+        <div class="row align-items-center">
+          <div class="col-md-6 col-sm-12">
+            <div
+              id="carouselExampleIndicators"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="0"
+                  class="active"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to="2"
+                ></button>
+              </div>
+              <div class="carousel-inner rounded shadow">
+                <div class="carousel-item active">
+                  <img
+                    src="./img/lubri-interior.jpg"
+                    class="d-block w-100"
+                    alt="Interior 1"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="./img/lubri-interior2.jpg"
+                    class="d-block w-100"
+                    alt="Interior 2"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="./img/lubri-cerrado.jpg"
+                    class="d-block w-100"
+                    alt="Cerrado"
+                  />
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-5 col-sm-12">
+            <h2 class="text-center quienes-somos">Quienes somos</h2>
+            <p class="m-4">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
+              ducimus molestias, illum quos impedit eligendi sequi consequuntur
+              dolores et dolorum voluptate autem reprehenderit, est nulla
+              dolorem deleniti quis quaerat ea temporibus? Eligendi dolorem quae
+              maiores recusandae, voluptates nemo, nihil quo nisi, mollitia
+              labore sint aliquid nobis aut a facilis ipsum.
+            </p>
+          </div>
         </div>
-        <div class="col-md-5 col-sm-12">
-          <h2 class="quienes-somos">Quienes somos</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
-            ducimus molestias, illum quos impedit eligendi sequi consequuntur
-            dolores et dolorum voluptate autem reprehenderit, est nulla dolorem
-            deleniti quis quaerat ea temporibus? Eligendi dolorem quae maiores
-            recusandae, voluptates nemo, nihil quo nisi, mollitia labore sint
-            aliquid nobis aut a facilis ipsum.
-          </p>
+      </section>
+      <section class="py-5 bg-white">
+        <div id="logoCarousel" class="carousel slide" data-bs-ride="carousel">
+          <h3 class="text-center mb-5">Nuestras Marcas</h3>
+          <div class="carousel-inner container">
+            <div class="carousel-item active">
+              <div class="d-flex justify-content-around align-items-center">
+                <div class="logo-item">
+                  <img src="./img/liqui_moly.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/elf.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/castrol.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/fram.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/mobil.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/molykote.png" alt="Marca" />
+                </div>
+              </div>
+            </div>
+            <!-- Grupo 2 -->
+            <div class="carousel-item">
+              <div class="d-flex justify-content-around align-items-center">
+                <div class="logo-item">
+                  <img src="./img/fram.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/mobil.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/molykote.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/shell.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/total.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/valvoline.png" alt="Marca" />
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="d-flex justify-content-around align-items-center">
+                <div class="logo-item">
+                  <img src="./img/shell.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/total.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/valvoline.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/liqui_moly.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/elf.png" alt="Marca" />
+                </div>
+                <div class="logo-item">
+                  <img src="./img/castrol.png" alt="Marca" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Puntos (Indicadores) -->
+          <div
+            class="carousel-indicators"
+            style="position: relative; margin-top: 20px"
+          >
+            <button
+              type="button"
+              data-bs-target="#logoCarousel"
+              data-bs-slide-to="0"
+              class="active bg-dark"
+              style="width: 10px; height: 10px; border-radius: 50%"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#logoCarousel"
+              data-bs-slide-to="1"
+              class="bg-dark"
+              style="width: 10px; height: 10px; border-radius: 50%"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#logoCarousel"
+              data-bs-slide-to="2"
+              class="bg-dark"
+              style="width: 10px; height: 10px; border-radius: 50%"
+            ></button>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

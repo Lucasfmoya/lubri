@@ -7,7 +7,7 @@
 
 .bg-header {
   background-color: #0318a2;
-  height: 50px;
+  height: 40px;
   font-size: 1rem;
   color: white;
   border-bottom: 1px solid red;
@@ -18,7 +18,7 @@
 
 /* Ajusta el tamaño del logo en móviles */
 .logo-custom {
-  width: 200px; /* Tamaño pequeño para que quepa el botón al lado */
+  width: 150px; /* Tamaño pequeño para que quepa el botón al lado */
   height: auto;
 }
 
@@ -54,7 +54,7 @@
 }
 
 .navbar-scrolled .logo-custom {
-  width: 120px; /* Tamaño reducido del logo */
+  width: 100px; /* Tamaño reducido del logo */
 }
 
 .my-bg {
@@ -81,17 +81,77 @@
 }
 
 .container-2 {
+  margin-top: 1rem;
   background-color: gray; /* Un color suave para diferenciar las secciones */
   color: white;
   overflow: hidden;
 }
+
+.carousel-item img {
+  height: 450px;
+  object-fit: cover; /* Esto evita que la imagen se estire feo */
+  object-position: center;
+}
+
 .quienes-somos {
   font-weight: bold;
 }
 
+/* Contenedor principal */
+.logo-item {
+  width: 180px; /* Tamaño del logo en pantalla */
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+/* Imagen y efecto zoom */
+.logo-item img {
+  width: auto;
+  height: 80px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-item img:hover {
+  transform: scale(1.2); /* Se agranda al pasar el mouse */
+}
+
+/* Estilo para los puntos (indicadores) */
+.custom-indicators {
+  position: relative;
+  margin-top: 30px;
+  bottom: 0;
+}
+
+.custom-indicators button {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50%;
+  border: none;
+  margin: 0 5px;
+  opacity: 0.3;
+}
+
+.custom-indicators button.active {
+  opacity: 1;
+}
+
+
 /* Cuando la pantalla sea grande (Escritorio), el logo vuelve a ser grande */
 @media (min-width: 992px) {
   .logo-custom {
-    width: 220px;
+    width: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  .quienes-somos {
+    margin-top: 1.25rem;
+  }
+  .carousel-item img {
+    height: 300px;
   }
 }
