@@ -139,7 +139,6 @@
   opacity: 1;
 }
 
-
 /* Cuando la pantalla sea grande (Escritorio), el logo vuelve a ser grande */
 @media (min-width: 992px) {
   .logo-custom {
@@ -153,5 +152,11 @@
   }
   .carousel-item img {
     height: 300px;
+  }
+  .logo-item {
+    width: 30%; /* Tres logos ocupan aprox el 100% en móvil */
+  }
+  .logo-item img {
+    height: 45px; /* Más pequeños para que quepan bien */
   }
 }
