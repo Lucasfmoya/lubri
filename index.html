@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body class="body">
-     <header class="bg-header align-items-center d-none d-lg-flex">
+    <!-- <header class="bg-header align-items-center d-none d-lg-flex">
       <ul
         class="container-fluid d-flex justify-content-start align-items-center gap-4 m-0 list-unstyled"
       >
@@ -21,7 +21,7 @@
         <li>|</li>
         <li>lubricentroohiggins@hotmail.com</li>
       </ul>
-    </header>
+    </header> -->
 
     <nav class="navbar sticky-top bg-nav navbar-expand-lg py-3">
       <div class="container">
@@ -164,7 +164,7 @@
           </div>
 
           <div class="col-md-5 col-sm-12">
-            <h2 class="text-center quienes-somos">Quienes somos</h2>
+            <h2 class="text-center mt-4 quienes-somos">Quienes somos</h2>
             <p class="m-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
               ducimus molestias, illum quos impedit eligendi sequi consequuntur
@@ -179,101 +179,52 @@
       <section class="py-5 bg-white">
         <div id="logoCarousel" class="carousel slide" data-bs-ride="carousel">
           <h3 class="text-center mb-5">Nuestras Marcas</h3>
-          <div class="carousel-inner container">
-            <div class="carousel-item active">
-              <div class="d-flex justify-content-around align-items-center">
-                <div class="logo-item">
-                  <img src="./img/liqui_moly.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/elf.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/castrol.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/fram.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/mobil.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/molykote.png" alt="Marca" />
-                </div>
+          <div class="slider-container">
+            <div class="slider-track">
+              <!-- Primer grupo de logos -->
+              <div class="logo-item">
+                <img src="./img/liqui_moly.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/elf.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/castrol.png" alt="" />
+              </div>
+              <div class="logo-item">
+                <img src="./img/petronas.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/fram.png" alt="" /></div>
+              <div class="logo-item"><img src="./img/mobil.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/molykote.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/shell.png" alt="" /></div>
+              <div class="logo-item"><img src="./img/total.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/valvoline.png" alt="" />
+              </div>
+
+              <!-- Duplicamos los mismos logos para el efecto infinito -->
+              <div class="logo-item">
+                <img src="./img/liqui_moly.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/elf.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/castrol.png" alt="" />
+              </div>
+              <div class="logo-item">
+                <img src="./img/petronas.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/fram.png" alt="" /></div>
+              <div class="logo-item"><img src="./img/mobil.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/molykote.png" alt="" />
+              </div>
+              <div class="logo-item"><img src="./img/shell.png" alt="" /></div>
+              <div class="logo-item"><img src="./img/total.png" alt="" /></div>
+              <div class="logo-item">
+                <img src="./img/valvoline.png" alt="" />
               </div>
             </div>
-            <!-- Grupo 2 -->
-            <div class="carousel-item">
-              <div class="d-flex justify-content-around align-items-center">
-                <div class="logo-item">
-                  <img src="./img/fram.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/mobil.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/molykote.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/shell.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/total.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/valvoline.png" alt="Marca" />
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="d-flex justify-content-around align-items-center">
-                <div class="logo-item">
-                  <img src="./img/shell.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/total.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/valvoline.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/liqui_moly.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/elf.png" alt="Marca" />
-                </div>
-                <div class="logo-item">
-                  <img src="./img/castrol.png" alt="Marca" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Puntos (Indicadores) -->
-          <div
-            class="carousel-indicators"
-            style="position: relative; margin-top: 20px"
-          >
-            <button
-              type="button"
-              data-bs-target="#logoCarousel"
-              data-bs-slide-to="0"
-              class="active bg-dark"
-              style="width: 10px; height: 10px; border-radius: 50%"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#logoCarousel"
-              data-bs-slide-to="1"
-              class="bg-dark"
-              style="width: 10px; height: 10px; border-radius: 50%"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#logoCarousel"
-              data-bs-slide-to="2"
-              class="bg-dark"
-              style="width: 10px; height: 10px; border-radius: 50%"
-            ></button>
           </div>
         </div>
       </section>
