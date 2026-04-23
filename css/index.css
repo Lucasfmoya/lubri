@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+<<<<<<< HEAD
   font-family: sans-serif;
 }
 
@@ -24,11 +25,19 @@
 
 /* Alinea verticalmente el logo y el botón */
 .container-fluid {
+=======
+}
+header {
+>>>>>>> dev
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 2rem;
+  background-color: grey;
+  font-family: sans-serif;
 }
 
+<<<<<<< HEAD
 /* Usamos tres clases para asegurar que el color se aplique */
 .navbar-nav .nav-link.nav-button {
   color: #0318a2 !important;
@@ -65,21 +74,30 @@
   background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
+=======
+.nav-list {
+  list-style: none;
+>>>>>>> dev
   display: flex;
-  align-items: center;
-  color: white;
-  padding-top: 80px; /* Evita que la navbar tape el título */
+  gap: 1rem;
+}
+.nav-list li a {
+  text-decoration: none;
+  color: black;
+}
+.logo {
+  max-width: 5rem;
 }
 
-.my-bg .container .row {
-  width: 100%;
-  margin: 0;
+.abrir-menu {
+  display: none;
 }
 
-.img-lubri-interior {
-  width: 800px;
+.cerrar-menu {
+  display: none;
 }
 
+<<<<<<< HEAD
 .container-2 {
   margin-top: 1rem;
   background-color: gray; /* Un color suave para diferenciar las secciones */
@@ -155,5 +173,52 @@
     100% {
       transform: translateX(calc(-80px * 10));
     }
+=======
+@media screen and (max-width: 550px) {
+  .abrir-menu,
+  .cerrar-menu {
+    display: block;
+    border: 0;
+    font-size: 1.25rem;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .abrir-menu {
+    color: white;
+  }
+
+  .cerrar-menu {
+    color: white;
+  }
+
+  .nav {
+    opacity: 0;
+    visibility: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    padding: 2rem;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  }
+
+  .nav.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-list {
+    flex-direction: column;
+    align-items: end;
+  }
+
+  .nav-list li a {
+    color: white;
+>>>>>>> dev
   }
 }
