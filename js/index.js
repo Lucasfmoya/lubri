@@ -1,4 +1,3 @@
-
 const navbar = document.querySelector(".navbar");
 
 let isScrolled = false;
@@ -17,4 +16,10 @@ window.addEventListener("scroll", () => {
     navbar.classList.remove("navbar-scrolled");
     isScrolled = false;
   }
+});
+
+const toggler = document.querySelector(".navbar-toggler");
+
+toggler.addEventListener("click", () => {
+  toggler.classList.toggle("open");
 });

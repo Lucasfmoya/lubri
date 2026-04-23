@@ -1,3 +1,218 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* =========================
+   NAVBAR INICIAL (BLANCO LIMPIO)
+========================= */
+.bg-nav {
+  background: white;
+}
+
+/* Navbar */
+.navbar {
+  padding: 25px 0;
+  min-height: 100px;
+
+  display: flex;
+  align-items: center;
+
+  transition:
+    padding 0.3s ease,
+    min-height 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.4s ease;
+}
+
+/* Contenedor */
+.navbar .container {
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+   LOGO
+========================= */
+.logo-custom {
+  width: 150px;
+  height: auto;
+  transition: width 0.3s ease;
+}
+
+/* =========================
+   LINKS (MODO BLANCO)
+========================= */
+.navbar-nav .nav-link.nav-button {
+  color: #0318a2 !important;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link.nav-button:hover {
+  color: #e30613 !important;
+}
+
+/* =========================
+   NAVBAR SCROLL (AZUL + VIDRIO)
+========================= */
+.navbar-scrolled {
+  padding: 6px 0;
+  min-height: 55px;
+
+  /* 🔵 gradiente corporativo */
+  background: linear-gradient(
+    90deg,
+    rgba(1, 10, 68, 0.9),
+    rgba(10, 27, 141, 0.85),
+    rgba(27, 54, 212, 0.85)
+  );
+
+  /* ✨ efecto vidrio */
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo más chico */
+.navbar-scrolled .logo-custom {
+  width: 110px;
+}
+
+/* LINKS en modo SCROLL (blancos) */
+.navbar-scrolled .nav-link.nav-button {
+  color: white !important;
+}
+
+.navbar-scrolled .nav-link.nav-button:hover {
+  color: #e30613 !important;
+}
+
+/* =========================
+   HERO
+========================= */
+.my-bg {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(../img/lubri-abierto.jpg);
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-top: 80px;
+}
+
+/* =========================
+   SECCIÓN 2
+========================= */
+.container-2 {
+  margin-top: 1rem;
+  background-color: gray;
+  color: white;
+  overflow: hidden;
+}
+
+.img-lubri-interior {
+  width: 800px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================
+   CAROUSEL
+========================= */
+.carousel-item img {
+  height: 450px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.quienes-somos {
+  font-weight: bold;
+}
+
+/* =========================
+   SLIDER MARCAS
+========================= */
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 30px 0;
+  background: white;
+}
+
+.slider-track {
+  display: flex;
+  align-items: center;
+  width: calc(140px * 20);
+  gap: 60px;
+  animation: scroll 25s linear infinite;
+}
+
+.logo-item {
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.logo-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Animación */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-140px * 10));
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .slider-track {
+    width: calc(90px * 20);
+    gap: 30px;
+    animation: scroll-mobile 15s linear infinite;
+  }
+
+  .logo-item {
+    width: 60px;
+  }
+
+  @keyframes scroll-mobile {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-80px * 10));
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -17,7 +232,7 @@
       <div class="container">
         <a class="navbar-brand me-auto" href="#">
           <img
-            src="./img/logo-ovalado.png"
+            src="./img/logo-sin-fondo.png"
             alt="Lubricentro O'Higgins"
             class="img-fluid logo-custom"
           />
@@ -227,3 +442,30 @@
     <script src="./js/index.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+const navbar = document.querySelector(".navbar");
+
+let isScrolled = false;
+
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+
+  // Activa cuando baja lo suficiente
+  if (!isScrolled && scrollY > 80) {
+    navbar.classList.add("navbar-scrolled");
+    isScrolled = true;
+  }
+
+  // Desactiva cuando sube bastante
+  if (isScrolled && scrollY < 40) {
+    navbar.classList.remove("navbar-scrolled");
+    isScrolled = false;
+  }
+});
