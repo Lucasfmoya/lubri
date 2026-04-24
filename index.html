@@ -10,9 +10,13 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <link rel="stylesheet" href="./css/index.css" />
   </head>
-  <body class="body">
+  <body id="top" class="body">
     <nav class="navbar sticky-top bg-nav navbar-expand-lg py-1">
       <div class="container">
         <a class="navbar-brand me-auto" href="#">
@@ -58,7 +62,6 @@
     </nav>
     <main>
       <section class="container-fluid my-bg">
-        <!-- Contenedor padre -->
         <div class="row align-items-center m-5">
           <div class="col-md-6 col-sm-12 text-md-start text-center">
             <h1 class="display-4 fw-bold">Lubricentro O'Higgins</h1>
@@ -152,7 +155,6 @@
               </button>
             </div>
           </div>
-
           <div class="col-md-5 col-sm-12">
             <h2 class="text-center mt-4 quienes-somos">Quienes somos</h2>
             <p class="m-4">
@@ -171,7 +173,6 @@
           <h3 class="text-center mb-5">Nuestras Marcas</h3>
           <div class="slider-container">
             <div class="slider-track">
-              <!-- Primer grupo de logos -->
               <div class="logo-item">
                 <img src="./img/liqui_moly.png" alt="" />
               </div>
@@ -192,8 +193,6 @@
               <div class="logo-item">
                 <img src="./img/valvoline.png" alt="" />
               </div>
-
-              <!-- Duplicamos los mismos logos para el efecto infinito -->
               <div class="logo-item">
                 <img src="./img/liqui_moly.png" alt="" />
               </div>
@@ -218,6 +217,96 @@
           </div>
         </div>
       </section>
+      <footer class="footer-pro text-white pt-5 pb-3">
+        <div class="container my-5">
+          <div class="map-container shadow rounded">
+            <iframe
+              src="https://www.google.com/maps?q=Av.%20O'Higgins%203111%20Cordoba&output=embed"
+              width="100%"
+              height="350"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row text-center text-md-start">
+            <!-- LOGO -->
+            <div class="col-md-4 mb-4 d-flex flex-column align-items-start">
+              <a href="#top">
+                <img
+                  src="./img/logo-ovalado.png"
+                  class="img-fluid footer-logo mb-3"
+                  alt="Logo"
+                />
+              </a>
+              <a href="#top" class="top-link">
+                <h4>Lubricentro O'Higgins</h4>
+              </a>
+              <p class="medium text-start">
+                Servicio profesional en cambio de aceite y mantenimiento
+                vehicular.
+              </p>
+            </div>
+            <div class="col-md-4 mb-4 contact-footer text-start footer-margin">
+              <h5 class="fw-bold footer-title mb-4">Contacto</h5>
+              <p class="mb-2">
+                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                Av. O'Higgins 3111 - Córdoba
+              </p>
+              <p class="mb-2">
+                <i class="bi bi-telephone-fill text-danger me-2"></i>
+                3516517525
+              </p>
+              <p class="mb-2">
+                <i class="bi bi-envelope-fill text-danger me-2"></i>
+                lubricentroohiggins@hotmail.com
+              </p>
+            </div>
+            <div class="col-md-4 mb-4 contact-footer text-start footer-margin">
+              <h5 class="fw-bold footer-title mb-3">Navegación</h5>
+              <ul class="list-unstyled">
+                <li><a href="#" class="top-link">Inicio</a></li>
+                <li><a href="#" class="top-link">Nosotros</a></li>
+                <li><a href="#" class="top-link">Servicios</a></li>
+                <li><a href="#" class="top-link">Contacto</a></li>
+              </ul>
+            </div>
+          </div>
+          <hr class="border-light opacity-25" />
+          <div class="footer-bottom position-relative text-center small">
+            <div>
+              <p class="mb-1">
+                © 2026 Lubricentro O'Higgins - Todos los derechos reservados
+              </p>
+              <p class="mb-0">
+                <a href="#" class="footer-link">Política de Privacidad</a> |
+                <a href="#" class="footer-link">Términos y Condiciones</a>
+              </p>
+            </div>
+            <div class="footer-qr-container">
+              <img
+                src="./img/qr-ejemplo.png"
+                class="img-fluid footer-qr"
+                alt="QR"
+              />
+            </div>
+          </div>
+        </div>
+      </footer>
+      <a
+        href="https://wa.me/5493516517525?text=Hola quiero hacer una consulta:"
+        class="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
+          alt="WhatsApp"
+        />
+      </a>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
