@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: "Google Sans", sans-serif;
 }
 
 /* =========================
@@ -12,6 +12,13 @@ html {
   scroll-behavior: smooth;
 }
 
+h1,
+h2,
+h3 {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .bg-nav {
   background: white;
 }
@@ -19,7 +26,6 @@ html {
 .navbar {
   padding: 25px 0;
   min-height: 100px;
-
   display: flex;
   align-items: center;
 
@@ -42,13 +48,15 @@ html {
 }
 
 /* LINKS */
+
 .navbar-nav .nav-link.nav-button {
-  color: #0318a2 !important;
+  color: #c62e47;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 .navbar-nav .nav-link.nav-button:hover {
-  color: #e30613 !important;
+  color: #0318a2 !important;
 }
 
 /* =========================
@@ -74,10 +82,6 @@ html {
 
 .navbar-scrolled .logo-custom {
   width: 110px;
-}
-
-.navbar-scrolled .nav-link.nav-button {
-  color: #0318a2 !important;
 }
 
 /* =========================
@@ -155,7 +159,8 @@ html {
    FOOTER PRO
 ========================= */
 .footer-pro {
-  background: linear-gradient(90deg, #010a44, #0a1b8d, #1b36d4);
+  /* background: linear-gradient(90deg, #010a44, #0a1b8d, #1b36d4); */
+  background: linear-gradient(90deg, #1b36d4, #0a1b8d, #010a44);
   position: relative;
   overflow: hidden;
 }
@@ -280,6 +285,14 @@ html {
    RESPONSIVE
 ========================= */
 @media (max-width: 768px) {
+  .navbar-nav .nav-link.nav-button {
+    font-size: 1.25rem;
+  }
+
+  .navbar-collapse.show {
+    transform: translateY(0);
+  }
+
   .slider-track {
     width: calc(90px * 20);
     gap: 30px;
