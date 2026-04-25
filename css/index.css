@@ -195,13 +195,27 @@ h3 {
 }
 
 /* LINKS */
-.footer-link {
+/* .footer-link {
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
+} */
+
+.footer-link {
+  display: inline-block; /* clave para que el transform no rompa layout */
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  transform-origin: left center; /* crece hacia la derecha */
 }
 
-.footer-link:hover {
+/* .footer-link:hover {
   color: #e30613;
+} */
+
+.footer-link:hover {
+  transform: scale(1.05); /* leve aumento */
+  color: white; /* mantiene blanco */
+  text-decoration: underline;
 }
 
 /* MAPA */
