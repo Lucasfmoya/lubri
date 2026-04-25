@@ -1,3 +1,4 @@
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -5,9 +6,6 @@
   font-family: "Google Sans", sans-serif;
 }
 
-/* =========================
-   NAVBAR INICIAL (BLANCO)
-========================= */
 html {
   scroll-behavior: smooth;
 }
@@ -19,150 +17,210 @@ h3 {
   text-transform: uppercase;
 }
 
+/* ================= NAVBAR ================= */
 .bg-nav {
   background: white;
 }
 
 .navbar {
-  padding: 25px 0;
-  min-height: 100px;
-  display: flex;
-  align-items: center;
-
-  transition:
-    padding 0.3s ease,
-    min-height 0.3s ease,
-    box-shadow 0.3s ease,
-    background 0.4s ease;
+  padding: 20px 0;
+  min-height: 90px;
+  transition: all 0.3s ease;
 }
 
-.navbar .container {
-  display: flex;
-  align-items: center;
-}
-
-/* LOGO */
 .logo-custom {
-  width: 150px;
-  transition: width 0.3s ease;
+  width: 140px;
+  transition: 0.3s;
 }
 
-/* LINKS */
-
-.navbar-nav .nav-link.nav-button {
+.navbar-nav .nav-link {
   color: #c62e47;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 10px;
 }
 
-.navbar-nav .nav-link.nav-button:hover {
-  color: #0318a2 !important;
+.navbar-nav .nav-link:hover {
+  color: #0318a2;
 }
 
-/* =========================
-   NAVBAR SCROLL (GLASS)
-========================= */
 .navbar-scrolled {
-  padding: 6px 0;
-  min-height: 55px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.75),
-    rgba(255, 255, 255, 0.45),
-    rgba(255, 255, 255, 0.85)
-  );
-
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  min-height: 60px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-scrolled .logo-custom {
   width: 110px;
 }
 
-/* =========================
-   HERO
-========================= */
+/* ================= HERO ================= */
 .my-bg {
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url(../img/lubri-mejorado.png);
+    linear-gradient(90deg, rgba(1, 10, 68, 0.85) 40%, rgba(1, 10, 68, 0.2)),
+    url("../img/lubri-mejorado.png");
 
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
 
   min-height: 100vh;
   display: flex;
   align-items: center;
   color: white;
-  padding-top: 80px;
 }
 
-/* =========================
-   SECCIÓN 2
-========================= */
-.container-2 {
-  margin-top: 1rem;
-  background-color: grey;
-  color: white;
-  overflow: hidden;
+
+
+.hero-subtitle {
+  color: #ff3b3b;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.img-lubri-interior {
-  width: 800px;
-  max-width: 100%;
+.hero-title {
+  font-size: 3rem;
+  margin: 15px 0;
 }
 
-/* =========================
-   CAROUSEL
-========================= */
-.carousel-item img {
-  height: 450px;
-  object-fit: cover;
+.hero-text {
+  opacity: 0.9;
+  margin-bottom: 20px;
 }
 
-/* =========================
-   SLIDER MARCAS
-========================= */
+/* BOTONES */
+.btn-main {
+  background: #e30613;
+  border: none;
+  padding: 12px 22px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-main:hover {
+  background: #c4000f;
+}
+
+.btn-outline-light {
+  border-radius: 8px;
+  padding: 12px 22px;
+}
+
+/* ================= MARCAS ================= */
 .slider-container {
   overflow: hidden;
-  padding: 30px 0;
+  width: 100%;
 }
 
 .slider-track {
   display: flex;
-  width: calc(140px * 20);
   gap: 60px;
+  width: max-content;
   animation: scroll 25s linear infinite;
 }
 
 .logo-item {
-  width: 80px;
+  flex: 0 0 auto;
+  width: 100px;
 }
 
 .logo-item img {
   width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.logo-item img:hover {
+  transform: scale(1.15);
 }
 
 @keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
   to {
-    transform: translateX(calc(-140px * 10));
+    transform: translateX(-50%);
   }
 }
 
-/* =========================
-   FOOTER PRO
-========================= */
+/* ================= QUIENES SOMOS ================= */
+/* .section-card {
+  background: #f8f9fc;
+  padding: 60px 0;
+}
+
+.card-custom {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-custom h3 {
+  color: #0318a2;
+} */
+
+/* ================= MAPA ================= */
+.map-container iframe {
+  border-radius: 15px;
+}
+
+/* ================= FOOTER ================= */
 .footer-pro {
-  /* background: linear-gradient(90deg, #010a44, #0a1b8d, #1b36d4); */
   background: linear-gradient(90deg, #1b36d4, #0a1b8d, #010a44);
+  color: white;
+  padding-top: 60px;
   position: relative;
   overflow: hidden;
+}
+
+.footer-title::after {
+  content: "";
+  width: 40px;
+  height: 3px;
+  background: #e30613;
+  display: block;
+  margin-top: 8px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* ================= WHATSAPP ================= */
+
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.whatsapp-float img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 /* efecto glass */
@@ -185,20 +243,6 @@ h3 {
 }
 
 /* TITULOS */
-.footer-title::after {
-  content: "";
-  width: 40px;
-  height: 3px;
-  background: #e30613;
-  display: block;
-  margin-top: 8px;
-}
-
-/* LINKS */
-/* .footer-link {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-} */
 
 .footer-link {
   display: inline-block; /* clave para que el transform no rompa layout */
@@ -207,10 +251,6 @@ h3 {
   transition: transform 0.2s ease;
   transform-origin: left center; /* crece hacia la derecha */
 }
-
-/* .footer-link:hover {
-  color: #e30613;
-} */
 
 .footer-link:hover {
   transform: scale(1.05); /* leve aumento */
@@ -266,62 +306,20 @@ h3 {
   transform: scale(1.1);
 }
 
-.whatsapp-float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25d366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.whatsapp-float img {
-  width: 30px;
-  height: 30px;
-  filter: invert(1);
-}
-
-.whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-  .navbar-nav .nav-link.nav-button {
-    font-size: 1.25rem;
-  }
-
-  .navbar-collapse.show {
-    transform: translateY(0);
-  }
-
-  .slider-track {
-    width: calc(90px * 20);
-    gap: 30px;
-    animation: scroll-mobile 15s linear infinite;
+  .hero-title {
+    font-size: 2rem;
   }
 
   .logo-item {
     width: 60px;
   }
 
-  @keyframes scroll-mobile {
-    to {
-      transform: translateX(calc(-80px * 10));
-    }
+  .slider-track {
+    gap: 30px;
   }
+
   .footer-bottom {
     flex-direction: column;
   }
