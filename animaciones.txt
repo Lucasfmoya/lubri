@@ -1,0 +1,106 @@
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+.fade-down {
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: all 0.6s ease;
+}
+.fade-down.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
+}
+.zoom-in.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+
+
+.zoom-out {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: all 0.5s ease;
+}
+.zoom-out.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+.blur-in {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+.blur-in.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+
+
+
+.rotate-in {
+  opacity: 0;
+  transform: rotate(-10deg) scale(0.9);
+  transition: all 0.6s ease;
+}
+.rotate-in.show {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+
+
+.slide-soft {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+.slide-soft.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+.bounce-in {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+}
+.bounce-in.show {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+
+
+
+

@@ -170,13 +170,7 @@ h3 {
 }
 
 .img-shadow:hover {
-  transform: translateY(-5px);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
-  display: inline-block;
-  margin: 0 0.5rem;
-
-  animation: bounce; /* referring directly to the animation's @keyframe declaration */
-  animation-duration: 2s; /* don't forget to set a duration! */
 }
 
 /* ================= MAPA ================= */
@@ -250,8 +244,8 @@ h2 {
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transform: scale(1.1) rotate(10deg);
 }
 
 /* efecto glass */
@@ -327,6 +321,25 @@ h2 {
 
 /*================== Animations ================= */
 
+[data-animate] {
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+.fade-left {
+  transform: translateX(-40px);
+}
+
+.fade-right {
+  transform: translateX(40px);
+}
+
+.fade-left.show,
+.fade-right.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 @keyframes scroll {
   from {
     transform: translateX(0);
@@ -336,7 +349,7 @@ h2 {
   }
 }
 
-@keyframes show {
+@keyframes mobile-show {
   from {
     opacity: 0;
     scale: 25%;

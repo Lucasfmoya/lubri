@@ -20,6 +20,7 @@
     />
     <meta property="og:image" content="./img/lubri-abierto-ia" />
     <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#010a44" />
     <link rel="canonical" href="https://lucasfmoya.github.io/lubri/" />
     <link
       rel="icon"
@@ -49,14 +50,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <meta name="theme-color" content="#010a44" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body id="top">
@@ -102,7 +101,7 @@
       </div>
     </nav>
     <section class="my-bg">
-      <div class="container text-white">
+      <div class="container text-white" data-animate="fade-left">
         <h5 class="text-danger fw-bold">LUBRICENTRO O'HIGGINS</h5>
 
         <h1 class="display-4 fw-bold">
@@ -161,10 +160,10 @@
         <div class="col-md-6">
           <img
             src="./img/lubri-abierto-ia.png"
-            class="img-fluid rounded img-shadow show"
+            class="img-fluid rounded img-shadow mobile-show"
           />
         </div>
-        <div class="col-md-6 show">
+        <div class="col-md-6" data-animate="fade-right">
           <h6 class="text-danger fw-bold">QUIENES SOMOS</h6>
           <h3>Comprometidos con tu vehículo y tu seguridad</h3>
           <p>
@@ -279,7 +278,7 @@
     </footer>
     <a
       href="https://wa.me/5493516517525?text=Hola Lubricentro O'Higgins quiero hacer una consulta"
-      class="whatsapp-float"
+      class="whatsapp-float animate__animated"
       target="_blank"
       rel="noopener noreferrer"
     >
