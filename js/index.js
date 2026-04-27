@@ -36,18 +36,22 @@ const observer = new IntersectionObserver(
       if (!entry.isIntersecting) return;
 
       const animation = entry.target.dataset.animate;
+      const delay = entry.target.dataset.delay || 0;
+
+      // 🔥 delay opcional (si lo usás en el HTML)
+      entry.target.style.transitionDelay = `${delay}ms`;
 
       entry.target.classList.add(animation);
       entry.target.classList.add("show");
 
-      // 🔒 clave: deja de observarlo para siempre
+      // 🔒 se ejecuta una sola vez
       observer.unobserve(entry.target);
     });
   },
   {
     threshold: 0.2,
     rootMargin: "0px 0px -80px 0px",
-  }
+  },
 );
 
 elements.forEach((el) => observer.observe(el));
