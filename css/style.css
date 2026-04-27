@@ -361,14 +361,6 @@ h2 {
 }
 
 /* ================= RESPONSIVE ================= */
-@media (max-width: 375px) {
-  div.show {
-    view-timeline-name: --image;
-    view-timeline-axis: block;
-    animation-timeline: --image;
-    animation-name: show;
-  }
-}
 
 @media (max-width: 768px) {
   .hero-title {
@@ -399,10 +391,10 @@ h2 {
     display: none;
   }
 
-  img.show {
+  img.mobile-show {
     view-timeline-name: --image;
     view-timeline-axis: block;
     animation-timeline: --image;
-    animation-name: show;
+    animation-name: mobile-show;
   }
 }
