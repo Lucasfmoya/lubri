@@ -1,0 +1,361 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Google Sans", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* ================= NAVBAR ================= */
+.bg-nav {
+  background: white;
+}
+
+.navbar {
+  padding: 20px 0;
+  min-height: 90px;
+  transition: all 0.3s ease;
+}
+
+.logo-custom {
+  width: 140px;
+  transition: 0.3s;
+}
+
+.navbar-nav .nav-link {
+  color: #c62e47;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 10px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0318a2;
+}
+
+.navbar-scrolled {
+  padding: 8px 0;
+  min-height: 60px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-scrolled .logo-custom {
+  width: 110px;
+}
+
+/* ================= HERO ================= */
+.my-bg {
+  background-image:
+    linear-gradient(90deg, rgba(1, 10, 68, 0.85) 40%, rgba(1, 10, 68, 0.2)),
+    url("../img/lubri-mejorado.png");
+
+  background-size: cover;
+  background-position: center;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.hero-subtitle {
+  color: #ff3b3b;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin: 15px 0;
+}
+
+.hero-text {
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+/* BOTONES */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-main {
+  background: #e30613;
+  border: none;
+  padding: 12px 22px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-main:hover {
+  background: #c4000f;
+}
+
+.btn-outline-light {
+  border-radius: 8px;
+  padding: 12px 22px;
+}
+
+/* ================= MARCAS ================= */
+.slider-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.slider-track {
+  display: flex;
+  gap: 60px;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+.logo-item {
+  flex: 0 0 auto;
+  width: 100px;
+}
+
+.logo-item img {
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.logo-item img:hover {
+  transform: scale(1.15);
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ================= QUIENES SOMOS ================= */
+.section-card {
+  background: #f8f9fc;
+  padding: 60px 0;
+}
+
+.card-custom {
+  background: white;
+  border: 1px solid red;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-custom p {
+  line-height: 1.7;
+  color: #333;
+}
+
+.card-custom ul {
+  padding-left: 20px;
+}
+
+.card-custom li {
+  margin-bottom: 6px;
+}
+
+.img-shadow {
+  box-shadow: 0 0 40px rgba(227, 6, 19, 0.4);
+}
+
+.img-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* ================= MAPA ================= */
+
+h1 {
+  text-transform: uppercase;
+}
+
+h2 {
+  text-transform: none;
+}
+
+.map-container {
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 350px;
+  border: 0;
+  border-radius: 15px;
+}
+/* ================= FOOTER ================= */
+.footer-pro {
+  background: linear-gradient(90deg, #1b36d4, #0a1b8d, #010a44);
+  color: white;
+  padding-top: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-title::after {
+  content: "";
+  width: 40px;
+  height: 3px;
+  background: #e30613;
+  display: block;
+  margin-top: 8px;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* ================= WHATSAPP ================= */
+
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.whatsapp-float img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* efecto glass */
+.footer-pro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.footer-pro .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* LOGO */
+.footer-logo {
+  max-width: 180px;
+}
+
+/* TITULOS */
+
+.footer-link {
+  display: inline-block; /* clave para que el transform no rompa layout */
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  transform-origin: left center; /* crece hacia la derecha */
+}
+
+.footer-link:hover {
+  transform: scale(1.05); /* leve aumento */
+  color: white; /* mantiene blanco */
+  text-decoration: underline;
+}
+
+/* =========================
+   FOOTER BOTTOM 
+========================= */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.footer-qr {
+  max-width: 70px;
+}
+
+.footer-margin {
+  margin-top: 2.25rem;
+}
+
+.top-link {
+  display: block;
+  padding: 1.5px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.top-link:hover {
+  color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.1);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .logo-item {
+    width: 60px;
+  }
+
+  .slider-track {
+    gap: 30px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+  }
+
+  .footer-qr {
+    margin-top: 10px;
+  }
+
+  .footer-margin {
+    margin-top: 0.25rem;
+  }
+
+  .footer-logo {
+    display: none;
+  }
+}
