@@ -3,6 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+body {
   font-family: "Google Sans", sans-serif;
 }
 
@@ -65,7 +67,7 @@ h3 {
   background-size: cover;
   background-position: center;
 
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   color: white;
@@ -425,6 +427,13 @@ h2 {
 }
 
 /* ================= RESPONSIVE ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 @media (max-width: 768px) {
   .hero-title {

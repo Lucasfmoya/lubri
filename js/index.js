@@ -1,22 +1,28 @@
 /*Suavizar el efecto del navbar al hacer scroll*/
-
+/*if agregado ver funcion */
 const navbar = document.querySelector(".navbar");
 
-let isScrolled = false;
+if (navbar) {
+  let isScrolled = false;
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
+  window.addEventListener(
+    "scroll",
+    () => {
+      const scrollY = window.scrollY;
 
-  if (!isScrolled && scrollY > 80) {
-    navbar.classList.add("navbar-scrolled");
-    isScrolled = true;
-  }
+      if (!isScrolled && scrollY > 80) {
+        navbar.classList.add("navbar-scrolled");
+        isScrolled = true;
+      }
 
-  if (isScrolled && scrollY < 40) {
-    navbar.classList.remove("navbar-scrolled");
-    isScrolled = false;
-  }
-});
+      if (isScrolled && scrollY < 40) {
+        navbar.classList.remove("navbar-scrolled");
+        isScrolled = false;
+      }
+    },
+    { passive: true },
+  );
+}
 
 const toggler = document.querySelector(".navbar-toggler");
 
@@ -55,3 +61,7 @@ const observer = new IntersectionObserver(
 );
 
 elements.forEach((el) => observer.observe(el));
+
+if (!("IntersectionObserver" in window)) {
+  elements.forEach((el) => el.classList.add("show"));
+}
