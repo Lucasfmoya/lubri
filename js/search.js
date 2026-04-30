@@ -11,13 +11,13 @@ if (btnBuscar) {
 
     let patente = input.value.trim().toUpperCase();
 
-    // Validación vacío
+    // 🔹 Validación vacío
     if (!patente) {
       contenedor.innerHTML = `<p class="text-danger">Ingresá una patente</p>`;
       return;
     }
 
-    // Validación formato
+    // 🔹 Validación formato
     const regexPatente = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
     if (!regexPatente.test(patente)) {
@@ -25,14 +25,15 @@ if (btnBuscar) {
       return;
     }
 
+    // 🔹 UI loading
     btnBuscar.disabled = true;
     btnBuscar.innerText = "Buscando...";
-
     contenedor.innerHTML = `<p class="text-muted">Buscando...</p>`;
 
     try {
       const resultados = await buscarPorPatente(patente);
 
+      // 🔹 sin resultados
       if (resultados.length === 0) {
         contenedor.innerHTML = `
           <div class="alert alert-danger">
@@ -42,32 +43,48 @@ if (btnBuscar) {
         return;
       }
 
-      // 🔥 tabla simple con datos de Firebase
+      // 🔥 eliminar duplicados
+      const unicos = [];
+      const vistos = new Set();
+
+      resultados.forEach((item) => {
+        const clave = `${item.patente}_${item.fecha}_${item.km}`;
+
+        if (!vistos.has(clave)) {
+          vistos.add(clave);
+          unicos.push(item);
+        }
+      });
+
+      // 🔹 ordenar por fecha (más nuevo primero)
+      unicos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+      // 🔥 armar tabla
       let tabla = `
         <div class="table-responsive">
           <table class="table table-bordered table-striped">
             <thead class="table-dark">
               <tr>
                 <th>Fecha</th>
-                <th>Kilómetros</th>
-                <th>Aceite</th>
-                <th>Cliente</th>
+                <th>Patente</th>
+                <th>Kms actuales</th>
+                <th>Próximo cambio</th>
               </tr>
             </thead>
             <tbody>
       `;
 
-      resultados.forEach((item) => {
+      unicos.forEach((item) => {
         const fecha = item.fecha
-          ? new Date(item.fecha).toLocaleDateString("es-AR")
+          ? item.fecha.split("-").reverse().join("/")
           : "-";
 
         tabla += `
           <tr>
             <td>${fecha}</td>
+            <td>${item.patente || "-"}</td>
             <td>${item.km || "-"}</td>
-            <td>${item.aceite || "-"}</td>
-            <td>${item.cliente || "-"}</td>
+            <td>${item.proximo || "-"}</td>
           </tr>
         `;
       });
