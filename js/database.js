@@ -1,26 +1,18 @@
 import { db } from "./firebase-config.js";
 import {
   collection,
-  addDoc,
   getDocs,
   query,
   where,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Guardar servicio
-export const guardarServicio = async (datos) => {
-  const docRef = await addDoc(collection(db, "servicios"), {
-    ...datos,
-    fecha: new Date().toISOString(),
-  });
-  return docRef.id;
-};
-
-// Buscar por patente
+// Buscar por patente (solo lectura)
 export const buscarPorPatente = async (patente) => {
   const q = query(
     collection(db, "servicios"),
-    where("patente", "==", patente.toUpperCase()),
+    where("patente", "==", (patente || "").toUpperCase()),
+    orderBy("fecha", "desc") // 🔥 clave: más nuevo primero
   );
 
   const snapshot = await getDocs(q);

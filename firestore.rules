@@ -3,7 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /servicios/{doc} {
-      allow read, write: if true;
+      allow read: if true;   // solo lectura
+      allow write: if false; // bloquea escritura desde cliente
     }
 
   }

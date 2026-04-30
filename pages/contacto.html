@@ -120,6 +120,26 @@
     </nav>
 
     <main>
+      <div class="container my-5">
+        <h3 class="mb-4 text-center">Consultar historial del vehículo</h3>
+
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="buscarPatente"
+                class="form-control"
+                placeholder="Ej: ABC123 o AB123CD"
+                maxlength="7"
+              />
+              <button class="btn btn-danger" id="btnBuscar">Buscar</button>
+            </div>
+
+            <div id="resultado"></div>
+          </div>
+        </div>
+      </div>
       <footer class="footer-pro text-white pt-5 pb-3">
         <div class="container">
           <div class="row text-center text-md-start">
@@ -246,5 +266,6 @@
     ></script>
 
     <script src="../js/index.js?v=1.1" defer></script>
+    <script type="module" src="../js/search.js"></script>
   </body>
 </html>
