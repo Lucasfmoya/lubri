@@ -66,31 +66,4 @@ if (!("IntersectionObserver" in window)) {
   elements.forEach((el) => el.classList.add("show"));
 }
 
-/* Data base */
 
-/* import { guardarServicio } from "./database.js";
-
-// 1. Buscamos el botón y el formulario por su ID
-const miBoton = document.getElementById("btnGuardar");
-
-miBoton.addEventListener("click", async (e) => {
-  e.preventDefault(); // Evita que la página se recargue
-
-  // 2. Capturamos lo que el usuario escribió en los inputs
-  // (Asegurate de que estos IDs coincidan con los de tu HTML)
-  const datos = {
-    patente: document.getElementById("inputPatente").value,
-    aceite: document.getElementById("inputAceite").value,
-    km: document.getElementById("inputKm").value,
-    cliente: document.getElementById("inputNombre").value,
-  };
-
-  // 3. Lo mandamos a la base de datos (usando la función de database.js)
-  try {
-    const id = await guardarServicio(datos);
-    alert("¡Servicio guardado con éxito!");
-    console.log("ID del documento en Firebase:", id);
-  } catch (error) {
-    alert("Hubo un error al guardar");
-  }
-}); */

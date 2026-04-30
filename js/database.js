@@ -1,35 +1,34 @@
 import { db } from "./firebase-config.js";
-import { collection, addDoc, getDocs, query, where } from "https://gstatic.com";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// 1. Función para guardar un servicio nuevo (Cambio de aceite, filtros, etc.)
+// Guardar servicio
 export const guardarServicio = async (datos) => {
-  try {
-    const docRef = await addDoc(collection(db, "servicios"), {
-      ...datos,
-      fechaCreacion: new Date().toLocaleString(), // Agrega fecha automática
-    });
-    return docRef.id;
-  } catch (error) {
-    console.error("Error al guardar en base de datos:", error);
-    throw error;
-  }
+  const docRef = await addDoc(collection(db, "servicios"), {
+    ...datos,
+    fecha: new Date().toISOString(),
+  });
+  return docRef.id;
 };
 
-// 2. Función para buscar un vehículo por patente
+// Buscar por patente
 export const buscarPorPatente = async (patente) => {
-  try {
-    const q = query(
-      collection(db, "servicios"),
-      where("patente", "==", patente),
-    );
-    const querySnapshot = await getDocs(q);
-    const resultados = [];
-    querySnapshot.forEach((doc) => {
-      resultados.push({ id: doc.id, ...doc.data() });
-    });
-    return resultados;
-  } catch (error) {
-    console.error("Error al buscar patente:", error);
-    throw error;
-  }
+  const q = query(
+    collection(db, "servicios"),
+    where("patente", "==", patente.toUpperCase()),
+  );
+
+  const snapshot = await getDocs(q);
+
+  const resultados = [];
+  snapshot.forEach((doc) => {
+    resultados.push({ id: doc.id, ...doc.data() });
+  });
+
+  return resultados;
 };
