@@ -68,7 +68,7 @@ if (!("IntersectionObserver" in window)) {
 
 /* Data base */
 
-import { guardarServicio } from "./database.js";
+/* import { guardarServicio } from "./database.js";
 
 // 1. Buscamos el botón y el formulario por su ID
 const miBoton = document.getElementById("btnGuardar");
@@ -93,4 +93,4 @@ miBoton.addEventListener("click", async (e) => {
   } catch (error) {
     alert("Hubo un error al guardar");
   }
-});
+}); */
