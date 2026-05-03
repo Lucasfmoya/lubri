@@ -8,53 +8,44 @@ if (!input || !btnBuscar || !contenedor) {
   console.warn("Elementos no encontrados en el DOM");
 }
 
-// 🔒 cache simple (mejora rendimiento)
+// 🔒 cache simple
 const cache = new Map();
 
-// ⏱️ debounce (evita múltiples llamadas seguidas)
+// ⏱️ debounce
 let debounceTimer;
 
-// 🚀 función principal (UNA sola fuente de verdad)
+// 🚀 función principal
 async function ejecutarBusqueda() {
   let patente = input.value.trim().toUpperCase();
-
-  // limpiar input visualmente
   input.value = patente;
 
-  // 🔹 validación vacío
+  const regexPatente = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
   if (!patente) {
     contenedor.innerHTML = `<p class="text-danger">Ingresá una patente</p>`;
     return;
   }
-
-  // 🔹 validación formato
-  const regexPatente = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
   if (!regexPatente.test(patente)) {
     contenedor.innerHTML = `<p class="text-danger">Formato inválido</p>`;
     return;
   }
 
-  // 🔥 cache
   if (cache.has(patente)) {
     renderizarResultados(cache.get(patente), patente);
     return;
   }
 
-  // 🔹 UI loading
   btnBuscar.disabled = true;
-  btnBuscar.innerText = "Buscando...";
+  btnBuscar.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
   contenedor.innerHTML = `<p class="text-muted">Buscando...</p>`;
 
   try {
     const resultados = await buscarPorPatente(patente);
-
     cache.set(patente, resultados);
-
     renderizarResultados(resultados, patente);
   } catch (error) {
     console.error(error);
-
     contenedor.innerHTML = `
       <div class="alert alert-danger">
         Error al consultar la base de datos
@@ -62,13 +53,12 @@ async function ejecutarBusqueda() {
     `;
   } finally {
     btnBuscar.disabled = false;
-    btnBuscar.innerText = "Buscar";
+    btnBuscar.innerHTML = `<i class="bi bi-search"></i>`;
   }
 }
 
-// 🎯 render separado (más limpio)
+// 🎯 render
 function renderizarResultados(resultados, patente) {
-  // 🔹 sin resultados
   if (resultados.length === 0) {
     contenedor.innerHTML = `
       <div class="alert alert-danger">
@@ -78,20 +68,17 @@ function renderizarResultados(resultados, patente) {
     return;
   }
 
-  // 🔥 eliminar duplicados
   const unicos = [];
   const vistos = new Set();
 
   resultados.forEach((item) => {
     const clave = `${item.patente}_${item.fecha}_${item.km}`;
-
     if (!vistos.has(clave)) {
       vistos.add(clave);
       unicos.push(item);
     }
   });
 
-  // 🔹 ordenar por fecha
   unicos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
   let tabla = `
@@ -121,42 +108,44 @@ function renderizarResultados(resultados, patente) {
     `;
   });
 
-  tabla += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
+  tabla += `</tbody></table></div>`;
   contenedor.innerHTML = tabla;
 }
 
 //
 // ===============================
-// 🎮 EVENTOS (UX PRO)
+// 🎮 EVENTOS
 // ===============================
 //
 
-// 👉 click botón
+// 👉 click
 btnBuscar.addEventListener("click", ejecutarBusqueda);
 
-// 👉 ENTER (PC + teclado mobile)
-input.addEventListener("keypress", (e) => {
+// 👉 ENTER (mejor que keypress)
+input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     ejecutarBusqueda();
   }
 });
 
-// 👉 input limpio (solo letras y números + mayúsculas)
+// 👉 limpieza + auto búsqueda
 input.addEventListener("input", () => {
   input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
-  // 🚀 AUTO BUSQUEDA con debounce (cuando llega a largo válido)
   clearTimeout(debounceTimer);
 
   if (input.value.length >= 6) {
-    debounceTimer = setTimeout(() => {
-      ejecutarBusqueda();
-    }, 500);
+    debounceTimer = setTimeout(ejecutarBusqueda, 500);
   }
+});
+
+// 👉 FIX MOBILE (scroll al foco)
+input.addEventListener("focus", () => {
+  setTimeout(() => {
+    document.querySelector(".search-box")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, 300);
 });
