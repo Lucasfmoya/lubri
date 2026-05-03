@@ -376,12 +376,6 @@ h2 {
   border-radius: 12px;
 }
 
-input,
-textarea,
-select {
-  font-size: 16px !important;
-}
-
 /*================== Animations ================= */
 
 [data-animate] {
@@ -433,6 +427,22 @@ select {
 }
 
 /* ================= RESPONSIVE ================= */
+
+@media (max-width: 576px) {
+  .input-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #buscarPatente {
+    width: 100%;
+  }
+
+  #btnBuscar {
+    width: 100%;
+    margin: 0; /* importante: sacamos el mx-2 */
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   * {
