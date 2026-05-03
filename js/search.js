@@ -89,7 +89,7 @@ function renderizarResultados(resultados, patente) {
             <th>Fecha</th>
             <th>Patente</th>
             <th>Kms actuales</th>
-            <th>Próximo cambio</th>
+            <th>Próximo service</th>
           </tr>
         </thead>
         <tbody>
@@ -100,10 +100,10 @@ function renderizarResultados(resultados, patente) {
 
     tabla += `
       <tr>
-        <td>${fecha}</td>
-        <td>${item.patente || "-"}</td>
-        <td>${item.km || "-"}</td>
-        <td>${item.proximo || "-"}</td>
+        <td data-label="Fecha">${fecha}</td>
+        <td data-label="Patente">${item.patente || "-"}</td>
+        <td data-label="Kms actuales">${item.km || "-"}</td>
+        <td data-label="Próximo service">${item.proximo || "-"}</td>
       </tr>
     `;
   });

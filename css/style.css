@@ -389,7 +389,7 @@ h2 {
 .search-input {
   width: 100%;
   height: 50px;
-  padding: 0 55px 0 15px; /* espacio para el botón */
+  padding: 0 55px 0 15px;
   border-radius: 10px;
   border: 1px solid #ccc;
   font-size: 16px;
@@ -409,7 +409,7 @@ h2 {
   top: 50%;
   transform: translateY(-50%);
   height: 38px;
-  width: 38px; /* 🔥 CLAVE: tamaño fijo */
+  width: 38px;
   border: none;
   background: #e30613;
   color: white;
@@ -420,6 +420,20 @@ h2 {
   justify-content: center;
 }
 
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+#resultado {
+  margin-top: 10px;
+}
+
+#resultado .table {
+  border-radius: 10px;
+  overflow: hidden;
+}
 /*================== Animations ================= */
 
 [data-animate] {
@@ -472,21 +486,47 @@ h2 {
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 576px) {
-  .input-group {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  #buscarPatente {
-    width: 100%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-responsive {
+    overflow: visible;
+  }
+
+  table {
+    border: 0;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background: white;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border: none;
+    font-size: 14px;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #555;
   }
 }
 
