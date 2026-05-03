@@ -376,6 +376,12 @@ h2 {
   border-radius: 12px;
 }
 
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}
+
 /*================== Animations ================= */
 
 [data-animate] {

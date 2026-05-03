@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contacto | Lubricentro O'Higgins</title>
-    <meta name="description" content="Contactanos para tu próximo service..." />
+    <title>Historial de cambio de aceite | Lubricentro O'Higgins</title>
+    <meta name="description" content="Consulta el historial de vehiculo..." />
     <meta name="theme-color" content="#010a44" />
     <link
       rel="canonical"
@@ -19,7 +19,7 @@
       content="https://lucasfmoya.github.io/lubri/img/lubri-abierto-ia.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Contacto | Lubricentro O'Higgins" />
+    <meta name="twitter:title" content="Historial | Lubricentro O'Higgins" />
     <meta
       name="twitter:description"
       content="Conocé nuestro lubricentro en Córdoba"
@@ -107,14 +107,41 @@
             </li>
           </ul>
 
-          <a href="./historial.html" class="btn btn-danger">
-            <i class="bi bi-calendar-check me-2"></i>Consultar historial
+          <a
+            href="https://wa.me/5493516517525?text=Hola Lubricentro O'Higgins, quiero solicitar turno para cambio de aceite "
+            class="btn btn-danger"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
           </a>
         </div>
       </div>
     </nav>
 
     <main>
+      <div class="container my-5">
+        <h3 class="mb-4 text-center">Consultar historial del vehículo</h3>
+
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="buscarPatente"
+                class="form-control text-uppercase"
+                placeholder="Ej: ABC123 o AB123CD"
+                maxlength="7"
+                enterkeyhint="search"
+                autocomplete="off"
+              />
+              <button class="btn btn-danger mx-2" id="btnBuscar">Buscar</button>
+            </div>
+
+            <div id="resultado"></div>
+          </div>
+        </div>
+      </div>
       <footer class="footer-pro text-white pt-5 pb-3">
         <div class="container">
           <div class="row text-center text-md-start">
@@ -164,15 +191,13 @@
               <ul class="list-unstyled ms-4">
                 <li><a href="../index.html" class="top-link">Inicio</a></li>
                 <li>
-                  <a href="./historial.html" class="top-link"
-                    >Historial de service</a
-                  >
-                </li>
-                <li>
                   <a href="./nosotros.html" class="top-link">Nosotros</a>
                 </li>
                 <li>
                   <a href="./servicios.html" class="top-link">Servicios</a>
+                </li>
+                <li>
+                  <a href="./contacto.html" class="top-link">Contacto</a>
                 </li>
               </ul>
             </div>
