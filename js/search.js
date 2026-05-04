@@ -29,6 +29,44 @@ async function buscarPorPatente(patente) {
   return data;
 }
 
+function mostrarSkeleton() {
+  let skeleton = `
+    <!-- DESKTOP -->
+    <div class="skeleton-table">
+  `;
+
+  for (let i = 0; i < 5; i++) {
+    skeleton += `
+      <div class="skeleton-row">
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+        <div class="skeleton skeleton-cell"></div>
+      </div>
+    `;
+  }
+
+  skeleton += `</div>`;
+
+  // MOBILE CARDS
+  skeleton += `<div class="skeleton-card">`;
+
+  for (let i = 0; i < 3; i++) {
+    skeleton += `
+      <div class="skeleton-card-item">
+        <div class="skeleton skeleton-line short"></div>
+        <div class="skeleton skeleton-line medium"></div>
+        <div class="skeleton skeleton-line long"></div>
+        <div class="skeleton skeleton-line medium"></div>
+      </div>
+    `;
+  }
+
+  skeleton += `</div>`;
+
+  contenedor.innerHTML = skeleton;
+}
+
 // ============================
 // BUSQUEDA PRINCIPAL
 // ============================
@@ -64,7 +102,7 @@ async function ejecutarBusqueda() {
 
   btnBuscar.disabled = true;
   btnBuscar.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
-  contenedor.innerHTML = `<p class="text-muted mt-3">Buscando...</p>`;
+  mostrarSkeleton();
 
   try {
     const resultados = await buscarPorPatente(patente);
