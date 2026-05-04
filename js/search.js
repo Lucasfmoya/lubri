@@ -23,48 +23,56 @@ async function buscarPorPatente(patente) {
   const data = await res.json();
 
   if (!res.ok) {
+    // 🔥 manejo especial rate limit
+    if (res.status === 429) {
+      throw new Error(
+        "⚠️ Demasiadas consultas. Esperá 1 minuto e intentá nuevamente.",
+      );
+    }
+
     throw new Error(data.error || "Error en backend");
   }
 
   return data;
 }
 
+// ============================
+// SKELETON LOADER (RESPONSIVE)
+// ============================
 function mostrarSkeleton() {
-  let skeleton = `
-    <!-- DESKTOP -->
+  contenedor.innerHTML = `
+    <!-- Desktop -->
     <div class="skeleton-table">
+      ${Array.from({ length: 5 })
+        .map(
+          () => `
+        <div class="skeleton-row">
+          <div class="skeleton skeleton-cell"></div>
+          <div class="skeleton skeleton-cell"></div>
+          <div class="skeleton skeleton-cell"></div>
+          <div class="skeleton skeleton-cell"></div>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
+
+    <!-- Mobile -->
+    <div class="skeleton-card">
+      ${Array.from({ length: 3 })
+        .map(
+          () => `
+        <div class="skeleton-card-item">
+          <div class="skeleton skeleton-line long"></div>
+          <div class="skeleton skeleton-line medium"></div>
+          <div class="skeleton skeleton-line short"></div>
+          <div class="skeleton skeleton-line medium"></div>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
   `;
-
-  for (let i = 0; i < 5; i++) {
-    skeleton += `
-      <div class="skeleton-row">
-        <div class="skeleton skeleton-cell"></div>
-        <div class="skeleton skeleton-cell"></div>
-        <div class="skeleton skeleton-cell"></div>
-        <div class="skeleton skeleton-cell"></div>
-      </div>
-    `;
-  }
-
-  skeleton += `</div>`;
-
-  // MOBILE CARDS
-  skeleton += `<div class="skeleton-card">`;
-
-  for (let i = 0; i < 3; i++) {
-    skeleton += `
-      <div class="skeleton-card-item">
-        <div class="skeleton skeleton-line short"></div>
-        <div class="skeleton skeleton-line medium"></div>
-        <div class="skeleton skeleton-line long"></div>
-        <div class="skeleton skeleton-line medium"></div>
-      </div>
-    `;
-  }
-
-  skeleton += `</div>`;
-
-  contenedor.innerHTML = skeleton;
 }
 
 // ============================
@@ -102,6 +110,7 @@ async function ejecutarBusqueda() {
 
   btnBuscar.disabled = true;
   btnBuscar.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
+
   mostrarSkeleton();
 
   try {
@@ -113,8 +122,8 @@ async function ejecutarBusqueda() {
     console.error(err);
 
     contenedor.innerHTML = `
-      <div class="alert alert-danger mt-3">
-        Error al consultar la base de datos
+      <div class="alert alert-warning mt-3">
+        ${err.message}
       </div>
     `;
   } finally {
@@ -124,7 +133,7 @@ async function ejecutarBusqueda() {
 }
 
 // ============================
-// RENDER (RESPETA TU CSS)
+// RENDER
 // ============================
 function render(data, patente) {
   if (!data.length) {
@@ -137,9 +146,9 @@ function render(data, patente) {
   }
 
   let html = `
-    <div class="table-container mt-3">
-      <table class="table table-striped table-bordered align-middle custom-table">
-        <thead class="table-dark">
+    <div class="table-container mt-3 fade-in">
+      <table class="table table-striped align-middle custom-table">
+        <thead>
           <tr>
             <th>Fecha</th>
             <th>Patente</th>
@@ -157,7 +166,7 @@ function render(data, patente) {
       <tr>
         <td data-label="Fecha">${fecha}</td>
         <td data-label="Patente">${d.patente || "-"}</td>
-        <td data-label="Km actuales">${d.km || "-"}</td>
+        <td data-label="Km acuales">${d.km || "-"}</td>
         <td data-label="Próximo service">${d.proximo || "-"}</td>
       </tr>
     `;
@@ -187,7 +196,7 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-// auto búsqueda (cuando termina de escribir)
+// auto búsqueda
 input.addEventListener("input", () => {
   input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
@@ -196,6 +205,6 @@ input.addEventListener("input", () => {
   if (input.value.length >= 6) {
     debounceTimer = setTimeout(() => {
       ejecutarBusqueda();
-    }, 600); // un poco más humano y estable
+    }, 600);
   }
 });

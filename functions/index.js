@@ -4,49 +4,81 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-const rateLimit = new Map();
-
 exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
   try {
     // =========================
-    // 🔥 CORS PERFECTO
+    // 🔥 CORS
     // =========================
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Headers", "Content-Type");
     res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
 
-    // 👇 IMPORTANTE: responder preflight
     if (req.method === "OPTIONS") {
       return res.status(204).send("");
     }
 
-    // =========================
-    // RATE LIMIT
-    // =========================
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
-
-    const ahora = Date.now();
-    const ventana = 60000;
-    const limite = 20;
-
-    if (!rateLimit.has(ip)) {
-      rateLimit.set(ip, { count: 1, time: ahora });
-    } else {
-      const data = rateLimit.get(ip);
-
-      if (ahora - data.time > ventana) {
-        rateLimit.set(ip, { count: 1, time: ahora });
-      } else {
-        data.count++;
-        if (data.count > limite) {
-          return res.status(429).json({ error: "Demasiadas consultas" });
-        }
-      }
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Método no permitido" });
     }
 
     // =========================
-    // BODY
+    // 🚫 RATE LIMIT (ATÓMICO)
+    // =========================
+    const ip =
+      req.headers["x-forwarded-for"]?.split(",")[0] ||
+      req.socket.remoteAddress ||
+      "unknown";
+
+    const ahora = Date.now();
+    const ventana = 60000; // 1 minuto
+    const limite = 5; // 👈 para pruebas
+
+    const ref = db.collection("rate_limits").doc(ip);
+
+    try {
+      await db.runTransaction(async (tx) => {
+        const doc = await tx.get(ref);
+
+        if (!doc.exists) {
+          tx.set(ref, {
+            count: 1,
+            time: ahora,
+          });
+          return;
+        }
+
+        const data = doc.data();
+
+        // reset ventana
+        if (ahora - data.time > ventana) {
+          tx.set(ref, {
+            count: 1,
+            time: ahora,
+          });
+          return;
+        }
+
+        // 🚫 BLOQUEO REAL
+        if (data.count >= limite) {
+          throw new Error("RATE_LIMIT");
+        }
+
+        tx.update(ref, {
+          count: data.count + 1,
+        });
+      });
+    } catch (err) {
+      if (err.message === "RATE_LIMIT") {
+        return res.status(429).json({
+          error: "Demasiadas consultas. Esperá 1 minuto.",
+        });
+      }
+
+      throw err;
+    }
+
+    // =========================
+    // 📥 BODY + VALIDACIÓN
     // =========================
     const { patente } = req.body;
 
@@ -56,8 +88,14 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
 
     const patenteNormalizada = patente.toUpperCase().trim();
 
+    const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
+    if (!regex.test(patenteNormalizada)) {
+      return res.status(400).json({ error: "Formato inválido" });
+    }
+
     // =========================
-    // FIRESTORE
+    // 🔎 FIRESTORE QUERY
     // =========================
     const snapshot = await db
       .collection("servicios")
@@ -74,14 +112,18 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
       resultados.push(doc.data());
     });
 
+    // ordenar por fecha descendente
     resultados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
+    // =========================
+    // ✅ RESPUESTA
+    // =========================
     return res.json(resultados);
   } catch (error) {
     console.error("ERROR FUNCTION:", error);
 
     return res.status(500).json({
-      error: "Error interno",
+      error: "Error interno del servidor",
     });
   }
 });
