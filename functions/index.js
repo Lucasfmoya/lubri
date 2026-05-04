@@ -4,20 +4,31 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
-// 🔥 rate limit en memoria (simple pero efectivo)
 const rateLimit = new Map();
 
 exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
   try {
-    // 🔒 CORS básico
+    // =========================
+    // 🔥 CORS PERFECTO
+    // =========================
     res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
 
+    // 👇 IMPORTANTE: responder preflight
+    if (req.method === "OPTIONS") {
+      return res.status(204).send("");
+    }
+
+    // =========================
+    // RATE LIMIT
+    // =========================
     const ip =
       req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
 
     const ahora = Date.now();
-    const ventana = 60000; // 1 minuto
-    const limite = 10; // 🔥 10 requests por minuto por IP
+    const ventana = 60000;
+    const limite = 20;
 
     if (!rateLimit.has(ip)) {
       rateLimit.set(ip, { count: 1, time: ahora });
@@ -28,54 +39,49 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
         rateLimit.set(ip, { count: 1, time: ahora });
       } else {
         data.count++;
-
         if (data.count > limite) {
-          return res.status(429).json({
-            error: "Demasiadas consultas. Intentá en 1 minuto.",
-          });
+          return res.status(429).json({ error: "Demasiadas consultas" });
         }
       }
     }
 
-    const patente = req.query.patente?.toUpperCase().trim();
+    // =========================
+    // BODY
+    // =========================
+    const { patente } = req.body;
 
     if (!patente) {
       return res.status(400).json({ error: "Patente requerida" });
     }
 
+    const patenteNormalizada = patente.toUpperCase().trim();
+
+    // =========================
+    // FIRESTORE
+    // =========================
     const snapshot = await db
       .collection("servicios")
-      .where("patente", "==", patente)
+      .where("patente", "==", patenteNormalizada)
       .get();
 
     if (snapshot.empty) {
       return res.json([]);
     }
 
-    let resultados = [];
+    const resultados = [];
 
     snapshot.forEach((doc) => {
       resultados.push(doc.data());
     });
 
-    // 🔥 eliminar duplicados (seguridad extra)
-    const unicos = resultados.filter(
-      (item, index, self) =>
-        index ===
-        self.findIndex(
-          (t) =>
-            t.fecha === item.fecha &&
-            t.km === item.km &&
-            t.patente === item.patente,
-        ),
-    );
+    resultados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
-    // 🔥 ordenar
-    unicos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-
-    res.json(unicos);
+    return res.json(resultados);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error interno" });
+    console.error("ERROR FUNCTION:", error);
+
+    return res.status(500).json({
+      error: "Error interno",
+    });
   }
 });
