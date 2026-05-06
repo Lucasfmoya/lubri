@@ -477,6 +477,42 @@ select {
   display: none;
 }
 
+/*============ Panel de administrador ============== */
+
+.bg-adm {
+  background: #0f172a;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+}
+
+.card.adm {
+  border-radius: 16px;
+  border: none;
+}
+
+.drop-zone {
+  border: 2px dashed #6c757d;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.drop-zone:hover {
+  border-color: #dc3545;
+  background: rgba(220, 53, 69, 0.1);
+}
+
+.log-box {
+  background: #000;
+  padding: 15px;
+  border-radius: 10px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
 /*================== Animations ================= */
 
 [data-animate] {

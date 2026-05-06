@@ -166,7 +166,7 @@ function render(data, patente) {
       <tr>
         <td data-label="Fecha">${fecha}</td>
         <td data-label="Patente">${d.patente || "-"}</td>
-        <td data-label="Km acuales">${d.km || "-"}</td>
+        <td data-label="Km actuales">${d.km || "-"}</td>
         <td data-label="Próximo service">${d.proximo || "-"}</td>
       </tr>
     `;
