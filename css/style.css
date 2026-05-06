@@ -513,6 +513,254 @@ select {
   font-size: 13px;
 }
 
+/* ============================================
+   PANEL DE ADMINISTRADOR
+   ============================================ */
+
+.adm-body {
+  background: linear-gradient(90deg, #1b36d4, #0a1b8d, #010a44);
+  min-height: 100vh;
+  padding: 1.5rem;
+  padding-top: 1.5rem; /* override del padding-top: 90px del body global */
+}
+
+.adm-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.adm-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.07);
+}
+
+/* --- Header logo --- */
+.adm-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.adm-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: brightness(10);
+}
+
+.adm-brand-name {
+  color: black;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+
+.adm-brand-sub {
+  color: #e30613;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.adm-divider {
+  border-color: rgba(255, 255, 255, 0.08);
+  margin: 0 0 1.5rem;
+}
+
+/* --- Sección login --- */
+.adm-title {
+  color: black;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.adm-subtitle {
+  color: #616b79;
+  font-size: 0.82rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.adm-btn-google {
+  width: 100%;
+  background: rgb(206, 204, 204);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.adm-btn-google:hover {
+  background: #8b8e91;
+}
+
+/* --- Header del panel --- */
+.adm-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.adm-welcome {
+  color: #94a3b8;
+  font-size: 0.78rem;
+  margin: 0;
+}
+
+.adm-welcome-email {
+  color: #e30613;
+  font-weight: 600;
+}
+
+.adm-btn-logout {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 5px 12px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.adm-btn-logout:hover {
+  border-color: #e30613;
+  color: #e30613;
+}
+
+/* --- Drop zone --- */
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.drop-zone:hover {
+  border-color: #e30613;
+  background: rgba(227, 6, 19, 0.07);
+}
+
+.adm-drop-icon {
+  width: 36px;
+  height: 36px;
+  stroke: #475569;
+  margin-bottom: 10px;
+}
+
+.adm-drop-text {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin: 0 0 4px;
+}
+
+.adm-drop-small {
+  color: #475569;
+  font-size: 0.78rem;
+}
+
+/* --- File info --- */
+.adm-file-info {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #38bdf8;
+  min-height: 20px;
+}
+.adm-btn-eliminar {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 4px 12px;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  cursor: pointer;
+  margin-top: 6px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.adm-btn-eliminar:hover {
+  border-color: #e30613;
+  color: #e30613;
+}
+/* --- Botón subir --- */
+.adm-btn-subir {
+  width: 100%;
+  background: #e30613;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0.5;
+  transition:
+    opacity 0.2s,
+    background 0.2s;
+}
+
+.adm-btn-subir:not(:disabled) {
+  opacity: 1;
+}
+
+.adm-btn-subir:not(:disabled):hover {
+  background: #c4000f;
+}
+
+/* --- Log --- */
+.adm-log {
+  background: #0f172a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  height: 130px;
+  overflow-y: auto;
+  font-size: 0.78rem;
+  color: #475569;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- Nota al pie --- */
+.adm-footer-note {
+  text-align: center;
+  color: #334155;
+  font-size: 0.72rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
 /*================== Animations ================= */
 
 [data-animate] {

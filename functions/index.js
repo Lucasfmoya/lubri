@@ -5,16 +5,39 @@ admin.initializeApp();
 const db = admin.firestore();
 
 /* =========================
-   🔐 CONFIG
+   📅 NORMALIZAR FECHA
 ========================= */
-const API_KEY = "123456SUPERSECRETA";
+function normalizarFecha(valor) {
+  if (!valor) return null;
+
+  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+    return valor;
+  }
+
+  if (typeof valor === "number") {
+    const fecha = new Date(Math.round((valor - 25569) * 86400 * 1000));
+    const y = fecha.getUTCFullYear();
+    const m = String(fecha.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(fecha.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
+  if (typeof valor === "string") {
+    const partes = valor.split("/");
+    if (partes.length === 3) {
+      const [d, m, y] = partes;
+      return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    }
+  }
+
+  return null;
+}
 
 /* =========================
    🔎 BUSCAR POR PATENTE
 ========================= */
 exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
   try {
-    // 🔥 CORS
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Headers", "Content-Type");
     res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -27,33 +50,30 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
-    // =========================
-    // 🚫 RATE LIMIT (ATÓMICO)
-    // =========================
     const ip =
       req.headers["x-forwarded-for"]?.split(",")[0] ||
       req.socket.remoteAddress ||
       "unknown";
 
     const ahora = Date.now();
-    const ventana = 60000; // 1 minuto
+    const ventana = 60000;
     const limite = 5;
 
-    const ref = db.collection("rate_limits").doc(ip);
+    const refLimit = db.collection("rate_limits").doc(ip);
 
     try {
       await db.runTransaction(async (tx) => {
-        const doc = await tx.get(ref);
+        const doc = await tx.get(refLimit);
 
         if (!doc.exists) {
-          tx.set(ref, { count: 1, time: ahora });
+          tx.set(refLimit, { count: 1, time: ahora });
           return;
         }
 
         const data = doc.data();
 
         if (ahora - data.time > ventana) {
-          tx.set(ref, { count: 1, time: ahora });
+          tx.set(refLimit, { count: 1, time: ahora });
           return;
         }
 
@@ -61,9 +81,7 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
           throw new Error("RATE_LIMIT");
         }
 
-        tx.update(ref, {
-          count: data.count + 1,
-        });
+        tx.update(refLimit, { count: data.count + 1 });
       });
     } catch (err) {
       if (err.message === "RATE_LIMIT") {
@@ -74,9 +92,6 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
       throw err;
     }
 
-    // =========================
-    // 📥 VALIDACIÓN
-    // =========================
     const { patente } = req.body;
 
     if (!patente) {
@@ -84,16 +99,12 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
     }
 
     const patenteNormalizada = patente.toUpperCase().trim();
-
     const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
     if (!regex.test(patenteNormalizada)) {
       return res.status(400).json({ error: "Formato inválido" });
     }
 
-    // =========================
-    // 🔎 QUERY
-    // =========================
     const snapshot = await db
       .collection("servicios")
       .where("patente", "==", patenteNormalizada)
@@ -104,21 +115,13 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
     }
 
     const resultados = [];
-
-    snapshot.forEach((doc) => {
-      resultados.push(doc.data());
-    });
-
-    // ordenar por fecha descendente
+    snapshot.forEach((doc) => resultados.push(doc.data()));
     resultados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
     return res.json(resultados);
   } catch (error) {
     console.error("ERROR FUNCTION:", error);
-
-    return res.status(500).json({
-      error: "Error interno del servidor",
-    });
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
@@ -127,9 +130,8 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
 ========================= */
 exports.importarServicios = functions.https.onRequest(async (req, res) => {
   try {
-    // 🔥 CORS
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type, x-api-key");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
 
     if (req.method === "OPTIONS") {
@@ -140,11 +142,26 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
-    // 🔐 API KEY
-    const apiKey = req.headers["x-api-key"];
+    const authHeader = req.headers.authorization;
 
-    if (apiKey !== API_KEY) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ error: "No autorizado" });
+    }
+
+    const token = authHeader.split("Bearer ")[1];
+    let decodedToken;
+
+    try {
+      decodedToken = await admin.auth().verifyIdToken(token);
+    } catch (error) {
+      return res.status(401).json({ error: "Token inválido" });
+    }
+
+    const adminRef = db.collection("admins").doc(decodedToken.email);
+    const adminDoc = await adminRef.get();
+
+    if (!adminDoc.exists || adminDoc.data().activo !== true) {
+      return res.status(403).json({ error: "Acceso denegado" });
     }
 
     const data = req.body;
@@ -154,55 +171,44 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
     }
 
     let batch = db.batch();
-    let operaciones = 0;
+    let count = 0;
     let total = 0;
 
     for (const item of data) {
       if (!item.PATENTE || !item.FECHA) continue;
 
       const patente = item.PATENTE.trim().toUpperCase();
-      const fecha = item.FECHA;
+      const fecha = normalizarFecha(item.FECHA); // ← CAMBIO CLAVE
+
+      if (!fecha) continue; // si la fecha no se pudo normalizar, saltea la fila
 
       const km = Number(item["KMS ACTUALES"] || item.km);
       const proximo = Number(item["KMS PROX. CAMBIO"] || item.proximo);
 
-      // validación mínima
-      if (!km || !proximo) continue;
+      if (isNaN(km) || isNaN(proximo)) continue;
 
       const id = `${patente}_${fecha}_${km}`;
       const ref = db.collection("servicios").doc(id);
 
-      batch.set(ref, {
-        patente,
-        fecha,
-        km,
-        proximo,
-      });
+      batch.set(ref, { patente, fecha, km, proximo });
 
-      operaciones++;
+      count++;
       total++;
 
-      // 🔥 batch eficiente
-      if (operaciones === 400) {
+      if (count === 400) {
         await batch.commit();
         batch = db.batch();
-        operaciones = 0;
+        count = 0;
       }
     }
 
-    if (operaciones > 0) {
+    if (count > 0) {
       await batch.commit();
     }
 
-    return res.json({
-      success: true,
-      total,
-    });
+    return res.json({ success: true, total });
   } catch (error) {
     console.error("IMPORT ERROR:", error);
-
-    return res.status(500).json({
-      error: "Error al importar datos",
-    });
+    return res.status(500).json({ error: "Error al importar datos" });
   }
 });
