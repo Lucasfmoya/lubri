@@ -38,7 +38,33 @@ const btnSubir = document.getElementById("btnSubir");
 const log = document.getElementById("log");
 const fileInfo = document.getElementById("fileInfo");
 
-const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
+const FUNCTION_URL =
+  "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
+
+/* =========================
+   🔔 SWEETALERT TOAST
+========================= */
+function showToast(msg, tipo = "info") {
+  const config = {
+    text: msg,
+    toast: true,
+    position: "top-end",
+    timer: 2500,
+    showConfirmButton: false,
+  };
+
+  const map = {
+    success: "success",
+    error: "error",
+    warning: "warning",
+    info: "info",
+  };
+
+  Swal.fire({
+    ...config,
+    icon: map[tipo] || "info",
+  });
+}
 
 /* =========================
    🧾 LOG
@@ -50,28 +76,7 @@ function logMsg(msg) {
 }
 
 /* =========================
-   🔔 TOASTIFY
-========================= */
-function showToast(msg, tipo = "info") {
-  const colores = {
-    success: "linear-gradient(to right, #00b09b, #96c93d)",
-    error: "linear-gradient(to right, #ff5f6d, #ffc371)",
-    warning: "linear-gradient(to right, #f7971e, #ffd200)",
-    info: "linear-gradient(to right, #2193b0, #6dd5ed)",
-  };
-
-  Toastify({
-    text: msg,
-    duration: 4000,
-    gravity: "top",
-    position: "right",
-    stopOnFocus: true,
-    style: { background: colores[tipo] ?? colores.info },
-  }).showToast();
-}
-
-/* =========================
-   🧹 LIMPIAR ARCHIVO
+   🧹 LIMPIAR
 ========================= */
 function limpiarArchivo() {
   archivo = null;
@@ -90,24 +95,25 @@ async function esAdmin(email) {
     const snap = await getDoc(ref);
     return snap.exists();
   } catch (err) {
-    console.error("Error verificando admin:", err);
+    console.error(err);
     return false;
   }
 }
 
 /* =========================
-   🔐 LOGIN CON POPUP
+   🔐 LOGIN
 ========================= */
 btnLoginBtn?.addEventListener("click", async () => {
   try {
     sessionStorage.setItem("loginManual", "clicking");
+
     await setPersistence(auth, browserSessionPersistence);
     await signInWithPopup(auth, provider);
+
     sessionStorage.setItem("loginManual", "loggedIn");
   } catch (err) {
     sessionStorage.removeItem("loginManual");
-    console.error("LOGIN ERROR:", err.code, err.message);
-    showToast("❌ Error al iniciar sesión: " + err.message, "error");
+    showToast("Error login: " + err.message, "error");
   }
 });
 
@@ -117,17 +123,13 @@ btnLoginBtn?.addEventListener("click", async () => {
 btnLogout?.addEventListener("click", async () => {
   sessionStorage.removeItem("loginManual");
   await signOut(auth);
-  showToast("👋 Sesión cerrada", "info");
+  showToast("Sesión cerrada", "info");
 });
 
 /* =========================
    👁️ AUTH STATE
 ========================= */
 onAuthStateChanged(auth, async (user) => {
-  console.log("AUTH STATE:", user?.email ?? "sin usuario");
-
-  if (!btnLogin || !adminPanel) return;
-
   btnLogin.style.display = "block";
   adminPanel.style.display = "none";
   userToken = null;
@@ -146,20 +148,18 @@ onAuthStateChanged(auth, async (user) => {
   if (!ok) {
     sessionStorage.removeItem("loginManual");
     await signOut(auth);
-    showToast("⛔ No autorizado: " + user.email, "error");
+    showToast("No autorizado", "error");
     return;
   }
 
   userToken = await user.getIdToken();
-  sessionStorage.setItem("loginManual", "loggedIn");
 
-  const emailSpan = document.getElementById("userEmailSpan");
-  if (emailSpan) emailSpan.textContent = user.email;
+  document.getElementById("userEmailSpan").textContent = user.email;
 
   btnLogin.style.display = "none";
   adminPanel.style.display = "block";
 
-  showToast("✅ Bienvenido: " + user.email, "success");
+  showToast("Bienvenido " + user.email, "success");
 });
 
 /* =========================
@@ -167,66 +167,29 @@ onAuthStateChanged(auth, async (user) => {
 ========================= */
 dropZone?.addEventListener("click", () => fileInput.click());
 
-dropZone?.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropZone.style.borderColor = "#e30613";
-  dropZone.style.background = "rgba(227,6,19,0.07)";
-});
-
-dropZone?.addEventListener("dragleave", () => {
-  dropZone.style.borderColor = "";
-  dropZone.style.background = "";
-});
-
-dropZone?.addEventListener("drop", (e) => {
-  e.preventDefault();
-  dropZone.style.borderColor = "";
-  dropZone.style.background = "";
-
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-
-  const extensionesValidas = [".xlsx", ".xls"];
-  const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-
-  if (!extensionesValidas.includes(extension)) {
-    showToast("❌ Solo se aceptan archivos Excel (.xlsx, .xls)", "error");
-    return;
-  }
-
-  archivo = file;
-  if (fileInfo) fileInfo.innerHTML = archivo.name;
-  if (btnSubir) btnSubir.disabled = false;
-  if (btnEliminar) btnEliminar.style.display = "inline-block";
-});
-
 fileInput?.addEventListener("change", (e) => {
   archivo = e.target.files[0];
-  if (fileInfo) fileInfo.innerHTML = archivo?.name || "";
-  if (btnSubir) btnSubir.disabled = !archivo;
-  if (btnEliminar)
-    btnEliminar.style.display = archivo ? "inline-block" : "none";
+  fileInfo.innerHTML = archivo?.name || "";
+  btnSubir.disabled = !archivo;
+  btnEliminar.style.display = archivo ? "inline-block" : "none";
 });
 
 /* =========================
-   🗑️ ELIMINAR ARCHIVO
+   🗑️ ELIMINAR
 ========================= */
 btnEliminar?.addEventListener("click", () => {
   limpiarArchivo();
-  showToast("🗑️ Archivo quitado", "info");
+  showToast("Archivo eliminado", "info");
 });
 
 /* =========================
-   🚀 SUBIR EXCEL
+   🚀 SUBIR
 ========================= */
 btnSubir?.addEventListener("click", async () => {
   if (!archivo || !userToken) {
-    showToast("❌ Falta archivo o login", "warning");
+    showToast("Falta archivo o login", "warning");
     return;
   }
-
-  logMsg("📊 Procesando Excel...");
-  showToast("📊 Procesando...", "info");
 
   try {
     const user = auth.currentUser;
@@ -235,10 +198,7 @@ btnSubir?.addEventListener("click", async () => {
     const data = await archivo.arrayBuffer();
     const wb = XLSX.read(data);
     const sheet = wb.Sheets[wb.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(sheet, {
-      raw: false,
-      dateNF: "yyyy-mm-dd",
-    });
+    const json = XLSX.utils.sheet_to_json(sheet);
 
     const res = await fetch(FUNCTION_URL, {
       method: "POST",
@@ -250,14 +210,14 @@ btnSubir?.addEventListener("click", async () => {
     });
 
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error ?? "Error desconocido");
+    if (!res.ok) throw new Error(result.error);
 
-    logMsg("✅ Importados: " + result.total);
-    showToast("✅ Importados: " + result.total, "success");
+    logMsg("Importados: " + result.total);
+    showToast("Importados: " + result.total, "success");
   } catch (err) {
-    console.error("UPLOAD ERROR:", err);
-    logMsg("❌ Error: " + err.message);
-    showToast("❌ Error al subir datos: " + err.message, "error");
+    console.error(err);
+    logMsg("Error: " + err.message);
+    showToast(err.message, "error");
   } finally {
     limpiarArchivo();
   }

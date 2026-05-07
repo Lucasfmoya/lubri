@@ -15,12 +15,12 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
-  <body class="adm-body d-flex align-items-center justify-content-center">
+  <body class="adm-body">
     <div class="adm-wrapper">
       <div class="adm-card">
         <!-- HEADER LOGO -->
@@ -31,10 +31,6 @@
               alt="Logo Lubricentro"
               class="img-fluid"
             />
-          </div>
-          <div>
-            <p class="adm-brand-name">Lubricentro O'Higgins</p>
-            <p class="adm-brand-sub">Panel de administración</p>
           </div>
         </div>
 
@@ -115,8 +111,6 @@
           </div>
 
           <div id="fileInfo" class="adm-file-info"></div>
-          <div id="fileInfo" class="adm-file-info"></div>
-
           <button
             id="btnEliminar"
             class="adm-btn-eliminar"
@@ -124,7 +118,6 @@
           >
             ✕ Quitar archivo
           </button>
-
           <button id="btnSubir" class="adm-btn-subir" disabled>
             <svg
               width="18"
@@ -145,12 +138,23 @@
           <div id="log" class="adm-log"></div>
         </div>
       </div>
+      <div
+        class="adm-footer d-flex align-items-center justify-content-between p-4"
+      >
+        <p class="adm-footer-note mb-0">
+          Lubricentro O'Higgins &mdash; Área interna
+        </p>
 
-      <p class="adm-footer-note">Lubricentro O'Higgins &mdash; Área interna</p>
+        <a
+          href="./index.html"
+          class="btn btn-outline-light btn-sm adm-footer-btn"
+        >
+          Página principal
+        </a>
+      </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script type="module" src="./js/admin.js"></script>
   </body>
 </html>
