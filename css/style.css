@@ -779,8 +779,11 @@ select {
   background: rgba(255, 255, 255, 0.14);
   color: white;
 }
-
-
+/*============= Alert ===============*/
+.swal2-close:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 /*================== Animations ================= */
 

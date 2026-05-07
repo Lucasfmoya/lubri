@@ -44,20 +44,37 @@ const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
    🔔 SWEETALERT TOAST
 ========================= */
 function showToast(msg, tipo = "info") {
+  const titulos = {
+    success: "Listo",
+    error: "Ocurrió un error",
+    warning: "Atención",
+    info: "Información",
+  };
+
   Swal.fire({
+    title: titulos[tipo] || "Aviso",
     text: msg,
     icon: tipo,
     position: "center",
-    timer: 2500,
+    timer: 3000,
+    timerProgressBar: true, // barrита de progreso abajo
     showConfirmButton: false,
-    toast: false,
-    background: "white",
-    color: "black",
+    showCloseButton: true,
+    timer: 3000,
+    background: "#ffffff",
+    color: "#1e293b",
     iconColor:
-      tipo === "error" ? "#e30613" : tipo === "success" ? "#22c55e" : "#38bdf8",
-    borderRadius: "14px",
+      tipo === "error"
+        ? "#e30613"
+        : tipo === "success"
+          ? "#22c55e"
+          : tipo === "warning"
+            ? "#f59e0b"
+            : "#38bdf8",
     customClass: {
       popup: "swal-admin-popup",
+      title: "swal-admin-title",
+      htmlContainer: "swal-admin-text",
     },
   });
 }
@@ -191,11 +208,33 @@ dropZone?.addEventListener("drop", (e) => {
 /* =========================
    🗑️ ELIMINAR
 ========================= */
-btnEliminar?.addEventListener("click", () => {
-  limpiarArchivo();
-  showToast("Archivo eliminado", "info");
-});
+btnEliminar?.addEventListener("click", async () => {
+  const confirm = await Swal.fire({
+    title: "¿Quitar archivo?",
+    text: "Tendrás que volver a seleccionarlo.",
+    icon: "warning",
+    background: "#ffffff",
+    color: "#1e293b",
+    showCancelButton: true,
+    confirmButtonText: "Sí, quitar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#e30613",
+    cancelButtonColor: "#334155",
+    showCloseButton: true,
+    timer: 3000,
+    borderRadius: "16px",
+    customClass: {
+      popup: "swal-admin-popup",
+      title: "swal-admin-title",
+      htmlContainer: "swal-admin-text",
+    },
+  });
 
+  if (confirm.isConfirmed) {
+    limpiarArchivo();
+    showToast("Archivo eliminado", "info");
+  }
+});
 /* =========================
    🚀 SUBIR
 ========================= */

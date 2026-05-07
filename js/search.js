@@ -13,9 +13,7 @@ async function buscarPorPatente(patente) {
     "https://us-central1-lubricentro--ohiggins.cloudfunctions.net/buscarPorPatente",
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ patente }),
     },
   );
@@ -23,13 +21,11 @@ async function buscarPorPatente(patente) {
   const data = await res.json();
 
   if (!res.ok) {
-    // 🔥 manejo especial rate limit
     if (res.status === 429) {
       throw new Error(
-        "⚠️ Demasiadas consultas. Esperá 1 minuto e intentá nuevamente.",
+        "Demasiadas consultas. Esperá 1 minuto e intentá nuevamente.",
       );
     }
-
     throw new Error(data.error || "Error en backend");
   }
 
@@ -41,7 +37,6 @@ async function buscarPorPatente(patente) {
 // ============================
 function mostrarSkeleton() {
   contenedor.innerHTML = `
-    <!-- Desktop -->
     <div class="skeleton-table">
       ${Array.from({ length: 5 })
         .map(
@@ -56,8 +51,6 @@ function mostrarSkeleton() {
         )
         .join("")}
     </div>
-
-    <!-- Mobile -->
     <div class="skeleton-card">
       ${Array.from({ length: 3 })
         .map(
@@ -85,24 +78,17 @@ async function ejecutarBusqueda() {
   const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
   if (!patente) {
-    contenedor.innerHTML = `
-      <div class="alert alert-danger mt-3">
-        Ingresá una patente
-      </div>
-    `;
+    contenedor.innerHTML = "";
+    showAlert("Ingresá una patente", "warning");
     return;
   }
 
   if (!regex.test(patente)) {
-    contenedor.innerHTML = `
-      <div class="alert alert-danger mt-3">
-        Formato inválido
-      </div>
-    `;
+    contenedor.innerHTML = "";
+    showAlert("Formato de patente inválido", "warning");
     return;
   }
 
-  // cache
   if (cache.has(patente)) {
     render(cache.get(patente), patente);
     return;
@@ -110,22 +96,16 @@ async function ejecutarBusqueda() {
 
   btnBuscar.disabled = true;
   btnBuscar.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
-
   mostrarSkeleton();
 
   try {
     const resultados = await buscarPorPatente(patente);
-
     cache.set(patente, resultados);
     render(resultados, patente);
   } catch (err) {
     console.error(err);
-
-    contenedor.innerHTML = `
-      <div class="alert alert-warning mt-3">
-        ${err.message}
-      </div>
-    `;
+    contenedor.innerHTML = "";
+    showAlert(err.message, "error");
   } finally {
     btnBuscar.disabled = false;
     btnBuscar.innerHTML = `<i class="bi bi-search"></i>`;
@@ -137,11 +117,8 @@ async function ejecutarBusqueda() {
 // ============================
 function render(data, patente) {
   if (!data.length) {
-    contenedor.innerHTML = `
-      <div class="alert alert-warning mt-3">
-        No hay historial para <strong>${patente}</strong>
-      </div>
-    `;
+    contenedor.innerHTML = "";
+    showAlert(`No hay historial para ${patente}`, "info");
     return;
   }
 
@@ -161,7 +138,6 @@ function render(data, patente) {
 
   data.forEach((d) => {
     const fecha = d.fecha ? d.fecha.split("-").reverse().join("/") : "-";
-
     html += `
       <tr>
         <td data-label="Fecha">${fecha}</td>
@@ -172,23 +148,46 @@ function render(data, patente) {
     `;
   });
 
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
+  html += `</tbody></table></div>`;
   contenedor.innerHTML = html;
+}
+
+// ============================
+// SWEET ALERT
+// ============================
+function showAlert(msg, tipo = "info") {
+  const titulos = {
+    success: "Listo",
+    error: "Ocurrió un error",
+    warning: "Atención",
+    info: "Información",
+  };
+
+  Swal.fire({
+    title: titulos[tipo] || "Aviso",
+    text: msg,
+    icon: tipo,
+    position: "center",
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+    showCloseButton: true,
+    timer: 3000,
+    background: "#ffffff",
+    color: "#1e293b",
+    customClass: {
+      popup: "swal-admin-popup",
+      title: "swal-admin-title",
+      htmlContainer: "swal-admin-text",
+    },
+  });
 }
 
 // ============================
 // EVENTOS
 // ============================
-
-// click botón
 btnBuscar.addEventListener("click", ejecutarBusqueda);
 
-// enter
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -196,15 +195,10 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-// auto búsqueda
 input.addEventListener("input", () => {
   input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-
   clearTimeout(debounceTimer);
-
   if (input.value.length >= 6) {
-    debounceTimer = setTimeout(() => {
-      ejecutarBusqueda();
-    }, 600);
+    debounceTimer = setTimeout(() => ejecutarBusqueda(), 600);
   }
 });
