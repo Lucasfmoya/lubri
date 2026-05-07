@@ -38,34 +38,29 @@ const btnSubir = document.getElementById("btnSubir");
 const log = document.getElementById("log");
 const fileInfo = document.getElementById("fileInfo");
 
-const FUNCTION_URL =
-  "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
+const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
 
 /* =========================
    🔔 SWEETALERT TOAST
 ========================= */
 function showToast(msg, tipo = "info") {
-  const config = {
+  Swal.fire({
     text: msg,
-    toast: true,
-    position: "top-end",
+    icon: tipo,
+    position: "center",
     timer: 2500,
     showConfirmButton: false,
-  };
-
-  const map = {
-    success: "success",
-    error: "error",
-    warning: "warning",
-    info: "info",
-  };
-
-  Swal.fire({
-    ...config,
-    icon: map[tipo] || "info",
+    toast: false,
+    background: "white",
+    color: "black",
+    iconColor:
+      tipo === "error" ? "#e30613" : tipo === "success" ? "#22c55e" : "#38bdf8",
+    borderRadius: "14px",
+    customClass: {
+      popup: "swal-admin-popup",
+    },
   });
 }
-
 /* =========================
    🧾 LOG
 ========================= */
@@ -165,13 +160,32 @@ onAuthStateChanged(auth, async (user) => {
 /* =========================
    📂 FILE
 ========================= */
-dropZone?.addEventListener("click", () => fileInput.click());
+// Evita que el navegador abra el archivo al soltar
+dropZone?.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+});
 
-fileInput?.addEventListener("change", (e) => {
-  archivo = e.target.files[0];
-  fileInfo.innerHTML = archivo?.name || "";
-  btnSubir.disabled = !archivo;
-  btnEliminar.style.display = archivo ? "inline-block" : "none";
+dropZone?.addEventListener("drop", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+
+  // Validar que sea Excel
+  const validos = [".xlsx", ".xls"];
+  const esValido = validos.some((ext) => file.name.endsWith(ext));
+
+  if (!esValido) {
+    showToast("Solo se aceptan archivos Excel (.xlsx, .xls)", "warning");
+    return;
+  }
+
+  archivo = file;
+  fileInfo.innerHTML = file.name;
+  btnSubir.disabled = false;
+  btnEliminar.style.display = "inline-block";
 });
 
 /* =========================
