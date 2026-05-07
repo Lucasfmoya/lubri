@@ -477,6 +477,25 @@ select {
   display: none;
 }
 
+/*===================== Buscador ===========================*/
+
+/*Scroll corto hacia abajo*/
+body#top {
+  display: flex;
+  flex-direction: column;
+}
+
+body#top main {
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body#top main footer {
+  margin-top: auto;
+}
+
 /*============ Panel de administrador ============== */
 
 .bg-adm {
@@ -512,10 +531,6 @@ select {
   overflow-y: auto;
   font-size: 13px;
 }
-
-/* ============================================
-   PANEL DE ADMINISTRADOR
-   ============================================ */
 
 .adm-body {
   background: linear-gradient(90deg, #1b36d4, #0a1b8d, #010a44);
@@ -779,6 +794,7 @@ select {
   background: rgba(255, 255, 255, 0.14);
   color: white;
 }
+
 /*============= Alert ===============*/
 .swal2-close:focus {
   outline: none !important;

@@ -36,8 +36,19 @@
 
         <hr class="adm-divider" />
 
+        <!-- LOADER -->
+        <div id="authLoader" class="text-center py-3">
+          <div
+            class="spinner-border text-danger"
+            role="status"
+            style="width: 1.5rem; height: 1.5rem"
+          >
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+        </div>
+
         <!-- LOGIN -->
-        <div id="btnLogin">
+        <div id="btnLogin" style="display: none">
           <p class="adm-title">Acceso restringido</p>
           <p class="adm-subtitle">Solo para administradores autorizados</p>
 
@@ -107,8 +118,14 @@
             </svg>
             <p class="adm-drop-text">Arrastrá tu Excel acá</p>
             <small class="adm-drop-small">o hacé click para seleccionar</small>
-            <input type="file" id="fileInput" accept=".xlsx,.xls" hidden />
           </div>
+
+          <input
+            type="file"
+            id="fileInput"
+            accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+            hidden
+          />
 
           <div id="fileInfo" class="adm-file-info"></div>
           <button
@@ -138,21 +155,21 @@
           <div id="log" class="adm-log"></div>
         </div>
       </div>
+
       <div
         class="adm-footer d-flex align-items-center justify-content-between p-4"
       >
         <p class="adm-footer-note mb-0">
           Lubricentro O'Higgins &mdash; Área interna
         </p>
-
         <a
           href="./index.html"
           class="btn btn-outline-light btn-sm adm-footer-btn"
+          >Página principal</a
         >
-          Página principal
-        </a>
       </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="./js/admin.js"></script>

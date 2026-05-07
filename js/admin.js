@@ -13,16 +13,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* =========================
-   🔐 AUTH
-========================= */
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
-
-/* =========================
    🧠 STATE
 ========================= */
 let userToken = null;
 let archivo = null;
+let authReady = false;
 
 /* =========================
    🎯 ELEMENTOS
@@ -30,6 +25,7 @@ let archivo = null;
 const btnLogin = document.getElementById("btnLogin");
 const btnLoginBtn = document.getElementById("btnLoginBtn");
 const adminPanel = document.getElementById("adminPanel");
+const authLoader = document.getElementById("authLoader"); // 👈 declarado
 const btnLogout = document.getElementById("btnLogout");
 const btnEliminar = document.getElementById("btnEliminar");
 const fileInput = document.getElementById("fileInput");
@@ -40,8 +36,18 @@ const fileInfo = document.getElementById("fileInfo");
 
 const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
 
+// Ocultar login y panel hasta que Firebase resuelva
+btnLogin.style.display = "none";
+adminPanel.style.display = "none";
+
 /* =========================
-   🔔 SWEETALERT TOAST
+   🔐 AUTH
+========================= */
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
+
+/* =========================
+   🔔 SWEETALERT
 ========================= */
 function showToast(msg, tipo = "info") {
   const titulos = {
@@ -57,10 +63,9 @@ function showToast(msg, tipo = "info") {
     icon: tipo,
     position: "center",
     timer: 3000,
-    timerProgressBar: true, // barrита de progreso abajo
+    timerProgressBar: true,
     showConfirmButton: false,
     showCloseButton: true,
-    timer: 3000,
     background: "#ffffff",
     color: "#1e293b",
     iconColor:
@@ -78,6 +83,7 @@ function showToast(msg, tipo = "info") {
     },
   });
 }
+
 /* =========================
    🧾 LOG
 ========================= */
@@ -119,6 +125,7 @@ btnLoginBtn?.addEventListener("click", async () => {
   try {
     sessionStorage.setItem("loginManual", "clicking");
 
+    await signOut(auth);
     await setPersistence(auth, browserSessionPersistence);
     await signInWithPopup(auth, provider);
 
@@ -142,16 +149,32 @@ btnLogout?.addEventListener("click", async () => {
    👁️ AUTH STATE
 ========================= */
 onAuthStateChanged(auth, async (user) => {
+  if (authLoader) authLoader.style.display = "none";
+
+  if (!authReady) {
+    authReady = true;
+    // Si hay sesión activa, dejar que continúe el flujo normalmente
+    // Si no hay sesión, mostrar login y cortar
+    if (!user) {
+      btnLogin.style.display = "block";
+      return;
+    }
+  }
+
   btnLogin.style.display = "block";
   adminPanel.style.display = "none";
   userToken = null;
 
-  if (!user) return;
+  if (!user) {
+    btnLogin.style.display = "block";
+    return;
+  }
 
   const flag = sessionStorage.getItem("loginManual");
 
   if (flag !== "clicking" && flag !== "loggedIn") {
     await signOut(auth);
+    btnLogin.style.display = "block";
     return;
   }
 
@@ -160,14 +183,13 @@ onAuthStateChanged(auth, async (user) => {
   if (!ok) {
     sessionStorage.removeItem("loginManual");
     await signOut(auth);
+    btnLogin.style.display = "block";
     showToast("No autorizado", "error");
     return;
   }
 
   userToken = await user.getIdToken();
-
   document.getElementById("userEmailSpan").textContent = user.email;
-
   btnLogin.style.display = "none";
   adminPanel.style.display = "block";
 
@@ -177,7 +199,8 @@ onAuthStateChanged(auth, async (user) => {
 /* =========================
    📂 FILE
 ========================= */
-// Evita que el navegador abra el archivo al soltar
+dropZone?.addEventListener("click", () => fileInput.click());
+
 dropZone?.addEventListener("dragover", (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -190,7 +213,6 @@ dropZone?.addEventListener("drop", (e) => {
   const file = e.dataTransfer.files[0];
   if (!file) return;
 
-  // Validar que sea Excel
   const validos = [".xlsx", ".xls"];
   const esValido = validos.some((ext) => file.name.endsWith(ext));
 
@@ -205,11 +227,21 @@ dropZone?.addEventListener("drop", (e) => {
   btnEliminar.style.display = "inline-block";
 });
 
+fileInput?.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  archivo = file;
+  fileInfo.innerHTML = file.name;
+  btnSubir.disabled = false;
+  btnEliminar.style.display = "inline-block";
+});
+
 /* =========================
    🗑️ ELIMINAR
 ========================= */
 btnEliminar?.addEventListener("click", async () => {
-  const confirm = await Swal.fire({
+  const result = await Swal.fire({
     title: "¿Quitar archivo?",
     text: "Tendrás que volver a seleccionarlo.",
     icon: "warning",
@@ -221,8 +253,6 @@ btnEliminar?.addEventListener("click", async () => {
     confirmButtonColor: "#e30613",
     cancelButtonColor: "#334155",
     showCloseButton: true,
-    timer: 3000,
-    borderRadius: "16px",
     customClass: {
       popup: "swal-admin-popup",
       title: "swal-admin-title",
@@ -230,11 +260,12 @@ btnEliminar?.addEventListener("click", async () => {
     },
   });
 
-  if (confirm.isConfirmed) {
+  if (result.isConfirmed) {
     limpiarArchivo();
     showToast("Archivo eliminado", "info");
   }
 });
+
 /* =========================
    🚀 SUBIR
 ========================= */
