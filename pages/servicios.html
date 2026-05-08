@@ -3,34 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Servicios | Lubricentro O'Higgins</title>
+    <title>Servicios | Lubricentro O'Higgins - Córdoba</title>
     <meta
       name="description"
-      content="Cambio de aceite, filtros, mantenimiento..."
+      content="Conocé todos los servicios de Lubricentro O'Higgins: cambio de aceite, filtros, control de fluidos, lámparas, accesorios y atención a flotas empresariales en Córdoba."
     />
+    <meta name="author" content="Lubricentro O'Higgins" />
     <meta name="theme-color" content="#010a44" />
-    <link
-      rel="canonical"
-      href="https://lucasfmoya.github.io/lubri/pages/servicios.html"
-    />
-    <meta
-      property="og:url"
-      content="https://lucasfmoya.github.io/lubri/pages/servicios.html"
-    />
-    <meta
-      property="og:image"
-      content="https://lucasfmoya.github.io/lubri/img/lubri-abierto-ia.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Servicios | Lubricentro O'Higgins" />
-    <meta
-      name="twitter:description"
-      content="Conocé nuestro lubricentro en Córdoba"
-    />
-    <meta
-      name="twitter:image"
-      content="https://lucasfmoya.github.io/lubri/img/lubri-abierto-ia.png"
-    />
+
     <link
       rel="icon"
       type="image/png"
@@ -49,10 +29,10 @@
       sizes="180x180"
       href="../img/favicon/apple-touch-icon.png"
     />
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <link
@@ -65,24 +45,11 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/style.css?v=1.1" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Cambio de aceite y mantenimiento vehicular",
-        "provider": {
-          "@type": "AutoRepair",
-          "name": "Lubricentro O'Higgins"
-        },
-        "areaServed": {
-          "@type": "City",
-          "name": "Córdoba"
-        }
-      }
-    </script>
+    <link rel="stylesheet" href="../css/style.css?v=2.0" />
   </head>
-  <body id="top" class="body">
+
+  <body>
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar bg-nav navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="../index.html">
@@ -90,6 +57,7 @@
             src="../img/logo-ovalado.png"
             class="logo-custom"
             loading="lazy"
+            alt="Lubricentro O'Higgins"
           />
         </a>
         <button
@@ -97,6 +65,7 @@
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#nav"
+          aria-label="Menú"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -106,19 +75,15 @@
               <a class="nav-link nav-button" href="../index.html">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-button" href="../pages/nosotros.html"
-                >Nosotros</a
-              >
+              <a class="nav-link nav-button" href="./nosotros.html">Nosotros</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-button" href="../pages/servicios.html"
+              <a class="nav-link nav-button active" href="./servicios.html"
                 >Servicios</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-button" href="../pages/contacto.html"
-                >Contacto</a
-              >
+              <a class="nav-link nav-button" href="./contacto.html">Contacto</a>
             </li>
           </ul>
           <a href="./historial.html" class="btn btn-danger">
@@ -127,128 +92,591 @@
         </div>
       </div>
     </nav>
-    <main>
-      <footer class="footer-pro text-white pt-5 pb-3">
-        <div class="container">
-          <div class="row text-center text-md-start">
-            <div class="col-md-3 mb-4 d-flex flex-column align-items-start">
-              <a href="../index.html">
-                <img
-                  src="../img/logo-ovalado.png"
-                  class="img-fluid footer-logo mb-3"
-                  alt="Logo"
-                  loading="lazy"
-                />
-              </a>
-              <a href="../index.html" class="top-link">
-                <h4>Lubricentro O'Higgins</h4>
-              </a>
-              <p class="medium text-start">
-                Servicio profesional en cambio de aceite y mantenimiento
-                vehicular.
-              </p>
-            </div>
-            <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
-              <h5 class="fw-bold footer-title mb-4">Contacto</h5>
-              <div class="mb-2">
-                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
-                <span>Av. O'Higgins 3111 - Córdoba</span>
+
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero">
+      <div class="page-hero-overlay"></div>
+      <div class="container page-hero-content">
+        <div data-animate="fade-left">
+          <span class="section-eyebrow">LO QUE HACEMOS</span>
+          <h1 class="page-hero-title">
+            Nuestros<br /><span class="hero-accent">Servicios</span>
+          </h1>
+          <p class="page-hero-lead">
+            Todo lo que tu vehículo necesita, en un solo lugar.<br />
+            Calidad garantizada, atención honesta.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INTRO / INTRO STRIP ===== -->
+    <section class="services-intro">
+      <div class="container">
+        <div class="intro-strip" data-animate="fade-up">
+          <div class="intro-pill">
+            <i class="bi bi-check-circle-fill"></i> Productos de primera marca
+          </div>
+          <div class="intro-pill">
+            <i class="bi bi-check-circle-fill"></i> Personal capacitado
+          </div>
+          <div class="intro-pill">
+            <i class="bi bi-check-circle-fill"></i> Sin turno o con turno previo
+          </div>
+          <div class="intro-pill">
+            <i class="bi bi-check-circle-fill"></i> Múltiples medios de pago
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 1. CAMBIO DE ACEITE ===== -->
+    <section class="srv-block" id="aceite">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6" data-animate="fade-right">
+            <div class="srv-img-wrap">
+              <!-- PLACEHOLDER: reemplazar src con foto real del cambio de aceite -->
+              <img
+                src="https://placehold.co/640x430/010a44/ffffff?text=Cambio+de+Aceite"
+                class="srv-img img-fluid rounded-4"
+                loading="lazy"
+                alt="Cambio de aceite"
+              />
+              <div class="srv-img-badge popular">
+                <i class="bi bi-fire"></i> Más solicitado
               </div>
-              <div class="mb-2">
-                <i class="bi bi-telephone-fill text-danger me-2"></i>
-                <a href="tel:+5493516517525" class="footer-link">
-                  3516517525
-                </a>
-              </div>
-              <div class="mb-2">
-                <i class="bi bi-envelope-fill text-danger"></i>
-                <a
-                  href="mailto:lubricentroohiggins@hotmail.com"
-                  class="footer-link"
-                >
-                  lubricentroohiggins@hotmail.com
-                </a>
-              </div>
-            </div>
-            <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
-              <h5 class="fw-bold footer-title mb-3">Navegación</h5>
-              <ul class="list-unstyled ms-4">
-                <li><a href="../index.html" class="top-link">Inicio</a></li>
-                <li>
-                  <a href="../pages/historial.html" class="top-link"
-                    >Historial de service</a
-                  >
-                </li>
-                <li>
-                  <a href="../pages/nosotros.html" class="top-link">Nosotros</a>
-                </li>
-                <li>
-                  <a href="../pages/contacto.html" class="top-link">Contacto</a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-3 mb-4 text-start contact-footer footer-margin">
-              <h5 class="fw-bold footer-title mb-3">Horarios</h5>
-              <p class="mb-2">
-                <i class="bi bi-clock-fill text-white me-2"></i>
-                <strong>Lunes a Viernes:</strong><br />
-                08:30 a 13:00 hs - 15:00 a 19:00 hs
-              </p>
-              <p class="mb-0">
-                <i class="bi bi-clock-fill text-white me-2"></i>
-                <strong>Sábados:</strong><br />
-                08:30 a 13:00 hs
-              </p>
             </div>
           </div>
-          <hr class="border-light opacity-25" />
-          <div class="footer-bottom position-relative text-center small">
-            <div>
-              <p class="mb-1">
-                © 2026 Lubricentro O'Higgins - Todos los derechos reservados
-              </p>
-              <p class="mb-0">
-                <a
-                  href="../pages/politica-privacidad.html"
-                  class="footer-link p-2"
-                  >Política de Privacidad</a
-                >
-                |
-                <a
-                  href="../pages/terminos-condiciones.html"
-                  class="footer-link p-2"
-                  >Términos y Condiciones</a
-                >
-              </p>
+          <div class="col-lg-6" data-animate="fade-left">
+            <div class="srv-icon-wrap"><i class="bi bi-droplet-half"></i></div>
+            <span class="section-eyebrow">SERVICIO 01</span>
+            <h2 class="section-title">Cambio de aceite</h2>
+            <p class="section-text">
+              Realizamos el cambio de aceite de motor y de transmisión (caja y
+              diferencial) utilizando lubricantes de las mejores marcas del
+              mercado, nacionales e importados. Seleccionamos el producto
+              adecuado para cada vehículo según las especificaciones del
+              fabricante.
+            </p>
+            <ul class="srv-feature-list">
+              <li>
+                <i class="bi bi-check2-circle"></i> Aceite de motor: mineral,
+                sintético y semisintético
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Aceite de transmisión manual
+                y automática
+              </li>
+              <li><i class="bi bi-check2-circle"></i> Aceite de diferencial</li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Marcas: Castrol, Shell,
+                Mobil, Liqui-Moly, ELF, Petronas y más
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Aceites envasados y a granel
+                disponibles para venta
+              </li>
+            </ul>
+            <a
+              href="https://wa.me/5493516517525?text=Hola, quiero consultar sobre cambio de aceite"
+              class="btn btn-danger mt-3"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-whatsapp me-2"></i>Consultar precio
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 2. FILTROS ===== -->
+    <section class="srv-block srv-block-alt" id="filtros">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 order-2 order-lg-1" data-animate="fade-right">
+            <div class="srv-icon-wrap"><i class="bi bi-funnel-fill"></i></div>
+            <span class="section-eyebrow">SERVICIO 02</span>
+            <h2 class="section-title">Cambio de filtros</h2>
+            <p class="section-text">
+              El filtro correcto en el momento indicado marca la diferencia en
+              la vida útil de tu motor. Trabajamos con piezas de calidad
+              certificada para garantizar el mejor rendimiento y protección.
+            </p>
+            <div class="filter-cards">
+              <div class="filter-card">
+                <i class="bi bi-droplet-fill"></i>
+                <div>
+                  <strong>Filtro de aceite</strong>
+                  <span>Protege el motor de impurezas y partículas</span>
+                </div>
+              </div>
+              <div class="filter-card">
+                <i class="bi bi-wind"></i>
+                <div>
+                  <strong>Filtro de aire</strong>
+                  <span
+                    >Mejora la mezcla aire-combustible y el rendimiento</span
+                  >
+                </div>
+              </div>
+              <div class="filter-card">
+                <i class="bi bi-fuel-pump-fill"></i>
+                <div>
+                  <strong>Filtro de combustible</strong>
+                  <span>Evita impurezas en el sistema de inyección</span>
+                </div>
+              </div>
+              <div class="filter-card">
+                <i class="bi bi-person-fill"></i>
+                <div>
+                  <strong>Filtro de habitáculo</strong>
+                  <span>Purifica el aire que respirás dentro del auto</span>
+                </div>
+              </div>
             </div>
-            <div class="footer-qr-container">
+            <a
+              href="https://wa.me/5493516517525?text=Hola, quiero consultar sobre cambio de filtros"
+              class="btn btn-danger mt-4"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-whatsapp me-2"></i>Consultar precio
+            </a>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2" data-animate="fade-left">
+            <div class="srv-img-wrap">
+              <!-- PLACEHOLDER: reemplazar src con foto real de filtros -->
               <img
-                src="../img/qr-ejemplo.png"
-                class="img-fluid footer-qr"
-                alt="QR"
+                src="https://placehold.co/640x430/0a1b8d/ffffff?text=Cambio+de+Filtros"
+                class="srv-img img-fluid rounded-4"
                 loading="lazy"
+                alt="Cambio de filtros"
               />
             </div>
           </div>
         </div>
-      </footer>
-      <a
-        href="https://wa.me/5493516517525?text=Hola quiero hacer una consulta:"
-        class="whatsapp-float"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
-          alt="WhatsApp"
-        />
-      </a>
-    </main>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../js/index.js?v=1.1" defer></script>
+      </div>
+    </section>
+
+    <!-- ===== 3. CONTROL GENERAL ===== -->
+    <section class="srv-block" id="control">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6" data-animate="fade-right">
+            <div class="srv-img-wrap">
+              <!-- PLACEHOLDER: reemplazar src con foto real del control -->
+              <img
+                src="https://placehold.co/640x430/010a44/ffffff?text=Control+General"
+                class="srv-img img-fluid rounded-4"
+                loading="lazy"
+                alt="Control general del vehículo"
+              />
+              <div class="srv-img-badge free">
+                <i class="bi bi-gift-fill"></i> Sin cargo
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6" data-animate="fade-left">
+            <div class="srv-icon-wrap"><i class="bi bi-tools"></i></div>
+            <span class="section-eyebrow">SERVICIO 03</span>
+            <h2 class="section-title">Control general<br />del vehículo</h2>
+            <p class="section-text">
+              Con cada servicio realizamos un control integral de tu vehículo
+              sin costo adicional. Nivelamos todos los fluidos que lo requieran
+              y verificamos el estado de las luces para que salgas con total
+              seguridad.
+            </p>
+            <div class="control-grid">
+              <div class="control-item">
+                <i class="bi bi-droplet-fill text-danger"></i
+                ><span>Refrigerante</span>
+              </div>
+              <div class="control-item">
+                <i class="bi bi-droplet-fill text-danger"></i
+                ><span>Líquido de frenos</span>
+              </div>
+              <div class="control-item">
+                <i class="bi bi-droplet-fill text-danger"></i
+                ><span>Dirección hidráulica</span>
+              </div>
+              <div class="control-item">
+                <i class="bi bi-droplet-fill text-danger"></i
+                ><span>Lavaparabrisas</span>
+              </div>
+              <div class="control-item">
+                <i class="bi bi-lightbulb-fill text-danger"></i
+                ><span>Luces</span>
+              </div>
+              <div class="control-item">
+                <i class="bi bi-battery-charging text-danger"></i
+                ><span>Batería (visual)</span>
+              </div>
+            </div>
+            <div class="free-notice mt-4">
+              <i class="bi bi-info-circle-fill"></i>
+              El nivelado de fluidos y la revisión de luces son
+              <strong>sin cargo</strong> con cualquier servicio.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4. LÁMPARAS ===== -->
+    <section class="srv-block srv-block-alt" id="lamparas">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 order-2 order-lg-1" data-animate="fade-right">
+            <div class="srv-icon-wrap">
+              <i class="bi bi-lightbulb-fill"></i>
+            </div>
+            <span class="section-eyebrow">SERVICIO 04</span>
+            <h2 class="section-title">Cambio de lámparas</h2>
+            <p class="section-text">
+              Contamos con stock de lámparas halógenas y LED para todo tipo de
+              vehículo. La instalación es sin cargo: solo abonás la lámpara de
+              reemplazo.
+            </p>
+            <ul class="srv-feature-list">
+              <li>
+                <i class="bi bi-check2-circle"></i> Lámparas halógenas estándar
+                y de alto rendimiento
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Lámparas LED de última
+                generación
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Luces de posición, giro,
+                freno y retroceso
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Luces interiores y tablero
+              </li>
+              <li>
+                <i class="bi bi-check2-circle"></i> Instalación sin cargo de
+                mano de obra
+              </li>
+            </ul>
+            <div class="free-notice mt-3">
+              <i class="bi bi-info-circle-fill"></i>
+              Solo pagás la lámpara. La
+              <strong>instalación es sin cargo</strong>.
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2" data-animate="fade-left">
+            <div class="srv-img-wrap">
+              <!-- PLACEHOLDER: reemplazar src con foto real de lámparas -->
+              <img
+                src="https://placehold.co/640x430/1b36d4/ffffff?text=Cambio+de+Lámparas"
+                class="srv-img img-fluid rounded-4"
+                loading="lazy"
+                alt="Cambio de lámparas"
+              />
+              <div class="srv-img-badge free">
+                <i class="bi bi-gift-fill"></i> Instalación gratis
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 5. ACCESORIOS ===== -->
+    <section class="srv-block" id="accesorios">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6" data-animate="fade-right">
+            <div class="srv-img-wrap">
+              <!-- PLACEHOLDER: reemplazar src con foto real de accesorios -->
+              <img
+                src="https://placehold.co/640x430/010a44/ffffff?text=Accesorios+y+Cosmética"
+                class="srv-img img-fluid rounded-4"
+                loading="lazy"
+                alt="Accesorios y cosmética vehicular"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6" data-animate="fade-left">
+            <div class="srv-icon-wrap">
+              <i class="bi bi-car-front-fill"></i>
+            </div>
+            <span class="section-eyebrow">SERVICIO 05</span>
+            <h2 class="section-title">
+              Accesorios,<br />cosmética y repuestos
+            </h2>
+            <p class="section-text">
+              Más allá del service, encontrás en nuestro local una selección de
+              accesorios y productos para mantener tu auto en las mejores
+              condiciones, tanto mecánicas como estéticas.
+            </p>
+            <div class="accessories-grid">
+              <span class="acc-tag"
+                ><i class="bi bi-moisture"></i> Escobillas</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-shield-fill"></i> Traba volante</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-map-fill"></i> Alfombras</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-circle-fill"></i> Tazas</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-wrench-adjustable"></i> Llave cruz</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-lock-fill"></i> Tuercas antirrobo</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-circle"></i> Cubre volante</span
+              >
+              <span class="acc-tag"><i class="bi bi-stars"></i> Perfumes</span>
+              <span class="acc-tag"
+                ><i class="bi bi-droplet"></i> Aditivos</span
+              >
+              <span class="acc-tag"
+                ><i class="bi bi-star-fill"></i> Cosmética vehicular</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 6. FLOTAS ===== -->
+    <section class="srv-fleet" id="flotas">
+      <div class="container">
+        <div class="fleet-inner-wrap" data-animate="fade-up">
+          <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+              <div class="srv-icon-wrap srv-icon-light">
+                <i class="bi bi-buildings-fill"></i>
+              </div>
+              <span
+                class="section-eyebrow"
+                style="color: rgba(255, 255, 255, 0.55)"
+                >SERVICIO 06</span
+              >
+              <h2 class="section-title" style="color: white">
+                Atención a flotas<br />y empresas
+              </h2>
+              <p class="section-text" style="color: rgba(255, 255, 255, 0.78)">
+                Trabajamos con empresas de todos los rubros ofreciendo
+                condiciones especiales: precios diferenciados, seguimiento
+                individualizado por vehículo y atención ágil para no interrumpir
+                la operación de tu flota.
+              </p>
+              <ul class="srv-feature-list srv-feature-light">
+                <li>
+                  <i class="bi bi-check2-circle"></i> Precios especiales para
+                  volumen
+                </li>
+                <li>
+                  <i class="bi bi-check2-circle"></i> Historial de service por
+                  unidad
+                </li>
+                <li>
+                  <i class="bi bi-check2-circle"></i> Coordinación de turnos sin
+                  espera
+                </li>
+                <li>
+                  <i class="bi bi-check2-circle"></i> Atención rápida para no
+                  detener operaciones
+                </li>
+                <li>
+                  <i class="bi bi-check2-circle"></i> Facturación empresa
+                  disponible
+                </li>
+              </ul>
+              <a
+                href="https://wa.me/5493516517525?text=Hola, me interesa información sobre atención para mi flota de vehículos"
+                class="btn btn-danger btn-lg mt-3"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="bi bi-whatsapp me-2"></i>Consultar para mi empresa
+              </a>
+            </div>
+            <div class="col-lg-6">
+              <p class="fleet-trust-label">
+                Empresas que ya confían en nosotros
+              </p>
+              <div class="fleet-trust-grid">
+                <div class="fleet-trust-card">
+                  <i class="bi bi-building"></i>
+                  <span>Bogamac</span>
+                </div>
+                <div class="fleet-trust-card">
+                  <i class="bi bi-building"></i>
+                  <span>Supercemento</span>
+                </div>
+                <div class="fleet-trust-card">
+                  <i class="bi bi-building"></i>
+                  <span>API</span>
+                </div>
+                <div class="fleet-trust-card">
+                  <i class="bi bi-building"></i>
+                  <span>Cormecor</span>
+                </div>
+              </div>
+              <p class="fleet-trust-more">
+                y muchas más empresas de Córdoba...
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section py-5 text-white text-center">
+      <div class="container" data-animate="fade-up">
+        <h2 class="cta-title">
+          ¿Tenés alguna consulta<br />sobre nuestros servicios?
+        </h2>
+        <p class="cta-subtitle mt-2">
+          Escribinos por WhatsApp o vení directamente al local. Te atendemos.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+          <a
+            href="https://wa.me/5493516517525"
+            class="btn btn-danger btn-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="bi bi-whatsapp me-2"></i>Escribinos
+          </a>
+          <a href="./contacto.html" class="btn btn-outline-light btn-lg"
+            >Ver datos de contacto</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-pro text-white pt-5 pb-3">
+      <div class="container">
+        <div class="row text-md-start">
+          <div class="col-md-3 mb-4 d-flex flex-column align-items-start">
+            <a href="../index.html">
+              <img
+                src="../img/logo-ovalado.png"
+                class="img-fluid footer-logo mb-3"
+                alt="Logo"
+                loading="lazy"
+              />
+            </a>
+            <a href="../index.html" class="top-link"
+              ><h4>Lubricentro O'Higgins</h4></a
+            >
+            <p class="medium text-start mt-2">
+              Servicio profesional en cambio de aceite y mantenimiento vehicular
+              desde 2014.
+            </p>
+          </div>
+          <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
+            <h5 class="fw-bold footer-title mb-4">Contacto</h5>
+            <div class="mb-2">
+              <i class="bi bi-geo-alt-fill text-danger me-2"></i
+              ><span>Av. O'Higgins 3111 - Córdoba</span>
+            </div>
+            <div class="mb-2">
+              <i class="bi bi-telephone-fill text-danger me-2"></i
+              ><a href="tel:+5493516517525" class="footer-link">3516517525</a>
+            </div>
+            <div class="mb-2">
+              <i class="bi bi-envelope-fill text-danger me-2"></i
+              ><a
+                href="mailto:lubricentroohiggins@hotmail.com"
+                class="footer-link"
+                >lubricentroohiggins@hotmail.com</a
+              >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
+            <h5 class="fw-bold footer-title mb-3">Navegación</h5>
+            <ul class="list-unstyled ms-4">
+              <li>
+                <a href="./historial.html" class="top-link"
+                  >Historial de service</a
+                >
+              </li>
+              <li><a href="./nosotros.html" class="top-link">Nosotros</a></li>
+              <li><a href="./servicios.html" class="top-link">Servicios</a></li>
+              <li><a href="./contacto.html" class="top-link">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4 text-start contact-footer footer-margin">
+            <h5 class="fw-bold footer-title mb-3">Horarios</h5>
+            <p class="mb-2">
+              <i class="bi bi-clock-fill text-white me-2"></i>
+              <strong>Lunes a Viernes:</strong><br />08:30 a 13:00 hs — 15:00 a
+              19:00 hs
+            </p>
+            <p class="mb-0">
+              <i class="bi bi-clock-fill text-white me-2"></i>
+              <strong>Sábados:</strong><br />08:30 a 13:00 hs
+            </p>
+          </div>
+        </div>
+        <div class="map-container shadow rounded mt-2 mb-4">
+          <iframe
+            src="https://www.google.com/maps?q=Av.%20O'Higgins%203111%20Cordoba&output=embed"
+            width="100%"
+            height="280"
+            style="border: 0"
+            loading="lazy"
+            title="Ubicación"
+          ></iframe>
+        </div>
+        <hr class="border-light opacity-25" />
+        <div class="footer-bottom position-relative text-center small">
+          <div>
+            <p class="mb-1">
+              © 2026 Lubricentro O'Higgins — Todos los derechos reservados
+            </p>
+            <p class="mb-0">
+              <a href="./politica-privacidad.html" class="footer-link p-2"
+                >Política de Privacidad</a
+              >
+              |
+              <a href="./terminos-condiciones.html" class="footer-link p-2"
+                >Términos y Condiciones</a
+              >
+            </p>
+          </div>
+          <div class="footer-qr-container">
+            <img
+              src="../img/qr-ejemplo.png"
+              class="img-fluid footer-qr"
+              alt="QR"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp flotante -->
+    <a
+      href="https://wa.me/5493516517525?text=Hola Lubricentro O'Higgins quiero hacer una consulta"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="WhatsApp"
+    >
+      <img
+        src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
+        alt="WhatsApp"
+        loading="lazy"
+      />
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/index.js?v=2.0" defer></script>
   </body>
 </html>
