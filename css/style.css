@@ -188,7 +188,7 @@ select {
   position: relative;
   background-image:
     linear-gradient(90deg, rgba(1, 10, 68, 0.88) 45%, rgba(1, 10, 68, 0.25)),
-    url("../img/lubri-mejorado.png");
+    url("../img/lubri-mejorado.webp");
   background-size: cover;
   background-position: center;
   min-height: 100svh;
@@ -659,8 +659,13 @@ select {
 
 .amenities-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  ); /* minmax(0,1fr) evita que el contenido expanda la celda */
   gap: 16px;
+  align-items: stretch;
+  width: 100%;
 }
 
 .amenity-item {
@@ -671,6 +676,7 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* ← asegura centrado vertical */
   gap: 10px;
   text-align: center;
   color: white;
@@ -678,6 +684,8 @@ select {
   font-weight: 600;
   backdrop-filter: blur(6px);
   transition: background var(--transition);
+  width: 100%;
+  min-height: 100px;
 }
 
 .amenity-item:hover {
@@ -690,8 +698,6 @@ select {
 }
 
 .experience-photo {
-  width: 100%;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius);
   box-shadow:
