@@ -4,8 +4,28 @@
 
 /* ===== NAVBAR: scroll suavizado ===== */
 (function () {
-  const navbar = document.querySelector(".navbar");
+  const navbar = document.querySelector("nav.navbar");
   if (!navbar) return;
+
+  const logo = navbar.querySelector(".logo-custom");
+
+  function applyScrolled() {
+    navbar.setAttribute(
+      "style",
+      "padding: 4px 0 !important;" +
+        "min-height: 52px !important;" +
+        "background-color: rgba(255,255,255,0.97) !important;" +
+        "backdrop-filter: blur(16px) !important;" +
+        "-webkit-backdrop-filter: blur(16px) !important;" +
+        "box-shadow: 0 4px 24px rgba(0,0,0,0.1) !important;",
+    );
+    if (logo) logo.style.width = "80px";
+  }
+
+  function removeScrolled() {
+    navbar.removeAttribute("style");
+    if (logo) logo.style.width = "";
+  }
 
   let isScrolled = false;
 
@@ -14,14 +34,14 @@
     () => {
       const scrollY = window.scrollY;
       if (!isScrolled && scrollY > 80) {
-        navbar.classList.add("navbar-scrolled");
+        applyScrolled();
         isScrolled = true;
       } else if (isScrolled && scrollY < 40) {
-        navbar.classList.remove("navbar-scrolled");
+        removeScrolled();
         isScrolled = false;
       }
     },
-    { passive: true }
+    { passive: true },
   );
 })();
 
@@ -39,7 +59,6 @@
   const elements = document.querySelectorAll("[data-animate]");
   if (!elements.length) return;
 
-  // Fallback sin soporte
   if (!("IntersectionObserver" in window)) {
     elements.forEach((el) => {
       const anim = el.dataset.animate;
@@ -65,7 +84,7 @@
     {
       threshold: 0.15,
       rootMargin: "0px 0px -60px 0px",
-    }
+    },
   );
 
   elements.forEach((el) => observer.observe(el));

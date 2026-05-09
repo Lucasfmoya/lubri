@@ -39,7 +39,7 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
@@ -78,20 +78,23 @@ select {
 
 /* =============================================
    4. NAVBAR
-   — !important supera los paddings de Bootstrap
+   
    ============================================= */
+
+/* Estado base: fondo blanco opaco */
 .navbar {
-  background: white;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 9999;
   min-height: 90px;
-  padding: 20px 0 !important;
+  padding: 20px 0;
+  background-color: #ffffff;
   transition:
     padding 0.4s ease,
     min-height 0.4s ease,
     background 0.4s ease,
+    backdrop-filter 0.4s ease,
     box-shadow 0.4s ease;
 }
 
@@ -127,19 +130,6 @@ select {
 
 .navbar-nav .nav-link:hover {
   color: var(--navy);
-}
-
-.navbar.navbar-scrolled {
-  padding: 6px 0 !important;
-  min-height: 58px;
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-}
-
-.navbar.navbar-scrolled .logo-custom {
-  width: 90px;
 }
 
 /* =============================================
@@ -313,30 +303,55 @@ select {
 
 /* =============================================
    7. HERO — PÁGINAS INTERNAS
+
    ============================================= */
 .page-hero {
   position: relative;
-  background-image:
-    linear-gradient(100deg, rgba(1, 10, 68, 0.92) 45%, rgba(1, 10, 68, 0.45)),
-    url("../img/lubri-mejorado.png");
-  background-size: cover;
-  background-position: center 30%;
-  min-height: 46vh;
+  background: linear-gradient(
+    135deg,
+    var(--navy) 0%,
+    var(--blue) 55%,
+    #1a2f9e 100%
+  );
+  min-height: 44vh;
   display: flex;
   align-items: flex-end;
   color: white;
   overflow: hidden;
 }
 
-.page-hero-overlay {
+/* Acento decorativo — círculo rojo difuso */
+.page-hero::after {
+  content: "";
   position: absolute;
-  inset: 0;
+  top: -80px;
+  right: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
   background: radial-gradient(
-    ellipse at 75% 60%,
-    rgba(227, 6, 19, 0.09) 0%,
-    transparent 60%
+    circle,
+    rgba(227, 6, 19, 0.14) 0%,
+    transparent 65%
   );
   pointer-events: none;
+}
+
+/* Trama de puntos decorativa */
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.page-hero-overlay {
+  display: none; /* ya no necesitamos overlay de imagen */
 }
 
 .page-hero-content {
@@ -360,6 +375,31 @@ select {
   opacity: 0.82;
   line-height: 1.6;
   max-width: 440px;
+}
+
+/* Breadcrumb sobre fondo oscuro */
+.svc-breadcrumb {
+  margin-bottom: 16px;
+}
+
+.svc-breadcrumb .breadcrumb-item a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.2s;
+}
+
+.svc-breadcrumb .breadcrumb-item a:hover {
+  color: white;
+}
+
+.svc-breadcrumb .breadcrumb-item.active {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+}
+
+.svc-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255, 255, 255, 0.3);
 }
 
 /* =============================================
@@ -492,6 +532,7 @@ select {
 .service-card:hover .service-icon-wrap {
   background: rgba(227, 6, 19, 0.15);
 }
+
 .service-icon-wrap i {
   font-size: 1.6rem;
   color: var(--red);
@@ -502,6 +543,7 @@ select {
   margin-bottom: 10px;
   font-weight: 700;
 }
+
 .service-card p {
   color: var(--gray-600);
   line-height: 1.7;
@@ -561,6 +603,7 @@ select {
   flex-shrink: 0;
   margin-top: 2px;
 }
+
 .why-icon i {
   color: var(--red);
   font-size: 1.25rem;
@@ -571,6 +614,7 @@ select {
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
+
 .why-item p {
   color: var(--gray-600);
   font-size: 0.88rem;
@@ -639,6 +683,7 @@ select {
 .amenity-item:hover {
   background: rgba(255, 255, 255, 0.14);
 }
+
 .amenity-item i {
   font-size: 1.6rem;
   color: rgba(255, 255, 255, 0.85);
@@ -725,6 +770,7 @@ select {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
 }
+
 .payment-item i {
   font-size: 1.8rem;
   color: var(--red);
@@ -753,10 +799,9 @@ select {
 /* =============================================
    16. INTRO STRIP (servicios.html)
    ============================================= */
-.services-intro {
-  background: white;
-  border-bottom: 1px solid var(--gray-200);
-  padding: 20px 0;
+.hero-row-border {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 40px;
 }
 
 .intro-strip {
@@ -764,6 +809,7 @@ select {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+  width: fit-content;
 }
 
 .intro-pill {
@@ -776,7 +822,7 @@ select {
   padding: 7px 16px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--red);
+  color: var(--gray-200);
 }
 
 /* =============================================
@@ -786,6 +832,7 @@ select {
   padding: 88px 0;
   background: white;
 }
+
 .srv-block-alt {
   background: var(--gray-100);
 }
@@ -805,9 +852,11 @@ select {
   font-size: 1.7rem;
   color: var(--red);
 }
+
 .srv-icon-light {
   background: rgba(255, 255, 255, 0.12);
 }
+
 .srv-icon-light i {
   color: white;
 }
@@ -853,6 +902,7 @@ select {
   color: white;
   box-shadow: 0 4px 14px rgba(227, 6, 19, 0.35);
 }
+
 .srv-img-badge.free {
   background: #059669;
   color: white;
@@ -883,9 +933,11 @@ select {
   flex-shrink: 0;
   margin-top: 1px;
 }
+
 .srv-feature-light li {
   color: rgba(255, 255, 255, 0.82);
 }
+
 .srv-feature-light li i {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -914,12 +966,14 @@ select {
   border-color: rgba(227, 6, 19, 0.2);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
+
 .filter-card > i {
   font-size: 1.5rem;
   color: var(--red);
   flex-shrink: 0;
   margin-top: 2px;
 }
+
 .filter-card strong {
   display: block;
   font-size: 0.93rem;
@@ -927,6 +981,7 @@ select {
   color: var(--text);
   margin-bottom: 3px;
 }
+
 .filter-card span {
   font-size: 0.82rem;
   color: var(--gray-600);
@@ -961,6 +1016,7 @@ select {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
+
 .control-item i {
   font-size: 1.2rem;
 }
@@ -1013,6 +1069,7 @@ select {
   transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(227, 6, 19, 0.12);
 }
+
 .acc-tag i {
   font-size: 0.9rem;
 }
@@ -1084,6 +1141,7 @@ select {
 .fleet-trust-card:hover {
   background: rgba(255, 255, 255, 0.14);
 }
+
 .fleet-trust-card i {
   font-size: 1.8rem;
   opacity: 0.6;
@@ -1128,17 +1186,21 @@ select {
   background: var(--red);
   border-color: var(--red);
 }
+
 .btn-danger:hover {
   background: var(--red-dark);
   border-color: var(--red-dark);
 }
+
 .btn-outline-light {
   border-radius: 10px;
 }
+
 .btn-outline-dark {
   border-color: var(--text);
   color: var(--text);
 }
+
 .btn-outline-dark:hover {
   background: var(--text);
   color: white;
@@ -1170,6 +1232,7 @@ select {
   height: 28px;
   filter: invert(1);
 }
+
 .whatsapp-float:hover {
   box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
   transform: scale(1.1) rotate(8deg);
@@ -1239,6 +1302,7 @@ select {
 .footer-qr {
   max-width: 70px;
 }
+
 .footer-margin {
   margin-top: 2.25rem;
 }
@@ -1282,6 +1346,7 @@ select {
   border-color: var(--red);
   box-shadow: 0 0 0 2px rgba(227, 6, 19, 0.2);
 }
+
 .search-input::placeholder {
   opacity: 0.7;
 }
@@ -1306,6 +1371,7 @@ select {
 #resultado {
   margin-top: 10px;
 }
+
 #resultado .table {
   border-radius: 10px;
   overflow: hidden;
@@ -1321,15 +1387,18 @@ select {
 .skeleton-table {
   margin-top: 15px;
 }
+
 .skeleton-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin-bottom: 10px;
 }
+
 .skeleton-cell {
   height: 16px;
 }
+
 .skeleton-card {
   display: none;
 }
@@ -1370,9 +1439,11 @@ select {
   gap: 12px;
   margin-bottom: 0.75rem;
 }
+
 .adm-header img {
   max-width: 250px;
 }
+
 .adm-title {
   color: black;
   font-size: 1.25rem;
@@ -1380,17 +1451,20 @@ select {
   text-align: center;
   margin-bottom: 4px;
 }
+
 .adm-subtitle {
   color: #616b79;
   font-size: 0.82rem;
   text-align: center;
   margin-bottom: 1rem;
 }
+
 .adm-welcome {
   color: #94a3b8;
   font-size: 0.78rem;
   margin: 0;
 }
+
 .adm-welcome-email {
   color: var(--red);
   font-weight: 600;
@@ -1453,15 +1527,18 @@ select {
   border-color: var(--red);
   background: rgba(227, 6, 19, 0.07);
 }
+
 .adm-drop-text {
   color: #94a3b8;
   font-size: 0.9rem;
   margin: 0 0 4px;
 }
+
 .adm-drop-small {
   color: #475569;
   font-size: 0.78rem;
 }
+
 .adm-file-info {
   margin-top: 8px;
   font-size: 0.82rem;
@@ -1512,6 +1589,7 @@ select {
 .adm-btn-subir:not(:disabled) {
   opacity: 1;
 }
+
 .adm-btn-subir:not(:disabled):hover {
   background: var(--red-dark);
 }
@@ -1559,11 +1637,13 @@ select {
   line-height: 1.65;
   color: #2b2b2b;
 }
+
 .privacy-content h1 {
   font-size: 1.7rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
 .privacy-content h2 {
   font-size: 1.05rem;
   font-weight: 600;
@@ -1571,13 +1651,16 @@ select {
   margin-bottom: 0.5rem;
   color: #111;
 }
+
 .privacy-content p {
   margin-bottom: 0.75rem;
 }
+
 .privacy-content ul {
   padding-left: 1.1rem;
   margin-bottom: 1rem;
 }
+
 .privacy-content li {
   margin-bottom: 0.25rem;
 }
@@ -1585,6 +1668,7 @@ select {
 .swal2-close:focus {
   outline: none !important;
   box-shadow: none !important;
+  /* SweetAlert2 usa estilos inline que solo se pueden pisar con !important */
 }
 
 /* =============================================
@@ -1598,9 +1682,11 @@ select {
 .fade-left {
   transform: translateX(-45px);
 }
+
 .fade-right {
   transform: translateX(45px);
 }
+
 .fade-up {
   transform: translateY(30px);
 }
@@ -1655,7 +1741,6 @@ select {
 /* =============================================
    27. MEDIA QUERIES
    ============================================= */
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1727,7 +1812,7 @@ select {
     padding: 56px 0;
   }
   .page-hero {
-    min-height: 38vh;
+    min-height: 36vh;
   }
   .control-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1839,6 +1924,10 @@ select {
   }
   .skeleton-line.long {
     width: 80%;
+  }
+
+  .service-column {
+    margin: 0px;
   }
 }
 
