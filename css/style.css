@@ -1015,19 +1015,21 @@ select {
    15. CTA
    ============================================= */
 .cta-section {
-  background: linear-gradient(135deg, #0318a2, var(--navy));
+  background: var(--gray-100);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .cta-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 800;
   line-height: 1.2;
-  text-transform: none;
+  color: var(--text);
 }
 
 .cta-subtitle {
   font-size: 1.05rem;
-  opacity: 0.8;
+  color: var(--gray-600);
   margin-top: 8px;
 }
 
