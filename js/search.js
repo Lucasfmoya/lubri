@@ -33,39 +33,114 @@ async function buscarPorPatente(patente) {
 }
 
 // ============================
-// SKELETON LOADER (RESPONSIVE)
+// SKELETON LOADER
 // ============================
 function mostrarSkeleton() {
   contenedor.innerHTML = `
-    <div class="skeleton-table">
-      ${Array.from({ length: 5 })
+    <div class="hst-skeleton-wrap">
+      ${[1, 2]
         .map(
           () => `
-        <div class="skeleton-row">
-          <div class="skeleton skeleton-cell"></div>
-          <div class="skeleton skeleton-cell"></div>
-          <div class="skeleton skeleton-cell"></div>
-          <div class="skeleton skeleton-cell"></div>
-        </div>
-      `,
-        )
-        .join("")}
-    </div>
-    <div class="skeleton-card">
-      ${Array.from({ length: 3 })
-        .map(
-          () => `
-        <div class="skeleton-card-item">
-          <div class="skeleton skeleton-line long"></div>
-          <div class="skeleton skeleton-line medium"></div>
-          <div class="skeleton skeleton-line short"></div>
-          <div class="skeleton skeleton-line medium"></div>
+        <div class="hst-skeleton-card">
+          <div class="hst-sk-top">
+            <div class="hst-sk-block wide"></div>
+            <div class="hst-sk-block narrow"></div>
+          </div>
+          <div class="hst-sk-body">
+            <div class="hst-sk-block mid"></div>
+            <div class="hst-sk-block mid"></div>
+          </div>
         </div>
       `,
         )
         .join("")}
     </div>
   `;
+}
+
+// ============================
+// RENDER
+// ============================
+function render(data, patente) {
+  if (!data.length) {
+    contenedor.innerHTML = "";
+    showAlert(`No hay historial registrado para ${patente}`, "info");
+    return;
+  }
+
+  const meses = [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct",
+    "nov",
+    "dic",
+  ];
+
+  const header = `
+    <div class="hst-results-header">
+      <i class="bi bi-list-ul"></i>
+      ${data.length} registro${data.length !== 1 ? "s" : ""} encontrado${data.length !== 1 ? "s" : ""} · ${patente}
+    </div>
+  `;
+
+  const cards = data
+    .map((d, i) => {
+      const partes = d.fecha ? d.fecha.split("-") : [];
+      const dia = partes[2] ? parseInt(partes[2], 10) : "—";
+      const mes = partes[1] ? meses[parseInt(partes[1], 10) - 1] : "";
+      const anio = partes[0] || "";
+      const esMasReciente = i === 0;
+
+      return `
+      <div class="hst-record-card${esMasReciente ? " is-recent" : " is-old"}">
+
+        <div class="hst-record-top">
+          <div class="hst-record-date-wrap">
+            <span class="hst-record-day">${dia}</span>
+            <div class="hst-record-month-year">
+              <span class="hst-record-month">${mes}</span>
+              <span class="hst-record-year">${anio}</span>
+            </div>
+          </div>
+          <div class="hst-record-top-right">
+            ${
+              esMasReciente
+                ? `<span class="hst-tag-reciente"><i class="bi bi-star-fill"></i>Más reciente</span>`
+                : `<span class="hst-tag-anterior"><i class="bi bi-clock-history"></i>Anterior</span>`
+            }
+            <span class="hst-plate-tag">${d.patente || patente}</span>
+          </div>
+        </div>
+
+        <div class="hst-record-body">
+          <div class="hst-record-stat">
+            <div class="hst-record-stat-label">
+              <i class="bi bi-speedometer2"></i>Km actuales
+            </div>
+            <div class="hst-record-stat-val">${d.km || "—"}</div>
+          </div>
+          <div class="hst-record-divider"></div>
+          <div class="hst-record-stat">
+            <div class="hst-record-stat-label">
+              <i class="bi bi-arrow-right-circle"></i>Próximo service
+            </div>
+            <div class="hst-record-stat-val${esMasReciente ? " is-next" : ""}">${d.proximo || "—"}</div>
+          </div>
+        </div>
+
+      </div>
+    `;
+    })
+    .join("");
+
+  contenedor.innerHTML = `<div class="hst-results-wrap fade-in">${header}${cards}</div>`;
 }
 
 // ============================
@@ -113,46 +188,6 @@ async function ejecutarBusqueda() {
 }
 
 // ============================
-// RENDER
-// ============================
-function render(data, patente) {
-  if (!data.length) {
-    contenedor.innerHTML = "";
-    showAlert(`No hay historial para ${patente}`, "info");
-    return;
-  }
-
-  let html = `
-    <div class="table-container mt-3 fade-in">
-      <table class="table table-striped align-middle custom-table">
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Patente</th>
-            <th>Km actuales</th>
-            <th>Próximo service</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  data.forEach((d) => {
-    const fecha = d.fecha ? d.fecha.split("-").reverse().join("/") : "-";
-    html += `
-      <tr>
-        <td data-label="Fecha">${fecha}</td>
-        <td data-label="Patente">${d.patente || "-"}</td>
-        <td data-label="Km actuales">${d.km || "-"}</td>
-        <td data-label="Próximo service">${d.proximo || "-"}</td>
-      </tr>
-    `;
-  });
-
-  html += `</tbody></table></div>`;
-  contenedor.innerHTML = html;
-}
-
-// ============================
 // SWEET ALERT
 // ============================
 function showAlert(msg, tipo = "info") {
@@ -172,7 +207,6 @@ function showAlert(msg, tipo = "info") {
     timerProgressBar: true,
     showConfirmButton: false,
     showCloseButton: true,
-    timer: 3000,
     background: "#ffffff",
     color: "#1e293b",
     customClass: {
