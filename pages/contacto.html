@@ -4,11 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contacto | Lubricentro O'Higgins</title>
-    <meta name="description" content="Contactanos para tu próximo service..." />
+    <meta
+      name="description"
+      content="Contactanos para tu próximo service. Formulario de consulta para vehículos particulares y flotas empresariales. Lubricentro O'Higgins, Córdoba."
+    />
     <meta name="theme-color" content="#010a44" />
     <link
       rel="canonical"
       href="https://lucasfmoya.github.io/lubri/pages/contacto.html"
+    />
+    <meta property="og:title" content="Contacto | Lubricentro O'Higgins" />
+    <meta
+      property="og:description"
+      content="Contactanos para tu próximo service en Córdoba."
     />
     <meta
       property="og:url"
@@ -19,15 +27,7 @@
       content="https://lucasfmoya.github.io/lubri/img/lubri-abierto-ia.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Contacto | Lubricentro O'Higgins" />
-    <meta
-      name="twitter:description"
-      content="Conocé nuestro lubricentro en Córdoba"
-    />
-    <meta
-      name="twitter:image"
-      content="https://lucasfmoya.github.io/lubri/img/lubri-abierto-ia.png"
-    />
+
     <link
       rel="icon"
       type="image/png"
@@ -50,15 +50,12 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
-
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -66,10 +63,396 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../css/style.css?v=1.1" />
+    <link rel="stylesheet" href="../css/style.css?v=2.0" />
+
+    <style>
+      /* ── HERO CONTACTO ── */
+      .contact-hero {
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--blue) 55%,
+          #1a2f9e 100%
+        );
+        min-height: 38vh;
+        display: flex;
+        align-items: flex-end;
+        color: white;
+        overflow: hidden;
+        position: relative;
+      }
+      .contact-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 28px 28px;
+        pointer-events: none;
+      }
+      .contact-hero::after {
+        content: "";
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(227, 6, 19, 0.14) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      .contact-hero-content {
+        position: relative;
+        z-index: 2;
+        padding-bottom: 56px;
+        padding-top: 40px;
+      }
+      .contact-hero-title {
+        font-size: clamp(2.4rem, 5.5vw, 4rem);
+        font-weight: 900;
+        line-height: 1.05;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        margin: 10px 0 14px;
+      }
+      .contact-hero-lead {
+        font-size: 1.08rem;
+        opacity: 0.82;
+        line-height: 1.6;
+        max-width: 480px;
+      }
+
+      /* ── TABS TIPO SELECTOR ── */
+      .contact-type-selector {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 32px;
+        background: var(--gray-100);
+        border-radius: 14px;
+        padding: 6px;
+      }
+      .contact-type-btn {
+        flex: 1;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        font-family: "Google Sans", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--gray-600);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .contact-type-btn.active {
+        background: white;
+        color: var(--red);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      }
+      .contact-type-btn i {
+        font-size: 1.1rem;
+      }
+
+      /* ── FORMULARIO ── */
+      .contact-form-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .form-label {
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .form-control,
+      .form-select {
+        border-radius: 10px;
+        border: 1.5px solid #e2e6ee;
+        font-family: "Google Sans", sans-serif;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        color: var(--text);
+      }
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--red);
+        box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+        outline: none;
+      }
+      textarea.form-control {
+        resize: vertical;
+        min-height: 130px;
+      }
+
+      .form-section-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--red);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .form-divider {
+        border: none;
+        border-top: 1px solid var(--gray-200);
+        margin: 28px 0;
+      }
+
+      /* Panel de flota extra */
+      #flota-extra {
+        display: none;
+      }
+      #flota-extra.show {
+        display: block;
+      }
+
+      .btn-submit {
+        background: var(--red);
+        border: none;
+        border-radius: 12px;
+        padding: 16px 36px;
+        font-family: "Google Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .btn-submit:hover {
+        background: var(--red-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(227, 6, 19, 0.3);
+      }
+      .btn-submit:active {
+        transform: translateY(0);
+      }
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Mensaje de éxito */
+      .form-success {
+        display: none;
+        text-align: center;
+        padding: 48px 24px;
+      }
+      .form-success.show {
+        display: block;
+      }
+      .success-icon {
+        width: 72px;
+        height: 72px;
+        background: rgba(5, 150, 105, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 2rem;
+        color: #059669;
+      }
+
+      /* ── SIDEBAR INFO ── */
+      .contact-info-card {
+        background: linear-gradient(
+          135deg,
+          var(--navy) 0%,
+          var(--blue) 60%,
+          var(--blue-mid) 100%
+        );
+        border-radius: 20px;
+        padding: 36px 30px;
+        color: white;
+        position: sticky;
+        top: 110px;
+      }
+      .contact-info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .contact-info-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .contact-info-item:first-child {
+        padding-top: 0;
+      }
+      .contact-info-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .contact-info-icon.red {
+        background: rgba(227, 6, 19, 0.25);
+      }
+      .contact-info-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 4px;
+        display: block;
+      }
+      .contact-info-value {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: white;
+        line-height: 1.5;
+      }
+      .contact-info-value a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .contact-info-value a:hover {
+        opacity: 0.75;
+      }
+
+      /* Horarios */
+      .hours-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        font-size: 0.88rem;
+      }
+      .hours-day {
+        color: rgba(255, 255, 255, 0.65);
+        font-weight: 500;
+      }
+      .hours-time {
+        color: white;
+        font-weight: 600;
+      }
+
+      /* Redes sociales */
+      .social-links {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        flex: 1;
+        justify-content: center;
+      }
+      .social-btn-ig {
+        background: linear-gradient(
+          135deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+        color: white;
+      }
+      .social-btn-wa {
+        background: #25d366;
+        color: white;
+      }
+      .social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        color: white;
+      }
+
+      /* ── MAPA ── */
+      .contact-map-section {
+        background: var(--gray-100);
+      }
+      .contact-map-wrapper {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      }
+      .contact-map-wrapper iframe {
+        display: block;
+        width: 100%;
+        height: 380px;
+        border: 0;
+      }
+
+      /* ── CTA WHATSAPP ── */
+      .cta-wa-section {
+        background: linear-gradient(135deg, var(--navy), var(--blue));
+      }
+      .cta-wa-card {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 48px 40px;
+        backdrop-filter: blur(10px);
+      }
+
+      @media (max-width: 768px) {
+        .contact-form-card {
+          padding: 24px 20px;
+        }
+        .contact-info-card {
+          position: static;
+          margin-top: 24px;
+        }
+        .contact-type-selector {
+          flex-direction: column;
+        }
+        .cta-wa-card {
+          padding: 32px 24px;
+        }
+        .social-links {
+          flex-direction: column;
+        }
+      }
+    </style>
   </head>
 
-  <body id="top" class="body">
+  <body id="top">
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar bg-nav navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="../index.html">
@@ -77,18 +460,18 @@
             src="../img/logo-ovalado.png"
             class="logo-custom"
             loading="lazy"
+            alt="Lubricentro O'Higgins"
           />
         </a>
-
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#nav"
+          aria-label="Menú"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="nav">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
@@ -103,214 +486,599 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-button" href="./contacto.html">Contacto</a>
+              <a class="nav-link nav-button active" href="./contacto.html"
+                >Contacto</a
+              >
             </li>
           </ul>
-          <div class="navbar-icons d-flex align-items-center gap-2">
-            <a
-              href="https://instagram.com/grupoohiggins/"
-              class="nav-icon-btn nav-icon-ig"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Instagram"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  <linearGradient
-                    id="ig-grad"
-                    x1="0%"
-                    y1="100%"
-                    x2="100%"
-                    y2="0%"
-                  >
-                    <stop offset="0%" stop-color="#f09433" />
-                    <stop offset="25%" stop-color="#e6683c" />
-                    <stop offset="50%" stop-color="#dc2743" />
-                    <stop offset="75%" stop-color="#cc2366" />
-                    <stop offset="100%" stop-color="#bc1888" />
-                  </linearGradient>
-                </defs>
-                <rect
-                  x="2"
-                  y="2"
-                  width="20"
-                  height="20"
-                  rx="6"
-                  ry="6"
-                  stroke="url(#ig-grad)"
-                  stroke-width="2"
-                  fill="none"
-                />
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="5"
-                  stroke="url(#ig-grad)"
-                  stroke-width="2"
-                  fill="none"
-                />
-                <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad)" />
-              </svg>
-            </a>
-            <div class="nav-icon-divider"></div>
-            <a
-              href="https://maps.google.com/?q=Av.+O'Higgins+3111+Córdoba"
-              class="nav-icon-btn nav-icon-loc"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Ubicación"
-            >
-              <i class="bi bi-geo-alt-fill"></i>
-            </a>
-            <div class="nav-icon-divider"></div>
-            <a
-              href="tel:+5493516517525"
-              class="nav-icon-btn nav-icon-tel"
-              title="Teléfono"
-            >
-              <i class="bi bi-telephone-fill"></i>
-              <span class="nav-icon-label">3516517525</span>
-            </a>
-          </div>
+          <a href="./historial.html" class="btn btn-danger">
+            <i class="bi bi-calendar-check me-2"></i>Consultar historial
+          </a>
         </div>
       </div>
     </nav>
 
     <main>
-      <footer class="footer-pro text-white pt-5 pb-3">
+      <!-- ===== HERO ===== -->
+      <section class="contact-hero">
+        <div class="container contact-hero-content">
+          <nav aria-label="breadcrumb" class="svc-breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item">
+                <a href="../index.html">Inicio</a>
+              </li>
+              <li class="breadcrumb-item active">Contacto</li>
+            </ol>
+          </nav>
+          <h1 class="contact-hero-title">Contacto</h1>
+          <p class="contact-hero-lead">
+            Consultas para vehículos particulares y flotas empresariales.<br />
+            Te respondemos a la brevedad.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== FORMULARIO + SIDEBAR ===== -->
+      <section class="py-5">
         <div class="container">
-          <div class="row text-center text-md-start">
-            <div class="col-md-3 mb-4 d-flex flex-column align-items-start">
-              <a href="../index.html">
-                <img
-                  src="../img/logo-ovalado.png"
-                  class="img-fluid footer-logo mb-3"
-                  alt="Logo"
-                  loading="lazy"
-                />
-              </a>
-              <a href="../index.html" class="top-link">
-                <h4>Lubricentro O'Higgins</h4>
-              </a>
-              <p class="medium text-start">
-                Servicio profesional en cambio de aceite y mantenimiento
-                vehicular.
-              </p>
-            </div>
-
-            <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
-              <h5 class="fw-bold footer-title mb-4">Contacto</h5>
-              <div class="mb-2">
-                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
-                <span>Av. O'Higgins 3111 - Córdoba</span>
-              </div>
-              <div class="mb-2">
-                <i class="bi bi-telephone-fill text-danger me-2"></i>
-                <a href="tel:+5493516517525" class="footer-link">
-                  3516517525
-                </a>
-              </div>
-              <div class="mb-2">
-                <i class="bi bi-envelope-fill text-danger"></i>
-                <a
-                  href="mailto:lubricentroohiggins@hotmail.com"
-                  class="footer-link"
-                >
-                  lubricentroohiggins@hotmail.com
-                </a>
-              </div>
-            </div>
-
-            <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
-              <h5 class="fw-bold footer-title mb-3">Navegación</h5>
-              <ul class="list-unstyled ms-4">
-                <li><a href="../index.html" class="top-link">Inicio</a></li>
-                <li>
-                  <a href="./historial.html" class="top-link"
-                    >Historial de service</a
+          <div class="row g-4 g-lg-5">
+            <!-- FORMULARIO -->
+            <div class="col-lg-7" data-animate="fade-right">
+              <div class="contact-form-card">
+                <!-- Selector particular / flota -->
+                <div class="contact-type-selector">
+                  <button
+                    class="contact-type-btn active"
+                    id="btn-particular"
+                    onclick="setType('particular')"
                   >
-                </li>
-                <li>
-                  <a href="./nosotros.html" class="top-link">Nosotros</a>
-                </li>
-                <li>
-                  <a href="./servicios.html" class="top-link">Servicios</a>
-                </li>
-              </ul>
-            </div>
+                    <i class="bi bi-person-fill"></i> Vehículo particular
+                  </button>
+                  <button
+                    class="contact-type-btn"
+                    id="btn-flota"
+                    onclick="setType('flota')"
+                  >
+                    <i class="bi bi-buildings-fill"></i> Flota empresarial
+                  </button>
+                </div>
 
-            <div class="col-md-3 mb-4 text-start contact-footer footer-margin">
-              <h5 class="fw-bold footer-title mb-3">Horarios</h5>
-              <p class="mb-2">
-                <i class="bi bi-clock-fill text-white me-2"></i>
-                <strong>Lunes a Viernes:</strong><br />
-                08:30 a 13:00 hs - 15:00 a 19:00 hs
-              </p>
-              <p class="mb-0">
-                <i class="bi bi-clock-fill text-white me-2"></i>
-                <strong>Sábados:</strong><br />
-                08:30 a 13:00 hs
-              </p>
-            </div>
-          </div>
-
-          <hr class="border-light opacity-25" />
-
-          <div class="footer-bottom position-relative text-center small">
-            <div>
-              <p class="mb-1">
-                © 2026 Lubricentro O'Higgins - Todos los derechos reservados
-              </p>
-              <p class="mb-0">
-                <a href="./politica-privacidad.html" class="footer-link p-2"
-                  >Política de Privacidad</a
+                <!-- Formulario Formspree -->
+                <form
+                  id="contactForm"
+                  action="https://formspree.io/f/YOUR_FORM_ID"
+                  method="POST"
                 >
-                |
-                <a href="./terminos-condiciones.html" class="footer-link p-2"
-                  >Términos y Condiciones</a
-                >
-              </p>
+                  <!-- Campo oculto para tipo de consulta -->
+                  <input
+                    type="hidden"
+                    name="tipo_consulta"
+                    id="tipo_consulta"
+                    value="Vehículo particular"
+                  />
+
+                  <!-- DATOS PERSONALES -->
+                  <span class="form-section-label">Datos de contacto</span>
+                  <div class="row g-3 mb-3">
+                    <div class="col-sm-6">
+                      <label class="form-label" for="nombre"
+                        >Nombre y apellido *</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Juan García"
+                        required
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="telefono"
+                        >Teléfono *</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="telefono"
+                        name="telefono"
+                        placeholder="351 000 0000"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="email"
+                      >Correo electrónico *</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      placeholder="tu@correo.com"
+                      required
+                    />
+                  </div>
+
+                  <hr class="form-divider" />
+
+                  <!-- DATOS DEL VEHÍCULO -->
+                  <span class="form-section-label">Datos del vehículo</span>
+                  <div class="row g-3 mb-3">
+                    <div class="col-sm-6">
+                      <label class="form-label" for="marca">Marca *</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="marca"
+                        name="marca_vehiculo"
+                        placeholder="Ej: Toyota, Ford..."
+                        required
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="modelo">Modelo *</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="modelo"
+                        name="modelo_vehiculo"
+                        placeholder="Ej: Corolla, Ranger..."
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row g-3 mb-3">
+                    <div class="col-sm-6">
+                      <label class="form-label" for="anio">Año</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="anio"
+                        name="anio_vehiculo"
+                        placeholder="Ej: 2020"
+                        min="1980"
+                        max="2026"
+                      />
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="servicio"
+                        >Servicio que necesitás *</label
+                      >
+                      <select
+                        class="form-select"
+                        id="servicio"
+                        name="servicio"
+                        required
+                      >
+                        <option value="" disabled selected>
+                          Seleccioná...
+                        </option>
+                        <option>Cambio de aceite motor</option>
+                        <option>Cambio de aceite transmisión</option>
+                        <option>Cambio de filtros</option>
+                        <option>Control general</option>
+                        <option>Cambio de lámparas</option>
+                        <option>Accesorios y cosmética</option>
+                        <option>Consulta de precio</option>
+                        <option>Otro</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- CAMPOS EXTRA FLOTA -->
+                  <div id="flota-extra">
+                    <hr class="form-divider" />
+                    <span class="form-section-label">Datos de la empresa</span>
+                    <div class="row g-3 mb-3">
+                      <div class="col-sm-6">
+                        <label class="form-label" for="empresa"
+                          >Nombre de la empresa</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="empresa"
+                          name="empresa"
+                          placeholder="Razón social"
+                        />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="form-label" for="cantidad"
+                          >Cantidad de vehículos</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="cantidad"
+                          name="cantidad_vehiculos"
+                          placeholder="Ej: 5"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="form-divider" />
+
+                  <!-- MENSAJE -->
+                  <div class="mb-4">
+                    <label class="form-label" for="mensaje"
+                      >Mensaje / consulta adicional</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="mensaje"
+                      name="mensaje"
+                      placeholder="Contanos qué necesitás o cualquier detalle que quieras aclarar..."
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="bi bi-send-fill"></i>
+                    <span>Enviar consulta</span>
+                  </button>
+
+                  <p
+                    class="text-center mt-3"
+                    style="font-size: 0.8rem; color: var(--gray-600)"
+                  >
+                    <i class="bi bi-shield-check me-1"></i>
+                    Tu información es confidencial y solo se usa para responder
+                    tu consulta.
+                  </p>
+                </form>
+
+                <!-- Mensaje de éxito -->
+                <div class="form-success" id="formSuccess">
+                  <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+                  <h4 style="font-weight: 800; margin-bottom: 8px">
+                    ¡Consulta enviada!
+                  </h4>
+                  <p style="color: var(--gray-600); margin-bottom: 24px">
+                    Recibimos tu mensaje. Te contactamos en breve al teléfono o
+                    mail que nos dejaste.
+                  </p>
+                  <a href="../index.html" class="btn btn-outline-dark">
+                    <i class="bi bi-house me-2"></i>Volver al inicio
+                  </a>
+                </div>
+              </div>
             </div>
 
-            <div class="footer-qr-container">
-              <img
-                src="../img/qr-ejemplo.png"
-                class="img-fluid footer-qr"
-                alt="QR"
-                loading="lazy"
-              />
+            <!-- SIDEBAR INFO -->
+            <div class="col-lg-5" data-animate="fade-left">
+              <div class="contact-info-card">
+                <span
+                  class="section-eyebrow light"
+                  style="margin-bottom: 20px; display: block"
+                  >INFORMACIÓN DE CONTACTO</span
+                >
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon red">
+                    <i class="bi bi-geo-alt-fill"></i>
+                  </div>
+                  <div>
+                    <span class="contact-info-label">Dirección</span>
+                    <div class="contact-info-value">
+                      <a
+                        href="https://maps.google.com/?q=Av.+O'Higgins+3111+Córdoba"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Av. O'Higgins 3111<br />Córdoba, Argentina
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="bi bi-telephone-fill"></i>
+                  </div>
+                  <div>
+                    <span class="contact-info-label">Teléfono</span>
+                    <div class="contact-info-value">
+                      <a href="tel:+5493516517525">351 651-7525</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="bi bi-envelope-fill"></i>
+                  </div>
+                  <div>
+                    <span class="contact-info-label">Email</span>
+                    <div class="contact-info-value">
+                      <a href="mailto:lubricentroohiggins@hotmail.com"
+                        >lubricentroohiggins@hotmail.com</a
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-info-item">
+                  <div class="contact-info-icon">
+                    <i class="bi bi-clock-fill"></i>
+                  </div>
+                  <div style="width: 100%">
+                    <span class="contact-info-label">Horarios</span>
+                    <div class="hours-row">
+                      <span class="hours-day">Lunes a Viernes</span>
+                      <span class="hours-time">08:30–13:00 / 15:00–19:00</span>
+                    </div>
+                    <div class="hours-row">
+                      <span class="hours-day">Sábados</span>
+                      <span class="hours-time">08:30–13:00</span>
+                    </div>
+                    <div class="hours-row">
+                      <span class="hours-day">Domingos</span>
+                      <span
+                        class="hours-time"
+                        style="color: rgba(255, 255, 255, 0.4)"
+                        >Cerrado</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Redes sociales -->
+                <div style="margin-top: 8px">
+                  <span
+                    class="contact-info-label"
+                    style="display: block; margin-bottom: 12px"
+                    >Seguinos</span
+                  >
+                  <div class="social-links">
+                    <a
+                      href="https://instagram.com/grupoohiggins/"
+                      class="social-btn social-btn-ig"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <rect
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="6"
+                          ry="6"
+                          stroke="white"
+                          stroke-width="2"
+                          fill="none"
+                        />
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="5"
+                          stroke="white"
+                          stroke-width="2"
+                          fill="none"
+                        />
+                        <circle cx="17.5" cy="6.5" r="1.2" fill="white" />
+                      </svg>
+                      @grupoohiggins
+                    </a>
+                    <a
+                      href="https://wa.me/5493516517525?text=Hola Lubricentro O'Higgins, quiero hacer una consulta"
+                      class="social-btn social-btn-wa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <i class="bi bi-whatsapp"></i>
+                      WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
+      </section>
 
-      <a
-        href="https://wa.me/5493516517525?text=Hola quiero hacer una consulta:"
-        class="whatsapp-float"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
-          alt="WhatsApp"
-          loading="lazy"
-        />
-      </a>
+      <!-- ===== MAPA ===== -->
+      <section class="contact-map-section py-5">
+        <div class="container" data-animate="fade-up">
+          <div class="text-center mb-4">
+            <span class="section-eyebrow">UBICACIÓN</span>
+            <h2 class="section-title">Encontranos en Córdoba</h2>
+            <p class="section-subtitle">
+              Av. O'Higgins 3111 — fácil acceso y estacionamiento en la puerta.
+            </p>
+          </div>
+          <div class="contact-map-wrapper">
+            <iframe
+              src="https://www.google.com/maps?q=Av.%20O'Higgins%203111%20Cordoba&output=embed"
+              loading="lazy"
+              title="Ubicación Lubricentro O'Higgins"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-pro text-white pt-5 pb-3">
+      <div class="container">
+        <div class="row text-md-start">
+          <div class="col-md-3 mb-4 d-flex flex-column align-items-start">
+            <a href="../index.html">
+              <img
+                src="../img/logo-ovalado.png"
+                class="img-fluid footer-logo mb-3"
+                alt="Logo"
+                loading="lazy"
+              />
+            </a>
+            <a href="../index.html" class="top-link"
+              ><h4>Lubricentro O'Higgins</h4></a
+            >
+            <p class="medium text-start mt-2">
+              Servicio profesional en cambio de aceite y mantenimiento vehicular
+              desde 2014.
+            </p>
+          </div>
+          <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
+            <h5 class="fw-bold footer-title mb-4">Contacto</h5>
+            <div class="mb-2">
+              <i class="bi bi-geo-alt-fill text-danger me-2"></i
+              ><span>Av. O'Higgins 3111 - Córdoba</span>
+            </div>
+            <div class="mb-2">
+              <i class="bi bi-telephone-fill text-danger me-2"></i
+              ><a href="tel:+5493516517525" class="footer-link">3516517525</a>
+            </div>
+            <div class="mb-2">
+              <i class="bi bi-envelope-fill text-danger me-2"></i
+              ><a
+                href="mailto:lubricentroohiggins@hotmail.com"
+                class="footer-link"
+                >lubricentroohiggins@hotmail.com</a
+              >
+            </div>
+          </div>
+          <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
+            <h5 class="fw-bold footer-title mb-3">Navegación</h5>
+            <ul class="list-unstyled ms-4">
+              <li>
+                <a href="./historial.html" class="top-link"
+                  >Historial de service</a
+                >
+              </li>
+              <li><a href="./nosotros.html" class="top-link">Nosotros</a></li>
+              <li><a href="./servicios.html" class="top-link">Servicios</a></li>
+              <li><a href="./contacto.html" class="top-link">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-4 text-start contact-footer footer-margin">
+            <h5 class="fw-bold footer-title mb-3">Horarios</h5>
+            <p class="mb-2">
+              <i class="bi bi-clock-fill text-white me-2"></i
+              ><strong>Lunes a Viernes:</strong><br />08:30 a 13:00 hs — 15:00 a
+              19:00 hs
+            </p>
+            <p class="mb-0">
+              <i class="bi bi-clock-fill text-white me-2"></i
+              ><strong>Sábados:</strong><br />08:30 a 13:00 hs
+            </p>
+          </div>
+        </div>
+        <hr class="border-light opacity-25" />
+        <div class="footer-bottom position-relative text-center small">
+          <div>
+            <p class="mb-1">
+              © 2026 Lubricentro O'Higgins — Todos los derechos reservados
+            </p>
+            <p class="mb-0">
+              <a href="./politica-privacidad.html" class="footer-link p-2"
+                >Política de Privacidad</a
+              >
+              |
+              <a href="./terminos-condiciones.html" class="footer-link p-2"
+                >Términos y Condiciones</a
+              >
+            </p>
+          </div>
+          <div class="footer-qr-container">
+            <img
+              src="../img/qr-ejemplo.png"
+              class="img-fluid footer-qr"
+              alt="QR"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- WhatsApp flotante -->
+    <a
+      href="https://wa.me/5493516517525?text=Hola Lubricentro O'Higgins quiero hacer una consulta"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="WhatsApp"
+    >
+      <img
+        src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg"
+        alt="WhatsApp"
+        loading="lazy"
+      />
+    </a>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
+    <script src="../js/index.js?v=2.0"></script>
 
-    <script src="../js/index.js?v=1.1" defer></script>
-    <script type="module" src="../js/search.js"></script>
+    <script>
+      // ── Selector particular / flota
+      function setType(type) {
+        const btnP = document.getElementById("btn-particular");
+        const btnF = document.getElementById("btn-flota");
+        const extra = document.getElementById("flota-extra");
+        const hidden = document.getElementById("tipo_consulta");
+
+        if (type === "flota") {
+          btnF.classList.add("active");
+          btnP.classList.remove("active");
+          extra.classList.add("show");
+          hidden.value = "Flota empresarial";
+        } else {
+          btnP.classList.add("active");
+          btnF.classList.remove("active");
+          extra.classList.remove("show");
+          hidden.value = "Vehículo particular";
+        }
+      }
+
+      // ── Envío con Formspree (fetch async para mostrar éxito sin redirigir)
+      const form = document.getElementById("contactForm");
+      const btn = document.getElementById("submitBtn");
+      const successEl = document.getElementById("formSuccess");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerHTML =
+          '<span class="spinner-border spinner-border-sm me-2"></span>Enviando...';
+
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: { Accept: "application/json" },
+          });
+
+          if (res.ok) {
+            form.style.display = "none";
+            successEl.classList.add("show");
+          } else {
+            btn.disabled = false;
+            btn.innerHTML =
+              '<i class="bi bi-send-fill"></i><span>Enviar consulta</span>';
+            alert(
+              "Hubo un error al enviar. Por favor intentá nuevamente o contactanos por WhatsApp.",
+            );
+          }
+        } catch {
+          btn.disabled = false;
+          btn.innerHTML =
+            '<i class="bi bi-send-fill"></i><span>Enviar consulta</span>';
+          alert("Error de conexión. Por favor intentá nuevamente.");
+        }
+      });
+    </script>
   </body>
 </html>
