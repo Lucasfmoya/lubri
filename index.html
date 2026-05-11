@@ -639,6 +639,7 @@
     <section class="experience-section py-5">
       <div class="container">
         <div class="experience-card" data-animate="fade-up">
+          <!-- Fila superior: texto + carousel -->
           <div class="row align-items-center g-4">
             <div class="col-lg-6">
               <span class="section-eyebrow light">SALA DE ESPERA</span>
@@ -649,25 +650,9 @@
                 Sala climatizada con aire acondicionado y calefacción. Podés
                 disfrutar sin cargo de café, té o una gaseosa fría del frigobar.
               </p>
-              <div class="amenities-grid mt-4">
-                <div class="amenity-item">
-                  <i class="bi bi-wind"></i><span>Aire acondicionado</span>
-                </div>
-                <div class="amenity-item">
-                  <i class="bi bi-thermometer-sun"></i><span>Calefacción</span>
-                </div>
-                <div class="amenity-item">
-                  <i class="bi bi-cup-hot-fill"></i
-                  ><span>Café y té sin cargo</span>
-                </div>
-                <div class="amenity-item">
-                  <i class="bi bi-cup-straw"></i
-                  ><span>Frigobar disponible</span>
-                </div>
-              </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 align-self-start">
               <div
                 id="salaCarousel"
                 class="carousel slide rounded-4 overflow-hidden experience-photo"
@@ -734,6 +719,22 @@
               </div>
             </div>
           </div>
+
+          <!-- Fila inferior: amenity-items en fila completa -->
+          <div class="amenities-grid mt-4">
+            <div class="amenity-item">
+              <i class="bi bi-wind"></i><span>Aire acondicionado</span>
+            </div>
+            <div class="amenity-item">
+              <i class="bi bi-thermometer-sun"></i><span>Calefacción</span>
+            </div>
+            <div class="amenity-item">
+              <i class="bi bi-cup-hot-fill"></i><span>Café y té sin cargo</span>
+            </div>
+            <div class="amenity-item">
+              <i class="bi bi-cup-straw"></i><span>Frigobar disponible</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -792,7 +793,7 @@
           >
             <i class="bi bi-whatsapp me-2"></i>Solicitar turno
           </a>
-          <a href="./pages/contacto.html" class="btn btn-outline-light btn-lg"
+          <a href="./pages/contacto.html" class="btn btn-outline-dark btn-lg"
             >Ver contacto</a
           >
         </div>
