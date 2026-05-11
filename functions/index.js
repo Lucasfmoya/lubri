@@ -212,3 +212,60 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
     return res.status(500).json({ error: "Error al importar datos" });
   }
 });
+
+// ── Selector particular / flota
+function setType(type) {
+  const btnP = document.getElementById("btn-particular");
+  const btnF = document.getElementById("btn-flota");
+  const extra = document.getElementById("flota-extra");
+  const hidden = document.getElementById("tipo_consulta");
+
+  if (type === "flota") {
+    btnF.classList.add("active");
+    btnP.classList.remove("active");
+    extra.classList.add("show");
+    hidden.value = "Flota empresarial";
+  } else {
+    btnP.classList.add("active");
+    btnF.classList.remove("active");
+    extra.classList.remove("show");
+    hidden.value = "Vehículo particular";
+  }
+}
+
+// ── Envío con Formspree (fetch async para mostrar éxito sin redirigir)
+const form = document.getElementById("contactForm");
+const btn = document.getElementById("submitBtn");
+const successEl = document.getElementById("formSuccess");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+  btn.disabled = true;
+  btn.innerHTML =
+    '<span class="spinner-border spinner-border-sm me-2"></span>Enviando...';
+
+  try {
+    const res = await fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" },
+    });
+
+    if (res.ok) {
+      form.style.display = "none";
+      successEl.classList.add("show");
+    } else {
+      btn.disabled = false;
+      btn.innerHTML =
+        '<i class="bi bi-send-fill"></i><span>Enviar consulta</span>';
+      alert(
+        "Hubo un error al enviar. Por favor intentá nuevamente o contactanos por WhatsApp.",
+      );
+    }
+  } catch {
+    btn.disabled = false;
+    btn.innerHTML =
+      '<i class="bi bi-send-fill"></i><span>Enviar consulta</span>';
+    alert("Error de conexión. Por favor intentá nuevamente.");
+  }
+});

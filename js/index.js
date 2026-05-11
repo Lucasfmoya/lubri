@@ -120,3 +120,73 @@
     }
   });
 })();
+
+/*=======================================
+        FORMULARIO CONTACTO
+=========================================*/
+
+const contactForm = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
+const formSuccess = document.getElementById("formSuccess");
+const contactFormCard = document.querySelector(".contact-form-card");
+const anioInput = document.getElementById("anio");
+
+/* Año máximo dinámico */
+if (anioInput) {
+  anioInput.max = new Date().getFullYear() + 1;
+}
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+
+    submitBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm"></span>
+      Enviando...
+    `;
+
+    try {
+      const formData = new FormData(contactForm);
+
+      let response, result;
+
+      try {
+        response = await fetch("https://formspree.io/f/xvzldeov", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+        result = await response.json();
+        console.log("STATUS:", response.status);
+        console.log("RESULT:", JSON.stringify(result));
+      } catch (fetchError) {
+        console.log("FETCH FALLÓ:", fetchError.name, fetchError.message);
+        throw fetchError;
+      }
+
+      if (!response.ok) {
+        const msg =
+          result?.errors?.map((e) => e.message).join(", ") ||
+          `HTTP ${response.status}`;
+        throw new Error(msg);
+      }
+
+      contactForm.reset();
+      contactForm.style.display = "none";
+      formSuccess.classList.add("show");
+      contactFormCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (error) {
+      console.error("Error detallado:", error.name, error.message);
+      alert("Error: " + error.name + " — " + error.message);
+    } finally {
+      submitBtn.disabled = false;
+
+      submitBtn.innerHTML = `
+        <i class="bi bi-send-fill"></i>
+        <span class="btn-submit-text">Enviar consulta</span>
+      `;
+    }
+  });
+}
