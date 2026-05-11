@@ -132,6 +132,56 @@ select {
   color: var(--navy);
 }
 
+/* === NAVBAR ICONS === */
+.nav-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+
+/* Ícono de Bootstrap Icons — mismo tamaño fijo */
+.nav-icon-btn i {
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* SVG de Instagram — mismo tamaño fijo */
+.nav-icon-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.nav-icon-ig {
+  border-color: rgba(193, 53, 132, 0.25);
+}
+.nav-icon-loc {
+  color: var(--navy);
+}
+.nav-icon-tel {
+  color: #059669;
+  border-color: rgba(5, 150, 105, 0.25);
+}
+.nav-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.nav-icon-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
 /* =============================================
    5. HELPERS DE SECCIÓN
    ============================================= */
@@ -2623,6 +2673,27 @@ select {
   }
 }
 
+@media (max-width: 991px) {
+  .nav-icon-label {
+    display: none;
+  }
+  .nav-icon-divider {
+    display: none;
+  }
+  .nav-icon-btn {
+    padding: 7px 9px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .nav-icon-btn i,
+  .nav-icon-btn svg {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+  .navbar-icons {
+    gap: 4px !important;
+  }
+}
 @media (min-width: 768px) {
   .privacy-content {
     font-size: 0.95rem;
