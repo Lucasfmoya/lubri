@@ -188,9 +188,8 @@ select {
    ============================================= */
 .section-eyebrow {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 2.5px;
   color: var(--red);
   text-transform: uppercase;
   margin-bottom: 12px;
