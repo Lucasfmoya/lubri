@@ -159,8 +159,6 @@ if (contactForm) {
           headers: { Accept: "application/json" },
         });
         result = await response.json();
-        console.log("STATUS:", response.status);
-        console.log("RESULT:", JSON.stringify(result));
       } catch (fetchError) {
         console.log("FETCH FALLÓ:", fetchError.name, fetchError.message);
         throw fetchError;
@@ -178,7 +176,6 @@ if (contactForm) {
       formSuccess.classList.add("show");
       contactFormCard.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
-      console.error("Error detallado:", error.name, error.message);
       alert("Error: " + error.name + " — " + error.message);
     } finally {
       submitBtn.disabled = false;
