@@ -2951,9 +2951,9 @@ textarea.form-control {
 }
 
 /* ── EQUIPO / STATS ── */
-.team-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.team-stats-flex {
+  display: flex;
+  justify-content: end;
   gap: 20px;
 }
 .team-stat {
@@ -2988,52 +2988,13 @@ textarea.form-control {
   border-radius: 20px;
   object-fit: cover;
   aspect-ratio: 16/9;
-  box-shadow:
+  box-shadow: 
     0 0 50px rgba(227, 6, 19, 0.2),
     0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* ── CTA NOSOTROS ── */
-.nos-cta {
-  background: linear-gradient(
-    135deg,
-    var(--navy) 0%,
-    var(--blue) 60%,
-    var(--blue-mid) 100%
-  );
-  position: relative;
-  overflow: hidden;
-}
-.nos-cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-.nos-cta::after {
-  content: "";
-  position: absolute;
-  bottom: -80px;
-  left: -80px;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(227, 6, 19, 0.12) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-}
-.nos-cta-inner {
-  position: relative;
-  z-index: 2;
-}
+
+
 
 /* =============================================
    26. ANIMACIONES — clases de entrada
