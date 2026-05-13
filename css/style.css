@@ -2709,6 +2709,332 @@ textarea.form-control {
   border: 0;
 }
 
+/*=============================================
+
+26. Nosotros
+
+=============================================*/
+
+/* ── MISIÓN / VISIÓN ── */
+.mv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.mv-card {
+  border-radius: 20px;
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.mv-card-mision {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: white;
+}
+.mv-card-vision {
+  background: var(--gray-100);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.mv-card::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(227, 6, 19, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.mv-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.mv-card-mision .mv-icon {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+.mv-card-vision .mv-icon {
+  background: rgba(227, 6, 19, 0.1);
+  color: var(--red);
+}
+.mv-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.mv-card-mision .mv-label {
+  color: rgba(255, 255, 255, 0.5);
+}
+.mv-card-vision .mv-label {
+  color: var(--red);
+}
+.mv-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.mv-card-mision .mv-title {
+  color: white;
+}
+.mv-card-vision .mv-title {
+  color: var(--text);
+}
+.mv-text {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  position: relative;
+  z-index: 1;
+}
+.mv-card-mision .mv-text {
+  color: rgba(255, 255, 255, 0.8);
+}
+.mv-card-vision .mv-text {
+  color: var(--gray-600);
+}
+
+/* ── TIMELINE / HISTORIA ── */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--red), var(--blue));
+  border-radius: 2px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+}
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+.timeline-dot {
+  position: absolute;
+  left: -26px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--red);
+}
+.timeline-year {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.timeline-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.timeline-text {
+  font-size: 0.88rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── VALORES ── */
+.values-section {
+  background: var(--gray-100);
+}
+.value-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px 24px;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.value-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.value-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+.value-card:hover::after {
+  transform: scaleX(1);
+}
+.value-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(227, 6, 19, 0.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--red);
+  margin-bottom: 16px;
+  transition: background var(--transition);
+}
+.value-card:hover .value-icon {
+  background: rgba(227, 6, 19, 0.14);
+}
+.value-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.value-desc {
+  font-size: 0.88rem;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.value-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.value-action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+.value-action-item i {
+  color: var(--red);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── EQUIPO / STATS ── */
+.team-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.team-stat {
+  background: white;
+  border-radius: 18px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform var(--transition);
+}
+.team-stat:hover {
+  transform: translateY(-4px);
+}
+.team-stat-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.team-stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ── IMAGEN DESTACADA ── */
+.about-full-img {
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+  box-shadow:
+    0 0 50px rgba(227, 6, 19, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* ── CTA NOSOTROS ── */
+.nos-cta {
+  background: linear-gradient(
+    135deg,
+    var(--navy) 0%,
+    var(--blue) 60%,
+    var(--blue-mid) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+.nos-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.nos-cta::after {
+  content: "";
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(227, 6, 19, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.nos-cta-inner {
+  position: relative;
+  z-index: 2;
+}
+
 /* =============================================
    26. ANIMACIONES — clases de entrada
    ============================================= */
@@ -2935,6 +3261,19 @@ textarea.form-control {
   .social-links {
     flex-direction: column;
   }
+  .mv-grid {
+    grid-template-columns: 1fr;
+  }
+  .team-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .team-stat-number {
+    font-size: 1.8rem;
+  }
+  .mv-card {
+    padding: 28px 22px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -3011,6 +3350,12 @@ textarea.form-control {
   }
   .service-column {
     margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-stats-grid {
+    grid-template-columns: 1fr;
   }
 }
 
