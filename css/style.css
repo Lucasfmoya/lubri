@@ -2988,13 +2988,1279 @@ textarea.form-control {
   border-radius: 20px;
   object-fit: cover;
   aspect-ratio: 16/9;
-  box-shadow: 
+  box-shadow:
     0 0 50px rgba(227, 6, 19, 0.2),
     0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
+/* ===== HERO SPLIT — nosotros.html ===== */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+
+.hero-split-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.hero-split-img:hover img {
+  transform: scale(1.03);
+}
+
+/* Badge flotante de rating */
+.hero-split-badge {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  background: rgba(1, 10, 68, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  color: #fff;
+}
+
+.hero-split-badge-num {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.hero-split-badge-star {
+  font-size: 1rem;
+  color: #fbbf24;
+  line-height: 1;
+}
+
+.hero-split-badge-label {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-left: 2px;
+}
+
+/* Columna de texto */
+.hero-split-body {
+  background: var(--navy, #010a44);
+  padding: 52px 52px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.hero-split-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 14px;
+  margin-top: 16px;
+}
+
+.hero-split-title {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.18;
+  margin-bottom: 18px;
+}
+
+.hero-split-lead {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+/* Stats row */
+.hero-split-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-split-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hero-split-stat-num {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-split-stat-lbl {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.3;
+}
+
+.hero-split-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+/* ==============================================
+   HERO SPLIT — nosotros.html
+   Agregar a style.css después de .page-hero
+   ============================================== */
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+
+.hero-split-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.hero-split-img:hover img {
+  transform: scale(1.04);
+}
+
+.hero-split-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(1, 10, 68, 0.18) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* Badge flotante rating */
+.hero-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(8, 18, 72, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.hero-badge-stars {
+  color: #fbbf24;
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.hero-badge-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-badge-num {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-badge-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Panel de texto */
+.hero-split-body {
+  background: var(--navy);
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split-body::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.025);
+  top: -80px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.hero-split-body::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(229, 57, 53, 0.07);
+  bottom: -40px;
+  right: 40px;
+  pointer-events: none;
+}
+
+/* Eyebrow con línea */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.hero-eyebrow-line {
+  width: 24px;
+  height: 2px;
+  background: #e53935;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.hero-eyebrow-text {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Título */
+.hero-split-title {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.18;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Lead */
+.hero-split-lead {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.65;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Stats */
+.hero-split-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-split-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: 20px;
+}
+
+.hero-split-stat + .hero-split-stat {
+  padding-left: 20px;
+  padding-right: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-split-stat-num {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-split-stat-lbl {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.4;
+}
+
+.hero-split-stat-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  margin: 0 20px;
+}
+
+/* CTA */
+.hero-cta {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #e53935;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  width: fit-content;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-cta:hover {
+  background: #c62828;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Responsive hero split */
+@media (max-width: 991px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-split-img {
+    height: 300px;
+  }
+
+  .hero-split-body {
+    padding: 36px 28px 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  .hero-split-body {
+    padding: 28px 20px 36px;
+  }
+
+  .hero-split-stats {
+    gap: 0;
+  }
+
+  .hero-split-stat-num {
+    font-size: 1.3rem;
+  }
+}
+
+/* ==============================================
+   REVIEWS WIDGET — nosotros.html
+   Agregar a style.css después del hero split
+   ============================================== */
+
+.reviews-widget {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Panel izquierdo */
+.rw-left {
+  background: var(--navy);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rw-eyebrow {
+  color: rgba(255, 255, 255, 0.35) !important;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.rw-title {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.rw-sub {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.6;
+}
+
+.rw-score {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rw-score-num {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.rw-score-stars {
+  color: #fbbf24;
+  font-size: 0.88rem;
+  letter-spacing: 2px;
+}
+
+.rw-score-count {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.38);
+  margin-top: 3px;
+}
+
+/* Panel derecho */
+.rw-right {
+  background: var(--gray-100, #f8f8f6);
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Card reseña estilo iOS */
+.review-ios {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px;
+  border: 0.5px solid rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.review-ios::before {
+  content: "\201C";
+  position: absolute;
+  top: 4px;
+  right: 14px;
+  font-size: 72px;
+  font-weight: 900;
+  color: rgba(1, 10, 68, 0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ri-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ri-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ri-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  background: var(--navy);
+  transition: background 0.25s ease;
+}
+
+.ri-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #0d0d0c;
+  line-height: 1.2;
+}
+
+.ri-date {
+  font-size: 0.7rem;
+  color: #b0afa8;
+  margin-top: 1px;
+}
+
+.ri-stars {
+  color: #fbbf24;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+}
+
+.ri-text {
+  font-size: 0.84rem;
+  color: #4a4a47;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.ri-verified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: #b0afa8;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.ri-verified .bi {
+  color: #4285f4;
+  font-size: 12px;
+}
+
+/* Navegación */
+.rw-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rw-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.rw-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  padding: 0;
+}
+
+.rw-dot.active {
+  width: 18px;
+  border-radius: 3px;
+  background: var(--navy);
+}
+
+.rw-arrows {
+  display: flex;
+  gap: 6px;
+}
+
+.rw-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #4a4a47;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.rw-btn:hover:not(:disabled) {
+  background: #f0f0ee;
+}
+
+.rw-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.rw-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Animaciones de transición */
+@keyframes riIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes riOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+.ri-enter {
+  animation: riIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ri-exit {
+  animation: riOut 0.2s ease forwards;
+}
+
+/* ==============================================
+   HERO SPLIT — nosotros.html
+   Agregar a style.css después de .page-hero
+   ============================================== */
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+
+.hero-split-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.hero-split-img:hover img {
+  transform: scale(1.04);
+}
+
+.hero-split-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(1, 10, 68, 0.18) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* Badge flotante rating */
+.hero-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(8, 18, 72, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.hero-badge-stars {
+  color: #fbbf24;
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.hero-badge-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-badge-num {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-badge-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Panel de texto */
+.hero-split-body {
+  background: var(--navy);
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split-body::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.025);
+  top: -80px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.hero-split-body::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(229, 57, 53, 0.07);
+  bottom: -40px;
+  right: 40px;
+  pointer-events: none;
+}
+
+/* Eyebrow con línea */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.hero-eyebrow-line {
+  width: 24px;
+  height: 2px;
+  background: #e53935;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.hero-eyebrow-text {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Título */
+.hero-split-title {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.18;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Lead */
+.hero-split-lead {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.65;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Stats */
+.hero-split-stats {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-split-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: 20px;
+}
+
+.hero-split-stat + .hero-split-stat {
+  padding-left: 20px;
+  padding-right: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-split-stat-num {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.hero-split-stat-lbl {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.4;
+}
+
+.hero-split-stat-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  margin: 0 20px;
+}
+
+/* CTA */
+.hero-cta {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #e53935;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  width: fit-content;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-cta:hover {
+  background: #c62828;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Responsive hero split */
+@media (max-width: 991px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-split-img {
+    height: 300px;
+  }
+
+  .hero-split-body {
+    padding: 36px 28px 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  .hero-split-body {
+    padding: 28px 20px 36px;
+  }
+
+  .hero-split-stats {
+    gap: 0;
+  }
+
+  .hero-split-stat-num {
+    font-size: 1.3rem;
+  }
+}
+
+/* ==============================================
+   REVIEWS WIDGET — nosotros.html
+   Agregar a style.css después del hero split
+   ============================================== */
+
+.reviews-widget {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 0.5px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Panel izquierdo */
+.rw-left {
+  background: var(--navy);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rw-eyebrow {
+  color: rgba(255, 255, 255, 0.35) !important;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.rw-title {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.rw-sub {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.6;
+}
+
+.rw-score {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rw-score-num {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.rw-score-stars {
+  color: #fbbf24;
+  font-size: 0.88rem;
+  letter-spacing: 2px;
+}
+
+.rw-score-count {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.38);
+  margin-top: 3px;
+}
+
+/* Panel derecho */
+.rw-right {
+  background: var(--gray-100, #f8f8f6);
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Card reseña estilo iOS */
+.review-ios {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px;
+  border: 0.5px solid rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.review-ios::before {
+  content: "\201C";
+  position: absolute;
+  top: 4px;
+  right: 14px;
+  font-size: 72px;
+  font-weight: 900;
+  color: rgba(1, 10, 68, 0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ri-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ri-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ri-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  background: var(--navy);
+  transition: background 0.25s ease;
+}
+
+.ri-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #0d0d0c;
+  line-height: 1.2;
+}
+
+.ri-date {
+  font-size: 0.7rem;
+  color: #b0afa8;
+  margin-top: 1px;
+}
+
+.ri-stars {
+  color: #fbbf24;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+}
+
+.ri-text {
+  font-size: 0.84rem;
+  color: #4a4a47;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.ri-verified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: #b0afa8;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.06);
+}
+
+.ri-verified .bi {
+  color: #4285f4;
+  font-size: 12px;
+}
+
+/* Navegación */
+.rw-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rw-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.rw-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  padding: 0;
+}
+
+.rw-dot.active {
+  width: 18px;
+  border-radius: 3px;
+  background: var(--navy);
+}
+
+.rw-arrows {
+  display: flex;
+  gap: 6px;
+}
+
+.rw-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #4a4a47;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.rw-btn:hover:not(:disabled) {
+  background: #f0f0ee;
+}
+
+.rw-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.rw-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
 
 
+
+
+
+
+
+
+
+
+
+
+/* Animaciones de transición */
+@keyframes riIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes riOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+.ri-enter {
+  animation: riIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ri-exit {
+  animation: riOut 0.2s ease forwards;
+}
+
+/* Responsive reviews */
+@media (max-width: 767px) {
+  .reviews-widget {
+    grid-template-columns: 1fr;
+  }
+
+  .rw-left {
+    padding: 32px 24px;
+    min-height: auto;
+  }
+
+  .rw-score {
+    margin-top: 24px;
+    padding-top: 20px;
+  }
+
+  .rw-right {
+    padding: 22px 20px 20px;
+  }
+}
+
+/* Value card CTA (reemplaza el inline del original) */
+.value-card-cta {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  min-height: 260px;
+}
+
+.value-card-cta-star {
+  font-size: 2.4rem;
+  color: #fbbf24;
+}
+
+.value-card-cta-num {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.value-card-cta-text {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.88rem;
+  margin: 0;
+  line-height: 1.5;
+}
 
 /* =============================================
    26. ANIMACIONES — clases de entrada
@@ -3323,5 +4589,36 @@ textarea.form-control {
 @media (min-width: 768px) {
   .privacy-content {
     font-size: 0.95rem;
+  }
+}
+
+/* Responsive — tablet */
+@media (max-width: 991px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-split-img {
+    height: 280px;
+  }
+
+  .hero-split-body {
+    padding: 36px 28px 40px;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 575px) {
+  .hero-split-body {
+    padding: 28px 20px 36px;
+  }
+
+  .hero-split-stats {
+    gap: 14px;
+  }
+
+  .hero-split-stat-num {
+    font-size: 1.3rem;
   }
 }

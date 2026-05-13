@@ -269,3 +269,245 @@ form.addEventListener("submit", async function (e) {
     alert("Error de conexión. Por favor intentá nuevamente.");
   }
 });
+
+/* =============================================
+   LUBRICENTRO O'HIGGINS — reviews.js
+   Autoplay · Loop · Swipe táctil · Dirección
+   ============================================= */
+(function () {
+  "use strict";
+
+  /* ── Datos ── */
+  const reviews = [
+    {
+      av: "MG",
+      bg: "#010a44",
+      name: "Martín González",
+      date: "hace 2 semanas",
+      stars: 5,
+      text: "Excelente atención, rápidos y honestos. Me avisaron que el filtro todavía estaba bien y no me lo cambiaron innecesariamente. Eso genera mucha confianza.",
+    },
+    {
+      av: "LP",
+      bg: "#1565c0",
+      name: "Laura Pérez",
+      date: "hace 1 mes",
+      stars: 5,
+      text: "Siempre voy ahí. El equipo es muy profesional y te explican todo lo que le hacen al auto. Los precios son justos y el servicio es rápido. 100% recomendable.",
+    },
+    {
+      av: "RV",
+      bg: "#2e7d32",
+      name: "Roberto Villalba",
+      date: "hace 3 semanas",
+      stars: 5,
+      text: "Fui por primera vez y me sorprendió la atención. Muy ordenados, limpios y explicaron cada paso del servicio. Ya tengo mi lubricentro de confianza en el sur.",
+    },
+    {
+      av: "SC",
+      bg: "#6a1b9a",
+      name: "Sofía Carrizo",
+      date: "hace 2 meses",
+      stars: 5,
+      text: "Me cambiaron el aceite y de paso me revisaron los líquidos sin cobrarme de más. El trato fue muy amable. Se nota que valoran al cliente. Volvería siempre.",
+    },
+    {
+      av: "DM",
+      bg: "#c62828",
+      name: "Diego Moreno",
+      date: "hace 5 semanas",
+      stars: 5,
+      text: "Rápido, limpio y honesto. No te intentan vender lo que no necesitás. Eso es cada vez más difícil de encontrar. Ya recomendé el lugar a varios amigos.",
+    },
+  ];
+
+  /* ── Nodos ── */
+  const card = document.getElementById("review-card");
+  const dotsEl = document.getElementById("rw-dots");
+  const btnP = document.getElementById("rw-prev");
+  const btnN = document.getElementById("rw-next");
+
+  // Barra de progreso: se inyecta antes de .rw-nav
+  const nav = document.querySelector(".rw-nav");
+  const progressWrap = document.createElement("div");
+  progressWrap.className = "rw-progress";
+  const progressBar = document.createElement("div");
+  progressBar.className = "rw-progress-bar";
+  progressWrap.appendChild(progressBar);
+  nav && nav.parentNode.insertBefore(progressWrap, nav);
+
+  /* ── Estado ── */
+  let cur = 0;
+  let busy = false;
+  let timer = null;
+  let paused = false;
+  const DELAY = 4500; // ms entre reseñas
+
+  /* ── Dots ── */
+  reviews.forEach(function (_, i) {
+    const d = document.createElement("button");
+    d.className = "rw-dot" + (i === 0 ? " active" : "");
+    d.setAttribute("aria-label", "Reseña " + (i + 1));
+    d.addEventListener("click", function () {
+      go(i, "fwd");
+    });
+    dotsEl.appendChild(d);
+  });
+
+  /* ── Render ── */
+  function render(r) {
+    const av = document.getElementById("ri-av");
+    av.textContent = r.av;
+    av.style.background = r.bg;
+    document.getElementById("ri-name").textContent = r.name;
+    document.getElementById("ri-date").textContent = r.date;
+    document.getElementById("ri-stars").textContent = "★".repeat(r.stars);
+    document.getElementById("ri-text").textContent = r.text;
+  }
+
+  /* ── Transición ── */
+  function go(idx, dir) {
+    // Normaliza índice para loop
+    const total = reviews.length;
+    idx = ((idx % total) + total) % total;
+
+    if (idx === cur || busy) return;
+    busy = true;
+
+    const enterClass = dir === "back" ? "ri-enter-back" : "ri-enter-fwd";
+
+    card.classList.add("ri-exit");
+
+    card.addEventListener(
+      "animationend",
+      function onExit() {
+        card.removeEventListener("animationend", onExit);
+        card.classList.remove("ri-exit");
+
+        cur = idx;
+        render(reviews[cur]);
+
+        card.classList.add(enterClass);
+        card.addEventListener("animationend", function onEnter() {
+          card.removeEventListener("animationend", onEnter);
+          card.classList.remove(enterClass);
+          busy = false;
+        });
+
+        // Dots
+        document.querySelectorAll(".rw-dot").forEach(function (d, i) {
+          d.classList.toggle("active", i === cur);
+        });
+
+        // Botones: siempre habilitados (loop)
+        btnP.disabled = false;
+        btnN.disabled = false;
+      },
+      { once: true },
+    );
+
+    resetAutoplay();
+  }
+
+  /* ── Autoplay ── */
+  function startProgress() {
+    if (!progressBar) return;
+    progressBar.style.transition = "none";
+    progressBar.style.width = "0%";
+    // Forzar reflow para reiniciar la transición
+    void progressBar.offsetWidth;
+    progressBar.style.transition = "width " + DELAY + "ms linear";
+    progressBar.style.width = "100%";
+  }
+
+  function startAutoplay() {
+    clearTimeout(timer);
+    if (!paused) {
+      startProgress();
+      timer = setTimeout(function () {
+        go(cur + 1, "fwd");
+      }, DELAY);
+    }
+  }
+
+  function resetAutoplay() {
+    clearTimeout(timer);
+    startAutoplay();
+  }
+
+  function pauseAutoplay() {
+    paused = true;
+    clearTimeout(timer);
+    if (progressBar) {
+      const computed = getComputedStyle(progressBar).width;
+      const parent = progressBar.parentElement.offsetWidth;
+      const pct = (parseFloat(computed) / parent) * 100;
+      progressBar.style.transition = "none";
+      progressBar.style.width = pct + "%";
+    }
+  }
+
+  function resumeAutoplay() {
+    paused = false;
+    startAutoplay();
+  }
+
+  /* ── Pausa al hover / focus ── */
+  const widget = document.querySelector(".reviews-widget");
+  if (widget) {
+    widget.addEventListener("mouseenter", pauseAutoplay);
+    widget.addEventListener("mouseleave", resumeAutoplay);
+    widget.addEventListener("focusin", pauseAutoplay);
+    widget.addEventListener("focusout", resumeAutoplay);
+  }
+
+  /* ── Botones ── */
+  btnP &&
+    btnP.addEventListener("click", function () {
+      go(cur - 1, "back");
+    });
+  btnN &&
+    btnN.addEventListener("click", function () {
+      go(cur + 1, "fwd");
+    });
+
+  /* ── Swipe táctil ── */
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  card &&
+    card.addEventListener(
+      "touchstart",
+      function (e) {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+      },
+      { passive: true },
+    );
+
+  card &&
+    card.addEventListener(
+      "touchend",
+      function (e) {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        // Solo swipe horizontal (ignora scroll vertical)
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          dx < 0 ? go(cur + 1, "fwd") : go(cur - 1, "back");
+        }
+      },
+      { passive: true },
+    );
+
+  /* ── Teclado (accesibilidad) ── */
+  card && card.setAttribute("tabindex", "0");
+  card &&
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") go(cur + 1, "fwd");
+      if (e.key === "ArrowLeft") go(cur - 1, "back");
+    });
+
+  /* ── Init ── */
+  render(reviews[0]);
+  startAutoplay();
+})();
