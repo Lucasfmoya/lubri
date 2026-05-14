@@ -306,3 +306,36 @@ if (contactForm) {
     go(1);
   }, DELAY);
 })();
+
+/* ===== MISIÓN / VISIÓN — swap de estilos al hover ===== */
+(function () {
+  const cardMision = document.querySelector(".mv-card-mision");
+  const cardVision = document.querySelector(".mv-card-vision");
+  const mvGrid = document.querySelector(".mv-grid");
+  if (!cardMision || !cardVision || !mvGrid) return;
+
+  let leaveTimer = null;
+
+  mvGrid.addEventListener(
+    "mouseenter",
+    function (e) {
+      if (!e.target.closest(".mv-card")) return;
+      clearTimeout(leaveTimer);
+      cardMision.classList.add("mv-inverted");
+      cardVision.classList.add("mv-inverted");
+    },
+    true,
+  );
+
+  mvGrid.addEventListener(
+    "mouseleave",
+    function (e) {
+      if (!e.target.closest(".mv-card")) return;
+      leaveTimer = setTimeout(function () {
+        cardMision.classList.remove("mv-inverted");
+        cardVision.classList.remove("mv-inverted");
+      }, 80);
+    },
+    true,
+  );
+})();
