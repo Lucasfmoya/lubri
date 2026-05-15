@@ -182,11 +182,14 @@
     </nav>
 
     <main>
-      <!-- ===== HERO ===== -->
-      <section class="page-hero">
-        <div class="container page-hero-content">
-          <div class="row align-items-end g-5">
-            <div class="col-lg-7">
+      <!-- ═══════════════════════════════════════
+             HERO
+           ═══════════════════════════════════════ -->
+      <section class="nos-page-hero">
+        <div class="container nos-hero-inner">
+          <div class="row align-items-center g-4 g-lg-5 hero-row-border">
+            <!-- Izquierda -->
+            <div class="col-lg-5" data-animate="fade-right">
               <nav aria-label="breadcrumb" class="svc-breadcrumb">
                 <ol class="breadcrumb mb-0">
                   <li class="breadcrumb-item">
@@ -195,64 +198,143 @@
                   <li class="breadcrumb-item active">Nosotros</li>
                 </ol>
               </nav>
-              <h1 class="page-hero-title mt-3">Nosotros</h1>
-              <p class="page-hero-lead">
-                Desde 2014 cuidando cada auto como si fuera el nuestro.<br />
-                El lubricentro de confianza en el sur de Córdoba.
-              </p>
+              <h1 class="nos-hero-title">
+                Más de una decada<br />
+                cuidando cada auto<br />
+                como si fuera<br />
+                <span class="accent">el nuestro</span>
+              </h1>
             </div>
-            <div class="col-lg-5">
-              <div class="nos-hero-stats" data-animate="fade-left">
-                <div class="nos-stat-item">
-                  <span class="nos-stat-num">+10</span>
-                  <span class="nos-stat-lbl">Años de experiencia</span>
-                </div>
-                <div class="nos-stat-divider"></div>
-                <div class="nos-stat-item">
-                  <span class="nos-stat-num">381</span>
-                  <span class="nos-stat-lbl">Reseñas en Google</span>
-                </div>
-                <div class="nos-stat-divider"></div>
-                <div class="nos-stat-item">
-                  <span class="nos-stat-num">4.7</span>
-                  <span class="nos-stat-lbl">Puntuación promedio</span>
-                </div>
+
+            <!-- Derecha: glass card — solo el primer párrafo -->
+            <div class="col-lg-7" data-animate="fade-left">
+              <div class="nos-hero-glass">
+                <p>
+                  Lubricentro O'Higgins nació en julio de 2014 con una premisa
+                  clara: brindar un servicio honesto, rápido y de calidad. A lo
+                  largo de los años crecimos, sumamos equipamiento y formamos un
+                  equipo sólido, pero nunca perdimos lo más importante — la
+                  confianza de nuestros clientes.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ===== QUIÉNES SOMOS ===== -->
+      <!-- ═══════════════════════════════════════
+           SECCIÓN INFERIOR
+           ═══════════════════════════════════════ -->
       <section class="py-5 bg-white">
         <div class="container">
           <div class="row align-items-center g-5">
-            <div class="col-lg-6" data-animate="fade-right">
-              <span class="section-eyebrow">NUESTRA HISTORIA</span>
-              <h2 class="section-title">
-                Desde 2014,<br />cuidando cada auto<br />como si fuera el
-                nuestro
-              </h2>
-              <p class="section-text">
-                Lubricentro O'Higgins nació en julio de 2014 con una premisa
-                clara: brindar un servicio honesto, rápido y de calidad. A lo
-                largo de los años crecimos, sumamos equipamiento y formamos un
-                equipo sólido, pero nunca perdimos lo más importante — la
-                confianza de nuestros clientes.
-              </p>
-              <p class="section-text" style="margin-top: -12px">
+            <!-- Carrusel -->
+            <div class="col-lg-5" data-animate="fade-right">
+              <div
+                id="nosCarousel"
+                class="carousel slide rounded-4 overflow-hidden"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img
+                      src="../img/lubri-abierto-ia.png"
+                      class="img-fluid"
+                      loading="lazy"
+                      alt="Lubricentro O'Higgins - exterior"
+                    />
+                  </div>
+                  <div class="carousel-item">
+                    <img
+                      src="../img/lubri-mejorado.webp"
+                      class="img-fluid"
+                      loading="lazy"
+                      alt="Lubricentro O'Higgins - local"
+                    />
+                  </div>
+                  <div class="carousel-item">
+                    <img
+                      src="../img/interior2-mejorada.webp"
+                      class="img-fluid"
+                      loading="lazy"
+                      alt="Lubricentro O'Higgins - interior"
+                    />
+                  </div>
+                </div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#nosCarousel"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#nosCarousel"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#nosCarousel"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Foto 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#nosCarousel"
+                    data-bs-slide-to="1"
+                    aria-label="Foto 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#nosCarousel"
+                    data-bs-slide-to="2"
+                    aria-label="Foto 3"
+                  ></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Párrafo + grid de valores -->
+            <div class="col-lg-7" data-animate="fade-left">
+              <!-- Párrafo encima del grid -->
+              <p class="nos-section-lead">
                 Hoy somos reconocidos en el sur de Córdoba por nuestra atención
                 cercana y personalizada, nuestro asesoramiento transparente y el
                 uso exclusivo de productos de primera línea.
               </p>
-            </div>
-            <div class="col-lg-6" data-animate="fade-left">
-              <img
-                src="../img/lubri-mejorado.webp"
-                class="about-full-img"
-                loading="lazy"
-                alt="Lubricentro O'Higgins - frente del local"
-              />
+
+              <!-- Grid 2×2 valores -->
+              <div class="nos-values-grid">
+                <div class="nos-value-pill">
+                  <i class="bi bi-shield-check"></i><span>Honestidad</span>
+                </div>
+                <div class="nos-value-pill">
+                  <i class="bi bi-patch-check-fill"></i
+                  ><span>Responsabilidad</span>
+                </div>
+                <div class="nos-value-pill">
+                  <i class="bi bi-award-fill"></i><span>Calidad</span>
+                </div>
+                <div class="nos-value-pill">
+                  <i class="bi bi-people-fill"></i><span>Equipo</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -458,21 +540,28 @@
               data-animate="fade-up"
               data-delay="400"
             >
-              <div class="value-card value-card-cta">
-                <i class="bi bi-star-fill value-card-cta-star"></i>
-                <div class="value-card-cta-num">4.7 ★</div>
-                <p class="value-card-cta-text">
-                  Así nos califica nuestra comunidad en Google con más de 381
-                  reseñas verificadas.
+              <div class="value-card">
+                <div class="value-icon"><i class="bi bi-heart-fill"></i></div>
+                <div class="value-title">Compromiso con el cliente</div>
+                <p class="value-desc">
+                  Cada persona que entra al lubricentro es atendida con
+                  dedicación. Queremos que te vayas tranquilo, no solo con el
+                  servicio hecho.
                 </p>
-                <a
-                  href="https://wa.me/5493516517525"
-                  class="btn btn-danger btn-sm"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <i class="bi bi-whatsapp me-1"></i>Contactanos
-                </a>
+                <div class="value-actions">
+                  <div class="value-action-item">
+                    <i class="bi bi-check-circle-fill"></i
+                    ><span>Te explicamos qué se hizo y por qué</span>
+                  </div>
+                  <div class="value-action-item">
+                    <i class="bi bi-check-circle-fill"></i
+                    ><span>Atención sin apuros ni presiones</span>
+                  </div>
+                  <div class="value-action-item">
+                    <i class="bi bi-check-circle-fill"></i
+                    ><span>Tu confianza es nuestra mayor recompensa</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -552,9 +641,8 @@
       <!-- ===== RESEÑAS GOOGLE ===== -->
       <section class="py-5 bg-white">
         <div class="container">
-          <div class="row align-items-center g-5">
-            <!-- Info izquierda -->
-            <div class="col-lg-4" data-animate="fade-right">
+          <div class="row align-items-center justify-content-center g-5">
+            <div class="col-lg-5" data-animate="fade-right">
               <span class="section-eyebrow">RESEÑAS DE CLIENTES</span>
               <h2 class="section-title">Lo que dicen<br />de nosotros</h2>
               <p class="section-text">
@@ -568,9 +656,7 @@
                 </div>
               </div>
             </div>
-
-            <!-- Carrusel derecha -->
-            <div class="col-lg-8" data-animate="fade-left">
+            <div class="col-lg-5" data-animate="fade-left">
               <div class="rev-carousel">
                 <div class="rev-card" id="rev-card">
                   <div class="rev-card-header">
@@ -593,7 +679,6 @@
                     Reseña verificada en Google
                   </div>
                 </div>
-
                 <div class="rev-controls">
                   <div class="rev-dots" id="rev-dots"></div>
                   <div class="rev-arrows">
@@ -626,14 +711,13 @@
       <div class="container">
         <div class="row text-md-start">
           <div class="col-md-3 mb-4 d-flex flex-column align-items-start">
-            <a href="../index.html">
-              <img
+            <a href="../index.html"
+              ><img
                 src="../img/logo-ovalado.png"
                 class="img-fluid footer-logo mb-3"
                 alt="Logo"
                 loading="lazy"
-              />
-            </a>
+            /></a>
             <a href="../index.html" class="top-link"
               ><h4>Lubricentro O'Higgins</h4></a
             >
