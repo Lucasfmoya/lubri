@@ -90,6 +90,36 @@
   elements.forEach((el) => observer.observe(el));
 })();
 
+/* ===== BOTÓN VOLVER ARRIBA ===== */
+(function () {
+  const btn = document.createElement("button");
+  btn.className = "back-to-top";
+  btn.setAttribute("aria-label", "Volver arriba");
+  btn.innerHTML = '<i class="bi bi-chevron-up"></i>';
+  document.body.appendChild(btn);
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const scrollY = window.scrollY;
+      const nearBottom =
+        scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 200;
+
+      if (scrollY > 300 && !nearBottom) {
+        btn.classList.add("visible");
+      } else {
+        btn.classList.remove("visible");
+      }
+    },
+    { passive: true },
+  );
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
+
 /* ===== SLIDER: pausar al hacer hover ===== */
 (function () {
   const track = document.querySelector(".slider-track");

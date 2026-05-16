@@ -59,15 +59,9 @@ function mostrarSkeleton() {
 }
 
 // ============================
-// RENDER
+// RENDER CARD
 // ============================
-function render(data, patente) {
-  if (!data.length) {
-    contenedor.innerHTML = "";
-    showAlert(`No hay historial registrado para ${patente}`, "info");
-    return;
-  }
-
+function renderCard(d, patente, esMasReciente) {
   const meses = [
     "ene",
     "feb",
@@ -83,6 +77,74 @@ function render(data, patente) {
     "dic",
   ];
 
+  const partes = d.fecha ? d.fecha.split("-") : [];
+  const dia = partes[2] ? parseInt(partes[2], 10) : "—";
+  const mes = partes[1] ? meses[parseInt(partes[1], 10) - 1] : "";
+  const anio = partes[0] || "";
+
+  return `
+    <div class="hst-record-card${esMasReciente ? " is-recent" : " is-old"}">
+      <div class="hst-record-top">
+        <div class="hst-record-date-wrap">
+          <span class="hst-record-day">${dia}</span>
+          <div class="hst-record-month-year">
+            <span class="hst-record-month">${mes}</span>
+            <span class="hst-record-year">${anio}</span>
+          </div>
+        </div>
+        <div class="hst-record-top-right">
+          ${esMasReciente ? `<span class="hst-tag-reciente"><i class="bi bi-star-fill"></i>Más reciente</span>` : ""}
+          <span class="hst-plate-tag">${d.patente || patente}</span>
+        </div>
+      </div>
+      <div class="hst-record-body">
+        <div class="hst-record-stat">
+          <div class="hst-record-stat-label">
+            <i class="bi bi-speedometer2"></i>Km actuales
+          </div>
+          <div class="hst-record-stat-val">${d.km || "—"}</div>
+        </div>
+        <div class="hst-record-divider"></div>
+        <div class="hst-record-stat">
+          <div class="hst-record-stat-label">
+            <i class="bi bi-arrow-right-circle"></i>Próximo service
+          </div>
+          <div class="hst-record-stat-val${esMasReciente ? " is-next" : ""}">${d.proximo || "—"}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================
+// RENDER PRINCIPAL
+// ============================
+function render(data, patente) {
+  if (!data.length) {
+    contenedor.innerHTML = "";
+    showAlert(`No hay historial registrado para ${patente}`, "info");
+    return;
+  }
+
+  // Ordenar por fecha descendente
+  const sorted = [...data].sort(
+    (a, b) => new Date(b.fecha) - new Date(a.fecha),
+  );
+
+  const reciente = sorted[0];
+  const anteriores = sorted.slice(1);
+
+  // Agrupar anteriores por año
+  const porAnio = {};
+  anteriores.forEach((d) => {
+    const anio = d.fecha ? d.fecha.split("-")[0] : "Sin fecha";
+    if (!porAnio[anio]) porAnio[anio] = [];
+    porAnio[anio].push(d);
+  });
+
+  const aniosOrdenados = Object.keys(porAnio).sort((a, b) => b - a);
+
+  // Header
   const header = `
     <div class="hst-results-header">
       <i class="bi bi-list-ul"></i>
@@ -90,57 +152,123 @@ function render(data, patente) {
     </div>
   `;
 
-  const cards = data
-    .map((d, i) => {
-      const partes = d.fecha ? d.fecha.split("-") : [];
-      const dia = partes[2] ? parseInt(partes[2], 10) : "—";
-      const mes = partes[1] ? meses[parseInt(partes[1], 10) - 1] : "";
-      const anio = partes[0] || "";
-      const esMasReciente = i === 0;
+  // Card más reciente
+  const cardReciente = renderCard(reciente, patente, true);
 
-      return `
-      <div class="hst-record-card${esMasReciente ? " is-recent" : " is-old"}">
+  // Acordeones por año (solo si hay anteriores)
+  let acordeones = "";
+  if (aniosOrdenados.length > 0) {
+    acordeones = `<div class="hst-accordion-wrap" id="hstAccordion">`;
 
-        <div class="hst-record-top">
-          <div class="hst-record-date-wrap">
-            <span class="hst-record-day">${dia}</span>
-            <div class="hst-record-month-year">
-              <span class="hst-record-month">${mes}</span>
-              <span class="hst-record-year">${anio}</span>
-            </div>
-          </div>
-          <div class="hst-record-top-right">
-            ${
-              esMasReciente
-                ? `<span class="hst-tag-reciente"><i class="bi bi-star-fill"></i>Más reciente</span>`
-                : `<span class="hst-tag-anterior"><i class="bi bi-clock-history"></i>Anterior</span>`
-            }
-            <span class="hst-plate-tag">${d.patente || patente}</span>
-          </div>
-        </div>
+    aniosOrdenados.forEach((anio) => {
+      const collapseId = `hst-collapse-${anio}`;
+      const cards = porAnio[anio]
+        .map((d) => renderCard(d, patente, false))
+        .join("");
 
-        <div class="hst-record-body">
-          <div class="hst-record-stat">
-            <div class="hst-record-stat-label">
-              <i class="bi bi-speedometer2"></i>Km actuales
-            </div>
-            <div class="hst-record-stat-val">${d.km || "—"}</div>
-          </div>
-          <div class="hst-record-divider"></div>
-          <div class="hst-record-stat">
-            <div class="hst-record-stat-label">
-              <i class="bi bi-arrow-right-circle"></i>Próximo service
-            </div>
-            <div class="hst-record-stat-val${esMasReciente ? " is-next" : ""}">${d.proximo || "—"}</div>
+      acordeones += `
+        <div class="hst-accordion-item">
+          <button
+            class="hst-accordion-btn"
+            data-target="${collapseId}"
+            aria-expanded="false"
+          >
+            <span class="hst-accordion-year-label">
+              <i class="bi bi-calendar3"></i>${anio}
+            </span>
+            <span class="hst-accordion-count">${porAnio[anio].length} service${porAnio[anio].length !== 1 ? "s" : ""}</span>
+            <i class="bi bi-chevron-down hst-accordion-chevron"></i>
+          </button>
+          <div class="hst-accordion-body" id="${collapseId}">
+            ${cards}
           </div>
         </div>
+      `;
+    });
 
-      </div>
-    `;
-    })
-    .join("");
+    acordeones += `</div>`;
+  }
 
-  contenedor.innerHTML = `<div class="hst-results-wrap fade-in">${header}${cards}</div>`;
+  const waText = encodeURIComponent(
+    `Hola Lubricentro O'Higgins, encontré un error en el historial de service para la patente ${patente}. Quiero reportarlo.`,
+  );
+  const btnReporte = `
+    <div class="hst-report-wrap">
+      <a
+        href="https://wa.me/5493516517525?text=${waText}"
+        class="hst-report-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i class="bi bi-exclamation-circle"></i>
+        Reportar un error en mi historial
+      </a>
+    </div>
+  `;
+
+  contenedor.innerHTML = `
+    <div class="hst-results-wrap fade-in">
+      ${header}
+      ${cardReciente}
+      ${acordeones}
+      ${btnReporte}
+    </div>
+  `;
+
+  // Lógica de los acordeones
+  contenedor.querySelectorAll(".hst-accordion-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.dataset.target;
+      const body = document.getElementById(targetId);
+      const isOpen = body.classList.contains("open");
+
+      // Cerrar todos
+      contenedor
+        .querySelectorAll(".hst-accordion-body")
+        .forEach((b) => b.classList.remove("open"));
+      contenedor.querySelectorAll(".hst-accordion-btn").forEach((b) => {
+        b.classList.remove("expanded");
+        b.setAttribute("aria-expanded", "false");
+      });
+
+      // Abrir el clickeado si estaba cerrado
+      if (!isOpen) {
+        body.classList.add("open");
+        btn.classList.add("expanded");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+}
+
+// ============================
+// SWEET ALERT
+// ============================
+function showAlert(msg, tipo = "info") {
+  const titulos = {
+    success: "Listo",
+    error: "Ocurrió un error",
+    warning: "Atención",
+    info: "Información",
+  };
+
+  Swal.fire({
+    title: titulos[tipo] || "Aviso",
+    text: msg,
+    icon: tipo,
+    position: "center",
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+    showCloseButton: true,
+    background: "#ffffff",
+    color: "#1e293b",
+    customClass: {
+      popup: "swal-admin-popup",
+      title: "swal-admin-title",
+      htmlContainer: "swal-admin-text",
+    },
+  });
 }
 
 // ============================
@@ -185,36 +313,6 @@ async function ejecutarBusqueda() {
     btnBuscar.disabled = false;
     btnBuscar.innerHTML = `<i class="bi bi-search"></i>`;
   }
-}
-
-// ============================
-// SWEET ALERT
-// ============================
-function showAlert(msg, tipo = "info") {
-  const titulos = {
-    success: "Listo",
-    error: "Ocurrió un error",
-    warning: "Atención",
-    info: "Información",
-  };
-
-  Swal.fire({
-    title: titulos[tipo] || "Aviso",
-    text: msg,
-    icon: tipo,
-    position: "center",
-    timer: 3000,
-    timerProgressBar: true,
-    showConfirmButton: false,
-    showCloseButton: true,
-    background: "#ffffff",
-    color: "#1e293b",
-    customClass: {
-      popup: "swal-admin-popup",
-      title: "swal-admin-title",
-      htmlContainer: "swal-admin-text",
-    },
-  });
 }
 
 // ============================

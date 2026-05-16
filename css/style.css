@@ -3489,6 +3489,153 @@ textarea.form-control {
 }
 
 /* =============================================
+   HISTORIAL — ACORDEÓN POR AÑO
+   Agregar al final de style.css (antes de los @media queries)
+   ============================================= */
+
+.hst-accordion-wrap {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hst-accordion-item {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hst-accordion-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--gray-100);
+  border: none;
+  cursor: pointer;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  transition: background 0.2s ease;
+  text-align: left;
+}
+
+.hst-accordion-btn:hover {
+  background: var(--gray-200);
+}
+
+.hst-accordion-btn.expanded {
+  background: var(--navy);
+  color: white;
+}
+
+.hst-accordion-btn.expanded .hst-accordion-count {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hst-accordion-btn.expanded .hst-accordion-chevron {
+  color: white;
+  transform: rotate(180deg);
+}
+
+.hst-accordion-year-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.hst-accordion-year-label i {
+  font-size: 1rem;
+  color: var(--red);
+}
+
+.hst-accordion-btn.expanded .hst-accordion-year-label i {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hst-accordion-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  background: rgba(0, 0, 0, 0.06);
+  padding: 3px 10px;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.hst-accordion-btn.expanded .hst-accordion-count {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hst-accordion-chevron {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  transition:
+    transform 0.3s ease,
+    color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.hst-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 16px;
+}
+
+.hst-accordion-body.open {
+  max-height: 2000px;
+  padding: 16px;
+}
+
+.hst-accordion-body .hst-record-card {
+  margin-bottom: 12px;
+}
+
+.hst-accordion-body .hst-record-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Botón reportar error */
+.hst-report-wrap {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.hst-report-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50px;
+  padding: 8px 18px;
+  text-decoration: none;
+  background: white;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.hst-report-btn i {
+  font-size: 0.9rem;
+}
+
+.hst-report-btn:hover {
+  color: var(--red);
+  border-color: var(--red-dark);
+  background: rgba(150, 5, 5, 0.247);
+}
+/* =============================================
    26. ANIMACIONES — clases de entrada
    ============================================= */
 
@@ -3555,6 +3702,60 @@ textarea.form-control {
   100% {
     background-position: 0 0;
   }
+}
+
+/* =============================================
+   BOTÓN VOLVER ARRIBA
+   Agregar al final de style.css (antes de los @media queries)
+   ============================================= */
+
+.back-to-top {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  width: 44px;
+  height: 44px;
+  background: rgba(227, 6, 19, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  color: var(--red);
+  border: 1px solid rgba(227, 6, 19, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow:
+    0 2px 12px rgba(227, 6, 19, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  z-index: 999;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: rgba(227, 6, 19, 0.25);
+  box-shadow:
+    0 4px 20px rgba(227, 6, 19, 0.25),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-top i {
+  font-size: 1rem;
+  line-height: 1;
 }
 
 /* =============================================
