@@ -57,7 +57,7 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
 
     const ahora = Date.now();
     const ventana = 60000;
-    const limite = 5;
+    const limite = 3;
 
     const refLimit = db.collection("rate_limits").doc(ip);
 
