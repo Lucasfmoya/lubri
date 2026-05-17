@@ -1927,6 +1927,7 @@ img.img-salita {
   text-transform: uppercase;
   color: var(--gray-600);
   margin-bottom: 8px;
+  white-space: nowrap;
 }
 
 .hst-record-stat-val {
