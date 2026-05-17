@@ -1098,7 +1098,6 @@ img.img-salita {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  justify-content: center;
   width: fit-content;
 }
 
@@ -1106,13 +1105,13 @@ img.img-salita {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(227, 6, 19, 0.06);
-  border: 1px solid rgba(227, 6, 19, 0.15);
+  background: rgba(255, 255, 255, 0.12); /* antes: rgba(227,6,19,0.06) */
+  border: 1px solid rgba(255, 255, 255, 0.35); /* antes: rgba(227,6,19,0.15) */
   border-radius: 50px;
   padding: 7px 16px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--gray-200);
+  color: #ffffff; /* antes: var(--gray-200) */
 }
 
 /* =============================================

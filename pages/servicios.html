@@ -85,11 +85,6 @@
             <li class="nav-item">
               <a class="nav-link nav-button" href="./contacto.html">Contacto</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link nav-button" href="./historial.html"
-                >Historial</a
-              >
-            </li>
           </ul>
           <div class="navbar-icons d-flex align-items-center gap-2">
             <a
@@ -166,64 +161,63 @@
         </div>
       </div>
     </nav>
-    <!-- ===== PAGE HERO  ===== -->
-    <section class="page-hero">
-      <div class="page-hero-overlay"></div>
 
+    <!-- ===== PAGE HERO ===== -->
+    <section class="page-hero svc-hero">
       <div class="container page-hero-content">
-        <div class="row align-items-center g-5 hero-row-border">
-          <!-- ===== COLUMNA IZQUIERDA ===== -->
-          <div class="col-lg-6">
-            <nav aria-label="breadcrumb" data-animate="fade-left">
-              <ol class="breadcrumb svc-breadcrumb mb-4">
+        <div class="svc-hero-grid hero-row-border">
+          <div class="svc-hero-col-title" data-animate="fade-left">
+            <nav aria-label="breadcrumb" class="svc-breadcrumb">
+              <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
                   <a href="../index.html">Inicio</a>
                 </li>
                 <li class="breadcrumb-item active">Servicios</li>
               </ol>
             </nav>
-
-            <div data-animate="fade-left" data-delay="100">
-              <h1 class="page-hero-title">
-                Nuestros<br />
-                <span class="hero-accent">Servicios</span>
-              </h1>
-
-              <p class="page-hero-lead">
-                Todo lo que tu vehículo necesita, en un solo lugar.
-                <br />
-                Calidad garantizada y atención honesta.
-              </p>
-            </div>
-          </div>
-
-          <!-- ===== COLUMNA DERECHA ===== -->
-          <div class="col-lg-6 service-column">
-            <div
-              class="services-intro"
-              data-animate="fade-left"
-              data-delay="200"
+            <span
+              class="section-eyebrow"
+              style="margin-top: 12px; display: inline-block"
+              >SERVICIOS</span
             >
-              <div class="intro-strip d-flex flex-column">
-                <div class="intro-pill">
-                  <i class="bi bi-check-circle-fill"></i>
-                  <span>Productos de primera marca</span>
-                </div>
-
-                <div class="intro-pill">
-                  <i class="bi bi-check-circle-fill"></i>
-                  <span>Personal capacitado</span>
-                </div>
-
-                <div class="intro-pill">
-                  <i class="bi bi-check-circle-fill"></i>
-                  <span>Sin turno o con turno previo</span>
-                </div>
-
-                <div class="intro-pill">
-                  <i class="bi bi-check-circle-fill"></i>
-                  <span>Múltiples medios de pago</span>
-                </div>
+            <h1 class="page-hero-title">
+              Nuestros<br />
+              <span class="hero-accent">Servicios</span>
+            </h1>
+          </div>
+          <div
+            class="svc-hero-col-lead"
+            data-animate="fade-left"
+            data-delay="80"
+          >
+            <p class="svc-hero-lead-main">
+              Todo lo que tu vehículo necesita, en un solo lugar.
+            </p>
+            <p class="svc-hero-lead-sub">
+              Calidad garantizada y atención honesta.
+            </p>
+          </div>
+          <div
+            class="svc-hero-col-pills mt-4"
+            data-animate="fade-left"
+            data-delay="160"
+          >
+            <div class="intro-strip">
+              <div class="intro-pill">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Productos de primera marca</span>
+              </div>
+              <div class="intro-pill">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Personal capacitado</span>
+              </div>
+              <div class="intro-pill">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Sin turno o con turno previo</span>
+              </div>
+              <div class="intro-pill">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Múltiples medios de pago</span>
               </div>
             </div>
           </div>
@@ -238,7 +232,7 @@
           <div class="col-lg-6" data-animate="fade-right">
             <div class="srv-img-wrap">
               <img
-                src="../img/agregar-aceite.webp"
+                src="https://placehold.co/640x430/010a44/ffffff?text=Cambio+de+Aceite"
                 class="srv-img img-fluid rounded-4"
                 loading="lazy"
                 alt="Cambio de aceite"
@@ -348,7 +342,7 @@
           <div class="col-lg-6 order-1 order-lg-2" data-animate="fade-left">
             <div class="srv-img-wrap">
               <img
-                src="../img/filtros.webp"
+                src="https://placehold.co/640x430/0a1b8d/ffffff?text=Cambio+de+Filtros"
                 class="srv-img img-fluid rounded-4"
                 loading="lazy"
                 alt="Cambio de filtros"
@@ -366,7 +360,7 @@
           <div class="col-lg-6" data-animate="fade-right">
             <div class="srv-img-wrap">
               <img
-                src="../img/chequeo-general.webp"
+                src="https://placehold.co/640x430/010a44/ffffff?text=Control+General"
                 class="srv-img img-fluid rounded-4"
                 loading="lazy"
                 alt="Control general del vehículo"
@@ -388,150 +382,27 @@
             </p>
             <div class="control-grid">
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M12 2a5 5 0 0 1 5 5v7.5a6.5 6.5 0 1 1-10 0V7a5 5 0 0 1 5-5z"
-                  />
-                  <path d="M12 9v4" />
-                  <circle
-                    cx="12"
-                    cy="16"
-                    r="1.5"
-                    fill="#e30613"
-                    stroke="none"
-                  />
-                </svg>
+                <i class="bi bi-droplet-fill text-danger"></i>
                 <span>Refrigerante</span>
               </div>
-
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M7 5 Q4 9 4 12 Q4 15 7 19" />
-                  <!-- paréntesis derecho -->
-                  <path d="M17 5 Q20 9 20 12 Q20 15 17 19" />
-                  <line x1="12" y1="7" x2="12" y2="14" />
-                  <circle
-                    cx="12"
-                    cy="17"
-                    r="1.2"
-                    fill="#e30613"
-                    stroke="none"
-                  />
-                </svg>
+                <i class="bi bi-droplet-fill text-danger"></i>
                 <span>Líquido de frenos</span>
               </div>
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <circle cx="12" cy="12" r="3" />
-                  <line x1="2" y1="12" x2="9" y2="12" />
-                  <line x1="15" y1="12" x2="22" y2="12" />
-                  <line x1="12" y1="2" x2="12" y2="9" />
-                  <line x1="12" y1="15" x2="12" y2="22" />
-                </svg>
+                <i class="bi bi-droplet-fill text-danger"></i>
                 <span>Dirección hidráulica</span>
               </div>
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M3 10 Q12 2 21 10" stroke-dasharray="2 2" />
-                  <path d="M12 19 L3 11 Q12 5 21 11 Z" />
-                  <line x1="12" y1="19" x2="12" y2="22" />
-                  <circle cx="12" cy="22" r="1" fill="#e30613" stroke="none" />
-                  <line
-                    x1="12"
-                    y1="10"
-                    x2="12"
-                    y2="13"
-                    stroke="white"
-                    stroke-width="1.2"
-                  />
-                  <circle cx="12" cy="15" r="0.6" fill="white" stroke="none" />
-                </svg>
+                <i class="bi bi-droplet-fill text-danger"></i>
                 <span>Lavaparabrisas</span>
               </div>
-
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="5" y1="9" x2="10" y2="9" />
-                  <line x1="5" y1="12" x2="10" y2="12" />
-                  <line x1="5" y1="15" x2="10" y2="15" />
-                  <path d="M10 8 L10 16 Q17 16 17 12 Q17 8 10 8z" />
-                </svg>
+                <i class="bi bi-lightbulb-fill text-danger"></i>
                 <span>Luces</span>
               </div>
-
               <div class="control-item">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#e30613"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="2" y="7" width="18" height="11" rx="2" />
-                  <line x1="20" y1="11" x2="22" y2="11" />
-                  <line x1="20" y1="14" x2="22" y2="14" />
-                  <line x1="6" y1="7" x2="6" y2="5" />
-                  <line x1="10" y1="7" x2="10" y2="5" />
-                  <line x1="7" y1="11" x2="9" y2="11" />
-                  <line x1="8" y1="10" x2="8" y2="12" />
-                  <line x1="12" y1="11" x2="14" y2="11" />
-                </svg>
+                <i class="bi bi-battery-charging text-danger"></i>
                 <span>Batería (visual)</span>
               </div>
             </div>
@@ -592,7 +463,7 @@
           <div class="col-lg-6 order-1 order-lg-2" data-animate="fade-left">
             <div class="srv-img-wrap">
               <img
-                src="../img/lamparas.webp"
+                src="https://placehold.co/640x430/1b36d4/ffffff?text=Cambio+de+Lámparas"
                 class="srv-img img-fluid rounded-4"
                 loading="lazy"
                 alt="Cambio de lámparas"
@@ -613,7 +484,7 @@
           <div class="col-lg-6" data-animate="fade-right">
             <div class="srv-img-wrap">
               <img
-                src="../img/accesorios.webp"
+                src="https://placehold.co/640x430/010a44/ffffff?text=Accesorios+y+Cosmética"
                 class="srv-img img-fluid rounded-4"
                 loading="lazy"
                 alt="Accesorios y cosmética vehicular"
@@ -728,20 +599,16 @@
               </p>
               <div class="fleet-trust-grid">
                 <div class="fleet-trust-card">
-                  <i class="bi bi-building"></i>
-                  <span>Bogamac</span>
+                  <i class="bi bi-building"></i><span>Bogamac</span>
                 </div>
                 <div class="fleet-trust-card">
-                  <i class="bi bi-building"></i>
-                  <span>Supercemento</span>
+                  <i class="bi bi-building"></i><span>Supercemento</span>
                 </div>
                 <div class="fleet-trust-card">
-                  <i class="bi bi-building"></i>
-                  <span>API</span>
+                  <i class="bi bi-building"></i><span>API</span>
                 </div>
                 <div class="fleet-trust-card">
-                  <i class="bi bi-building"></i>
-                  <span>Cormecor</span>
+                  <i class="bi bi-building"></i><span>Cormecor</span>
                 </div>
               </div>
               <p class="fleet-trust-more">
@@ -802,21 +669,20 @@
           <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
             <h5 class="fw-bold footer-title mb-4">Contacto</h5>
             <div class="mb-2">
-              <i class="bi bi-geo-alt-fill text-danger me-2"></i>
-              <span>Av. O'Higgins 3111 - Córdoba</span>
+              <i class="bi bi-geo-alt-fill text-danger me-2"></i
+              ><span>Av. O'Higgins 3111 - Córdoba</span>
             </div>
             <div class="mb-2">
-              <i class="bi bi-telephone-fill text-danger me-2"></i>
-              <a href="tel:+5493516517525" class="footer-link">3516517525</a>
+              <i class="bi bi-telephone-fill text-danger me-2"></i
+              ><a href="tel:+5493516517525" class="footer-link">3516517525</a>
             </div>
             <div class="mb-2">
-              <i class="bi bi-envelope-fill text-danger me-2"></i>
-              <a
+              <i class="bi bi-envelope-fill text-danger me-2"></i
+              ><a
                 href="mailto:lubricentroohiggins@hotmail.com"
                 class="footer-link"
+                >lubricentroohiggins@hotmail.com</a
               >
-                lubricentroohiggins@hotmail.com
-              </a>
             </div>
           </div>
           <div class="col-md-3 mb-4 contact-footer text-start footer-margin">
@@ -835,13 +701,13 @@
           <div class="col-md-3 mb-4 text-start contact-footer footer-margin">
             <h5 class="fw-bold footer-title mb-3">Horarios</h5>
             <p class="mb-2">
-              <i class="bi bi-clock-fill text-white me-2"></i>
-              <strong>Lunes a Viernes:</strong><br />08:30 a 13:00 hs — 15:00 a
+              <i class="bi bi-clock-fill text-white me-2"></i
+              ><strong>Lunes a Viernes:</strong><br />08:30 a 13:00 hs — 15:00 a
               19:00 hs
             </p>
             <p class="mb-0">
-              <i class="bi bi-clock-fill text-white me-2"></i>
-              <strong>Sábados:</strong><br />08:30 a 13:00 hs
+              <i class="bi bi-clock-fill text-white me-2"></i
+              ><strong>Sábados:</strong><br />08:30 a 13:00 hs
             </p>
           </div>
         </div>
@@ -899,6 +765,6 @@
     </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/index.js?v=2.0" defer></script>
+    <script src="../js/index.js?v=2.1" defer></script>
   </body>
 </html>
