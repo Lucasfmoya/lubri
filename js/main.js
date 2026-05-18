@@ -1,5 +1,5 @@
 /* =============================================
-   LUBRICENTRO O'HIGGINS — index.js v2.0
+   LUBRICENTRO O'HIGGINS — main.js v2.0
    ============================================= */
 
 /* ===== NAVBAR: scroll suavizado ===== */
