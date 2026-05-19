@@ -219,6 +219,7 @@ if (contactForm) {
 }
 
 /* ===== RESEÑAS — carrusel minimalista ===== */
+
 (function () {
   const reviews = [
     {
@@ -267,6 +268,8 @@ if (contactForm) {
   const dotsEl = document.getElementById("rev-dots");
   const btnP = document.getElementById("rev-prev");
   const btnN = document.getElementById("rev-next");
+
+  if (!card || !dotsEl || !btnP || !btnN) return;
 
   let cur = 0;
   let busy = false;
