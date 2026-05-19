@@ -2566,7 +2566,6 @@ img.img-salita {
   box-shadow: var(--shadow);
 }
 
-/* ::before = fondo alternativo que hace crossfade sobre el base */
 .mv-card::before {
   content: "";
   position: absolute;
@@ -2589,7 +2588,6 @@ img.img-salita {
   opacity: 1;
 }
 
-/* ::after = glow rojo decorativo */
 .mv-card::after {
   content: "";
   position: absolute;
@@ -2712,6 +2710,7 @@ img.img-salita {
   margin: 0;
   transition: color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 .mv-card-mision .mv-text {
   color: rgba(255, 255, 255, 0.72);
