@@ -1066,7 +1066,7 @@ img.img-salita {
   justify-content: center;
   color: white;
   overflow: hidden;
-  min-height: 700px;
+  min-height: 500px;
 }
 
 .hero-row-border {
@@ -2366,7 +2366,7 @@ img.img-salita {
   align-items: center;
   color: white;
   overflow: hidden;
-  padding: 80px 0 72px;
+  padding: 65px 0 72px;
 }
 
 .nos-page-hero::before {
@@ -3124,48 +3124,19 @@ img.img-salita {
    25. PÁGINA DE CONTACTO
    ============================================= */
 
-/* Hero contacto */
-.contact-hero {
-  background: linear-gradient(
-    135deg,
-    var(--navy) 0%,
-    var(--blue) 55%,
-    #1a2f9e 100%
-  );
-  min-height: 38vh;
+.hero-section-contacto {
+  position: relative;
+  background-image:
+    linear-gradient(90deg, rgba(1, 10, 68, 0.88) 45%, rgba(1, 10, 68, 0.25)),
+    url("../img/interior2-mejorada.webp");
+  background-size: cover;
+  background-position: center;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: center;
   color: white;
   overflow: hidden;
-  position: relative;
-}
-
-.contact-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.04) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
-  pointer-events: none;
-}
-
-.contact-hero::after {
-  content: "";
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(227, 6, 19, 0.14) 0%,
-    transparent 65%
-  );
-  pointer-events: none;
+  min-height: 500px;
 }
 
 .contact-hero-content {
@@ -3184,7 +3155,6 @@ img.img-salita {
   font-weight: 900;
   line-height: 1.05;
   text-transform: uppercase;
-  letter-spacing: -1px;
   margin: 10px 0 14px;
 }
 
@@ -3197,7 +3167,7 @@ img.img-salita {
 }
 .text-red {
   font-weight: 800;
-  color: var(--red);
+  color: var(--red-dark);
 }
 
 /* Hero grid */
@@ -3210,7 +3180,7 @@ img.img-salita {
 }
 
 .contact-hero-info {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.151);
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 16px;
   padding: 6px 20px;
@@ -3244,7 +3214,7 @@ img.img-salita {
 }
 
 .chi-icon.red {
-  background: rgba(227, 6, 19, 0.3);
+  background: rgba(197, 3, 16, 0.74);
 }
 
 .chi-label {
@@ -3253,7 +3223,7 @@ img.img-salita {
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.904);
   margin-bottom: 2px;
 }
 
@@ -3419,7 +3389,7 @@ textarea.form-control {
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.904);
   margin-bottom: 4px;
   display: block;
 }
@@ -3452,7 +3422,7 @@ textarea.form-control {
 }
 
 .hours-day {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.904);
   font-weight: 500;
   flex-shrink: 0;
 }
