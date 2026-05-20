@@ -11,7 +11,7 @@
    ============================================= */
 :root {
   --red: #e30613;
-  --red-dark: #c4000f;
+  --red-dark: #f30216;
   --navy: #010a44;
   --blue: #0a1b8d;
   --blue-mid: #1b36d4;
@@ -1066,7 +1066,7 @@ img.img-salita {
   justify-content: center;
   color: white;
   overflow: hidden;
-  min-height: 500px;
+  min-height: 565px;
 }
 
 .hero-row-border {
@@ -3128,7 +3128,7 @@ img.img-salita {
   position: relative;
   background-image:
     linear-gradient(90deg, rgba(1, 10, 68, 0.88) 45%, rgba(1, 10, 68, 0.25)),
-    url("../img/interior2-mejorada.webp");
+    url("../img/contacto3.webp");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -3136,14 +3136,14 @@ img.img-salita {
   justify-content: center;
   color: white;
   overflow: hidden;
-  min-height: 500px;
+  min-height: 565px;
 }
 
 .contact-hero-content {
   position: relative;
   z-index: 2;
-  padding-top: 40px;
-  padding-bottom: 56px;
+  padding-top: 50px;
+  padding-bottom: 40px;
 }
 
 .contact-full-width {
