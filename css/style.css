@@ -989,42 +989,6 @@ img.img-salita {
 }
 
 /* =============================================
-   13. FLOTAS (index)
-   ============================================= */
-.fleet-section {
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  color: white;
-}
-
-.fleet-text {
-  max-width: 620px;
-  opacity: 0.88;
-  font-size: 1.05rem;
-}
-
-.fleet-logos {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px;
-}
-
-.fleet-badge {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 12px 24px;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background var(--transition);
-}
-
-.fleet-badge:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-/* =============================================
    14. MEDIOS DE PAGO
    ============================================= */
 .payment-grid {
@@ -1089,6 +1053,22 @@ img.img-salita {
 /* =============================================
    16. INTRO STRIP (servicios.html)
    ============================================= */
+
+.hero-section-ser {
+  position: relative;
+  background-image:
+    linear-gradient(90deg, rgba(1, 10, 68, 0.88) 45%, rgba(1, 10, 68, 0.25)),
+    url("../img/cambio-de-aceite.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+  min-height: 700px;
+}
+
 .hero-row-border {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 40px;
@@ -2711,7 +2691,6 @@ img.img-salita {
   transition: color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
 .mv-card-mision .mv-text {
   color: rgba(255, 255, 255, 0.72);
 }
@@ -4045,6 +4024,10 @@ textarea.form-control {
   }
   #nosCarousel .carousel-item img {
     max-height: 250px;
+  }
+
+  .hero-section-ser {
+    min-height: 100svh;
   }
 }
 
