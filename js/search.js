@@ -113,6 +113,7 @@ function renderCard(d, patente, esMasReciente) {
         </div>
       </div>
     </div>
+    
   `;
 }
 
