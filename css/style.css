@@ -2351,10 +2351,25 @@ img.img-salita {
    ============================================= */
 
 /* Hero — stats pill */
+
+.nos-page-hero {
+  position: relative;
+  background-image:
+    linear-gradient(90deg, rgba(1, 10, 68, 0.88) 45%, rgba(1, 10, 68, 0.25)),
+    url("../img/nosotros.webp");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+  min-height: 565px;
+}
 /* ═══════════════════════════════════════
          HERO NOSOTROS
          ═══════════════════════════════════════ */
-.nos-page-hero {
+/* .nos-page-hero {
   position: relative;
   background: linear-gradient(
     135deg,
@@ -2395,7 +2410,7 @@ img.img-salita {
     transparent 70%
   );
   pointer-events: none;
-}
+} */
 
 .nos-hero-inner {
   position: relative;
