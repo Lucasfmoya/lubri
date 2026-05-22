@@ -401,13 +401,6 @@ select {
   display: none;
 }
 
-.page-hero-content {
-  position: relative;
-  z-index: 2;
-  padding-bottom: 56px;
-  padding-top: 40px;
-}
-
 .page-hero-title {
   font-size: clamp(2.4rem, 5.5vw, 4rem);
   font-weight: 900;
@@ -424,27 +417,27 @@ select {
   max-width: 440px;
 }
 
-.svc-breadcrumb {
-  margin-bottom: 16px;
+.hero-breadcrumb {
+  padding: 50px 20px 16px 20px;
 }
 
-.svc-breadcrumb .breadcrumb-item a {
+.hero-breadcrumb .breadcrumb-item a {
   color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
   font-size: 0.82rem;
   transition: color 0.2s;
 }
 
-.svc-breadcrumb .breadcrumb-item a:hover {
+.hero-breadcrumb .breadcrumb-item a:hover {
   color: white;
 }
 
-.svc-breadcrumb .breadcrumb-item.active {
+.hero-breadcrumb .breadcrumb-item.active {
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.82rem;
 }
 
-.svc-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+.hero-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   color: rgba(255, 255, 255, 0.3);
 }
 
@@ -3157,7 +3150,6 @@ img.img-salita {
 .contact-hero-content {
   position: relative;
   z-index: 2;
-  padding-top: 50px;
   padding-bottom: 40px;
 }
 
@@ -3190,8 +3182,7 @@ img.img-salita {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
-  align-items: center;
-  margin-top: 16px;
+  align-items: start;
 }
 
 .contact-hero-info {
