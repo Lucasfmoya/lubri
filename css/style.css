@@ -1496,7 +1496,28 @@ img.img-salita {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.03);
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.09) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.footer-pro::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(227, 6, 19, 0.13) 0%,
+    rgba(227, 6, 19, 0.04) 45%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -2483,6 +2504,10 @@ img.img-salita {
   gap: 24px;
 }
 
+/* ================================================
+   MISIÓN / VISIÓN
+   ================================================ */
+
 .mv-card {
   border-radius: 20px;
   padding: 36px 32px;
@@ -2491,7 +2516,7 @@ img.img-salita {
   cursor: default;
 }
 
-/* Fondo base de cada card */
+/* Fondos base */
 .mv-card-mision {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
   box-shadow: 0 16px 48px rgba(1, 10, 68, 0.3);
@@ -2503,20 +2528,20 @@ img.img-salita {
   box-shadow: var(--shadow);
 }
 
+/* ── ::before — capa de inversión de fondo ── */
 .mv-card::before {
   content: "";
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 0;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mv-card-mision::before {
   background: white;
 }
-
 .mv-card-vision::before {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
 }
@@ -2525,6 +2550,7 @@ img.img-salita {
   opacity: 1;
 }
 
+/* ── ::after — glow rojo decorativo ── */
 .mv-card::after {
   content: "";
   position: absolute;
@@ -2544,6 +2570,7 @@ img.img-salita {
   transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* visible cuando la card tiene fondo azul */
 .mv-card-mision::after {
   opacity: 1;
 }
@@ -2554,6 +2581,43 @@ img.img-salita {
   opacity: 1;
 }
 
+/* ── Contenido — z-index sobre los pseudo-elementos ── */
+.mv-icon,
+.mv-label,
+.mv-title,
+.mv-text {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Label — siempre rojo ── */
+.mv-label {
+  color: var(--red);
+}
+
+/* ── Barrita roja bajo el título ── */
+.mv-title::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: var(--red);
+  border-radius: 2px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* visible cuando la card tiene fondo azul */
+.mv-card-mision .mv-title::after {
+  opacity: 1;
+}
+.mv-card-mision.mv-inverted .mv-title::after {
+  opacity: 0;
+}
+.mv-card-vision.mv-inverted .mv-title::after {
+  opacity: 1;
+}
 /* Todo el contenido por encima de los pseudo-elementos */
 .mv-icon,
 .mv-label,
@@ -2598,25 +2662,14 @@ img.img-salita {
 /* Labels */
 .mv-label {
   display: inline-block;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 8px;
   transition: color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.mv-card-mision .mv-label {
-  color: rgba(255, 255, 255, 0.4);
-}
-.mv-card-vision .mv-label {
+.mv-card-mision .mv-card-vision .mv-label {
   color: var(--red);
-}
-.mv-card-mision.mv-inverted .mv-label {
-  color: var(--red);
-}
-.mv-card-vision.mv-inverted .mv-label {
-  color: rgba(255, 255, 255, 0.4);
 }
 
 /* Títulos */
