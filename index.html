@@ -561,7 +561,10 @@
               Consultá en cualquier momento la fecha, los kilómetros y cuándo te
               toca el próximo service — solo con tu patente.
             </p>
-            <div class="historial-pills mb-4">
+          </div>
+
+          <div class="col-lg-6" data-animate="fade-left">
+            <div class="historial-pills mt-4 mb-4">
               <span class="historial-pill">
                 <i class="bi bi-calendar-check"></i>Fecha del service
               </span>
@@ -572,54 +575,42 @@
                 <i class="bi bi-bell"></i>Próximo service
               </span>
             </div>
-            <a href="./pages/historial.html" class="btn btn-danger btn-lg">
-              <i class="bi bi-search me-2"></i>Consultar mi historial
-            </a>
-          </div>
-
-          <div class="col-lg-6" data-animate="fade-left">
-            <div class="hst-card">
-              <div class="hst-accent-line"></div>
-
-              <div class="hst-card-top">
-                <div>
-                  <div class="hst-vehicle-sub">Vehiculo</div>
-                  <div class="hst-vehicle">Toyota Corolla</div>
+            <div class="hst-record-card is-recent">
+              <div class="hst-record-top">
+                <div class="hst-record-date-wrap">
+                  <span class="hst-record-day">14</span>
+                  <div class="hst-record-month-year">
+                    <span class="hst-record-month">mar</span>
+                    <span class="hst-record-year">2025</span>
+                  </div>
                 </div>
-                <div class="hst-plate">MNO456</div>
-              </div>
-
-              <hr class="hst-divider" />
-
-              <div class="hst-stats">
-                <div class="hst-stat-box">
-                  <span class="hst-stat-label">Último service</span>
-                  <span class="hst-stat-val">14 mar</span>
-                  <span class="hst-stat-sub">2025</span>
-                </div>
-                <div class="hst-stat-box">
-                  <span class="hst-stat-label">Kilómetros</span>
-                  <span class="hst-stat-val">68.400</span>
-                  <span class="hst-stat-sub">km al momento</span>
+                <div class="hst-record-top-right">
+                  <span class="hst-tag-reciente"
+                    ><i class="bi bi-star-fill"></i>Más reciente</span
+                  >
+                  <span class="hst-plate-tag">MNO456</span>
                 </div>
               </div>
-
-              <div class="hst-next">
-                <div>
-                  <p class="hst-next-label">Próximo service</p>
-                  <p class="hst-next-val">78.400 km · sep 2025</p>
+              <div class="hst-record-body">
+                <div class="hst-record-stat">
+                  <div class="hst-record-stat-label">
+                    <i class="bi bi-speedometer2"></i>Km actuales
+                  </div>
+                  <div class="hst-record-stat-val">68.400</div>
                 </div>
-                <span class="hst-next-dot" aria-hidden="true"></span>
+                <div class="hst-record-divider"></div>
+                <div class="hst-record-stat">
+                  <div class="hst-record-stat-label">
+                    <i class="bi bi-arrow-right-circle"></i>Próximo service
+                  </div>
+                  <div class="hst-record-stat-val is-next">78.400</div>
+                </div>
               </div>
-
-              <div class="hst-card-footer">
-                <span class="hst-badge-ok">
-                  <i class="bi bi-check-circle-fill"></i>Historial al día
-                </span>
-                <span class="hst-search-hint">
-                  <i class="bi bi-search"></i>Buscá tu patente
-                </span>
-              </div>
+            </div>
+            <div class="text-center">
+              <a href="./pages/historial.html" class="btn btn-danger btn-lg">
+                <i class="bi bi-search me-2"></i>Consultar mi historial
+              </a>
             </div>
           </div>
         </div>
