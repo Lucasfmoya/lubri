@@ -3381,3 +3381,810 @@ textarea.form-control {
   flex-direction: column;
   gap: 10px;
 }
+
+/* =============================================
+   ADMIN DASHBOARD — style block
+   Agregar al final de css/style.css
+   ============================================= */
+
+/* ── BASE ── */
+.adm-body {
+  background: #07102e;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(227,6,19,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 80%, rgba(27,54,212,0.12) 0%, transparent 55%);
+  min-height: 100vh;
+  padding: 0;
+  display: block;
+  font-family: "Google Sans", sans-serif;
+}
+
+.adm-hidden { display: none !important; }
+
+/* ── SHELL / LAYOUT ── */
+.adm-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.adm-sidebar {
+  background: rgba(255,255,255,0.03);
+  border-right: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.adm-sidebar-logo {
+  padding: 0 24px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 20px;
+}
+
+.adm-sidebar-logo img {
+  max-width: 160px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+}
+
+.adm-sidebar-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 0 24px 8px;
+  display: block;
+}
+
+.adm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 24px;
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: color 0.2s, background 0.2s;
+  position: relative;
+  font-family: "Google Sans", sans-serif;
+}
+
+.adm-nav-item i {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+.adm-nav-item:hover {
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.04);
+}
+
+.adm-nav-item.active {
+  color: #fff;
+  background: rgba(227,6,19,0.12);
+}
+
+.adm-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: #e30613;
+  border-radius: 0 3px 3px 0;
+}
+
+.adm-sidebar-spacer { flex: 1; }
+
+/* ── USER PILL ── */
+.adm-user-pill {
+  margin: 0 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adm-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e30613, #c00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.adm-user-info { flex: 1; min-width: 0; }
+
+.adm-user-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adm-user-role {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 1px;
+}
+
+.adm-logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.85rem;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adm-logout-btn:hover {
+  color: #ff6b6b;
+  background: rgba(227,6,19,0.1);
+}
+
+/* ── MAIN ── */
+.adm-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.adm-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.adm-page-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.adm-page-subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  margin: 2px 0 0;
+}
+
+.adm-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  background: rgba(5,150,105,0.12);
+  color: #34d399;
+  border: 1px solid rgba(52,211,153,0.2);
+}
+
+.adm-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: adm-pulse-dot 2s infinite;
+}
+
+@keyframes adm-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── CONTENT ── */
+.adm-content {
+  flex: 1;
+  padding: 32px 36px;
+  overflow-y: auto;
+}
+
+/* ── SPINNER ── */
+#authLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+.adm-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: #e30613;
+  border-radius: 50%;
+  animation: adm-spin 0.8s linear infinite;
+}
+
+@keyframes adm-spin { to { transform: rotate(360deg); } }
+
+/* ── LOGIN PANEL ── */
+.adm-login-wrap {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.adm-login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.adm-login-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.adm-login-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+/* ── STAT CARDS ── */
+.adm-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.adm-stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.adm-stat-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+}
+
+.adm-stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: 0 0 14px 14px;
+}
+
+.adm-stat-red::after   { background: #e30613; }
+.adm-stat-blue::after  { background: #1b36d4; }
+.adm-stat-green::after { background: #059669; }
+
+.adm-stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.adm-stat-label i { font-size: 0.8rem; }
+
+.adm-stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.adm-stat-active {
+  font-size: 1rem !important;
+  margin-top: 4px;
+  color: #34d399 !important;
+}
+
+.adm-stat-sub {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  margin-top: 5px;
+}
+
+/* ── PANELS GRID ── */
+.adm-panels {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
+
+.adm-panel {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.adm-panel-head {
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adm-panel-head-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  flex: 1;
+}
+
+.adm-panel-head-sub {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.adm-panel-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.adm-icon-red   { background: rgba(227,6,19,0.15);  color: #e30613; }
+.adm-icon-blue  { background: rgba(27,54,212,0.15); color: #6080f5; }
+.adm-icon-green { background: rgba(5,150,105,0.15); color: #34d399; }
+
+.adm-panel-body { padding: 22px; }
+
+/* ── DROP ZONE ── */
+.adm-drop-zone {
+  border: 1.5px dashed rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 36px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+  background: rgba(255,255,255,0.02);
+}
+
+.adm-drop-zone:hover,
+.adm-drop-zone.dragover {
+  border-color: #e30613;
+  background: rgba(227,6,19,0.05);
+}
+
+.adm-drop-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(227,6,19,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 1.4rem;
+  color: #e30613;
+  transition: background 0.25s, transform 0.2s;
+}
+
+.adm-drop-zone:hover .adm-drop-icon-wrap {
+  transform: scale(1.08);
+  background: rgba(227,6,19,0.18);
+}
+
+.adm-drop-title {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.adm-drop-hint {
+  color: rgba(255,255,255,0.28);
+  font-size: 0.75rem;
+}
+
+/* ── FILE INFO ROW ── */
+.adm-file-info-row {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 11px 14px;
+  margin-top: 14px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #60c8f5;
+}
+
+.adm-file-info-row.visible { display: flex; }
+
+.adm-file-info-row i { font-size: 1rem; color: #60c8f5; }
+
+#fileInfoName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adm-file-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.85rem;
+  margin-left: auto;
+  padding: 2px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.adm-file-remove:hover { color: #ff6b6b; }
+
+/* ── UPLOAD BUTTON ── */
+.adm-upload-btn {
+  width: 100%;
+  background: #e30613;
+  border: none;
+  border-radius: 11px;
+  padding: 14px;
+  color: #fff;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.93rem;
+  font-weight: 700;
+  margin-top: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 6px 20px rgba(227,6,19,0);
+}
+
+.adm-upload-btn:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(227,6,19,0.3);
+}
+
+.adm-upload-btn:not(:disabled):hover {
+  background: #f30216;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(227,6,19,0.45);
+}
+
+.adm-upload-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── LOG ── */
+.adm-log-wrap { margin-top: 16px; }
+
+.adm-log-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 8px;
+}
+
+.adm-log {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 10px 14px;
+  height: 90px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  font-family: monospace;
+  line-height: 1.65;
+}
+
+.adm-log div { padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.adm-log div.success { color: #34d399; }
+.adm-log div.error   { color: #f87171; }
+
+/* ── FORM FIELDS ── */
+.adm-field { margin-bottom: 14px; }
+
+.adm-field label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.adm-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.adm-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: #fff;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.adm-input::placeholder { color: rgba(255,255,255,0.22); }
+
+.adm-input:focus {
+  border-color: rgba(255,255,255,0.32);
+  background: rgba(255,255,255,0.09);
+}
+
+.adm-input.has-toggle { padding-right: 44px; }
+
+/* ── EYE BUTTON ── */
+.adm-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.95rem;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  line-height: 1;
+  z-index: 1;
+}
+
+.adm-eye-btn:hover { color: rgba(255,255,255,0.7); }
+
+/* ── GOOGLE BUTTON ── */
+.adm-google-btn {
+  width: 100%;
+  background: #fff;
+  border: none;
+  border-radius: 11px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  cursor: pointer;
+  font-family: "Google Sans", sans-serif;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.adm-google-btn:hover {
+  background: #f1f3f4;
+  transform: translateY(-1px);
+}
+
+/* ── SEPARATOR ── */
+.adm-separator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.adm-separator::before,
+.adm-separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+.adm-separator span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── SUBMIT / CHANGE PASS BUTTON ── */
+.adm-submit-btn {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px;
+  color: #fff;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.adm-submit-btn:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-1px);
+}
+
+.adm-submit-btn--top { margin-top: 6px; }
+
+/* ── SECURITY - unavailable msg ── */
+.adm-pass-unavailable {
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
+}
+
+/* ── INSTRUCTIONS ── */
+.adm-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.adm-instr-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.adm-instr-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.adm-instr-num--red {
+  background: rgba(227,6,19,0.12);
+  color: #e30613;
+}
+
+.adm-instr-num--green {
+  background: rgba(5,150,105,0.15);
+  color: #34d399;
+  font-size: 0.85rem;
+}
+
+.adm-instr-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 2px;
+}
+
+.adm-instr-desc {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── FOOTER ── */
+.adm-footer {
+  padding: 14px 36px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.adm-footer-note {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  margin: 0;
+}
+
+.adm-footer-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.adm-footer-link:hover { color: rgba(255,255,255,0.65); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .adm-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .adm-sidebar {
+    height: auto;
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    gap: 6px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .adm-sidebar-logo { padding: 0; border: none; margin: 0; }
+  .adm-sidebar-logo img { max-width: 100px; }
+  .adm-sidebar-label { display: none; }
+  .adm-user-pill { margin: 0; }
+  .adm-sidebar-spacer { display: none; }
+
+  .adm-stats-grid { grid-template-columns: 1fr 1fr; }
+  .adm-panels     { grid-template-columns: 1fr; }
+
+  .adm-content  { padding: 20px 16px; }
+  .adm-topbar   { padding: 16px; }
+  .adm-footer   { padding: 12px 16px; }
+}
+
+@media (max-width: 480px) {
+  .adm-stats-grid { grid-template-columns: 1fr; }
+}
