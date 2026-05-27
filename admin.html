@@ -13,9 +13,9 @@
     <div class="adm-shell">
 
       <!-- ══════════════════════════════
-           SIDEBAR
+           SIDEBAR — oculto hasta auth
       ══════════════════════════════ -->
-      <aside class="adm-sidebar">
+      <aside class="adm-sidebar adm-hidden" id="adminSidebar">
         <div class="adm-sidebar-logo">
           <img src="./img/logo-ovalado.png" alt="Lubricentro O'Higgins" />
         </div>
@@ -24,6 +24,9 @@
 
         <button class="adm-nav-item active" data-section="import">
           <i class="bi bi-cloud-upload-fill"></i> Importar datos
+        </button>
+        <button class="adm-nav-item" data-section="search">
+          <i class="bi bi-search"></i> Buscar patente
         </button>
         <button class="adm-nav-item" data-section="security">
           <i class="bi bi-shield-lock-fill"></i> Seguridad
@@ -151,7 +154,7 @@
             <!-- PANELS -->
             <div class="adm-panels">
 
-              <!-- Import -->
+              <!-- ── IMPORTAR ── -->
               <div class="adm-panel" id="sectionImport">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-red">
@@ -197,7 +200,41 @@
                 </div>
               </div>
 
-              <!-- Security (hidden by default) -->
+              <!-- ── BUSCAR / EDITAR ── -->
+              <div class="adm-panel adm-hidden" id="sectionSearch">
+                <div class="adm-panel-head">
+                  <div class="adm-panel-icon adm-icon-blue">
+                    <i class="bi bi-search"></i>
+                  </div>
+                  <div>
+                    <div class="adm-panel-head-title">Buscar y editar registro</div>
+                    <div class="adm-panel-head-sub">Por número de patente</div>
+                  </div>
+                </div>
+                <div class="adm-panel-body">
+
+                  <div style="display:flex; gap:10px; margin-bottom:8px;">
+                    <input type="text" id="searchPatente" class="adm-input"
+                      placeholder="Ej: AB123CD"
+                      style="flex:1; text-transform:uppercase; letter-spacing:3px; font-weight:700;"
+                      maxlength="7" />
+                    <button id="btnSearchPatente" class="adm-upload-btn"
+                      style="width:auto; padding:0 20px; margin-top:0; opacity:1; cursor:pointer;">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                  <p style="font-size:12px; color:rgba(255,255,255,0.28); margin-bottom:20px;">
+                    Formatos válidos: <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">ABC123</code>
+                    &nbsp;o&nbsp;
+                    <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">AB123CD</code>
+                  </p>
+
+                  <div id="searchResults"></div>
+
+                </div>
+              </div>
+
+              <!-- ── SEGURIDAD ── -->
               <div class="adm-panel adm-hidden" id="sectionSecurity">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-blue">
@@ -254,7 +291,7 @@
                 </div>
               </div>
 
-              <!-- Right col: instrucciones -->
+              <!-- ── INSTRUCCIONES (col derecha de importar) ── -->
               <div class="adm-panel" id="sectionImportSide">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-green">
