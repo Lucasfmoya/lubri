@@ -3306,3 +3306,78 @@ textarea.form-control {
     font-size: 0.95rem;
   }
 }
+
+
+
+.adm-separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+.adm-separator::before,
+.adm-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+.adm-separator span {
+  color: rgba(255,255,255,0.3);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.adm-email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.adm-input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: white;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.adm-input::placeholder { color: rgba(255,255,255,0.3); }
+.adm-input:focus { border-color: rgba(255,255,255,0.4); }
+
+.adm-btn-email {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 12px;
+  color: white;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.adm-btn-email:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-1px);
+}
+
+.adm-section-label {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.adm-change-pass {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

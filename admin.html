@@ -69,6 +69,29 @@
             </svg>
             Iniciar sesión con Google
           </button>
+          <!-- Separador -->
+          <div class="adm-separator">
+            <span>o</span>
+          </div>
+
+          <!-- Login con email/contraseña -->
+          <div class="adm-email-form">
+            <input
+              type="email"
+              id="emailInput"
+              class="adm-input"
+              placeholder="Correo electrónico"
+              autocomplete="email"
+            />
+            <input
+              type="password"
+              id="passInput"
+              class="adm-input"
+              placeholder="Contraseña"
+              autocomplete="current-password"
+            />
+            <button id="btnLoginEmail" class="adm-btn-email">Ingresar</button>
+          </div>
         </div>
 
         <!-- PANEL ADMIN -->
@@ -163,6 +186,32 @@
           class="btn btn-outline-light btn-sm adm-footer-btn"
           >Página principal</a
         >
+      </div>
+      <!-- Cambio de contraseña — solo visible para login email/pass -->
+      <div id="changePassForm" style="display: none" class="adm-change-pass">
+        <hr class="adm-divider" />
+        <p class="adm-section-label">Cambiar contraseña</p>
+        <input
+          type="password"
+          id="currentPass"
+          class="adm-input"
+          placeholder="Contraseña actual"
+        />
+        <input
+          type="password"
+          id="newPass"
+          class="adm-input"
+          placeholder="Nueva contraseña (mín. 8 caracteres)"
+        />
+        <input
+          type="password"
+          id="confirmPass"
+          class="adm-input"
+          placeholder="Confirmar nueva contraseña"
+        />
+        <button id="btnChangePass" class="adm-btn-email mt-2">
+          Actualizar contraseña
+        </button>
       </div>
     </div>
 
