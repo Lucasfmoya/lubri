@@ -4,14 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Panel Admin | Lubricentro O'Higgins</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body class="adm-body">
     <div class="adm-shell">
-
       <!-- ══════════════════════════════
            SIDEBAR — oculto hasta auth
       ══════════════════════════════ -->
@@ -33,7 +38,12 @@
         </button>
 
         <div class="adm-sidebar-spacer"></div>
-
+        <div class="adm-theme-toggle" id="themeToggle">
+          <span>Modo oscuro</span>
+          <div class="adm-toggle-track">
+            <div class="adm-toggle-thumb"></div>
+          </div>
+        </div>
         <!-- user pill — shown only when logged in -->
         <div class="adm-user-pill adm-hidden" id="userPill">
           <div class="adm-user-avatar" id="userAvatar">?</div>
@@ -51,12 +61,15 @@
            MAIN
       ══════════════════════════════ -->
       <div class="adm-main">
-
         <!-- TOPBAR -->
         <div class="adm-topbar">
           <div>
-            <p class="adm-page-title" id="topbarTitle">Panel de administración</p>
-            <p class="adm-page-subtitle">Lubricentro O'Higgins — Área interna</p>
+            <p class="adm-page-title" id="topbarTitle">
+              Panel de administración
+            </p>
+            <p class="adm-page-subtitle">
+              Lubricentro O'Higgins — Área interna
+            </p>
           </div>
           <div class="adm-status-badge adm-hidden" id="statusBadge">
             <span class="adm-status-dot"></span>
@@ -66,7 +79,6 @@
 
         <!-- CONTENT -->
         <div class="adm-content">
-
           <!-- ░░ LOADER ░░ -->
           <div id="authLoader">
             <div class="adm-spinner"></div>
@@ -75,19 +87,32 @@
           <!-- ░░ LOGIN PANEL ░░ -->
           <div id="loginPanel" class="adm-hidden">
             <div class="adm-login-wrap">
-
               <div class="adm-login-header">
                 <p class="adm-login-title">Acceso restringido</p>
-                <p class="adm-login-subtitle">Solo para administradores autorizados</p>
+                <p class="adm-login-subtitle">
+                  Solo para administradores autorizados
+                </p>
               </div>
 
               <!-- Google -->
               <button id="btnLoginBtn" class="adm-google-btn">
                 <svg width="18" height="18" viewBox="0 0 48 48">
-                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                  <path
+                    fill="#EA4335"
+                    d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                  />
+                  <path
+                    fill="#4285F4"
+                    d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                  />
                 </svg>
                 Continuar con Google
               </button>
@@ -97,19 +122,35 @@
               <!-- Email -->
               <div class="adm-field">
                 <label for="emailInput">Correo electrónico</label>
-                <input type="email" id="emailInput" class="adm-input"
+                <input
+                  type="email"
+                  id="emailInput"
+                  class="adm-input"
                   placeholder="admin@ejemplo.com"
-                  autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="none"
+                  spellcheck="false"
+                />
               </div>
 
               <!-- Contraseña -->
               <div class="adm-field">
                 <label for="passInput">Contraseña</label>
                 <div class="adm-input-wrap">
-                  <input type="password" id="passInput" class="adm-input has-toggle"
+                  <input
+                    type="password"
+                    id="passInput"
+                    class="adm-input has-toggle"
                     placeholder="••••••••"
-                    autocomplete="new-password" />
-                  <button class="adm-eye-btn" id="togglePassBtn" type="button" aria-label="Mostrar/ocultar contraseña">
+                    autocomplete="new-password"
+                  />
+                  <button
+                    class="adm-eye-btn"
+                    id="togglePassBtn"
+                    type="button"
+                    aria-label="Mostrar/ocultar contraseña"
+                  >
                     <i class="bi bi-eye" id="eyeIcon"></i>
                   </button>
                 </div>
@@ -123,7 +164,6 @@
 
           <!-- ░░ ADMIN PANEL ░░ -->
           <div id="adminPanel" class="adm-hidden">
-
             <!-- STATS -->
             <div class="adm-stats-grid">
               <div class="adm-stat-card adm-stat-red">
@@ -138,7 +178,9 @@
                   <i class="bi bi-arrow-up-circle-fill"></i> Última importación
                 </div>
                 <div class="adm-stat-value" id="statLast">—</div>
-                <div class="adm-stat-sub" id="statLastDate">sin importaciones aún</div>
+                <div class="adm-stat-sub" id="statLastDate">
+                  sin importaciones aún
+                </div>
               </div>
               <div class="adm-stat-card adm-stat-green">
                 <div class="adm-stat-label">
@@ -153,7 +195,6 @@
 
             <!-- PANELS -->
             <div class="adm-panels">
-
               <!-- ── IMPORTAR ── -->
               <div class="adm-panel" id="sectionImport">
                 <div class="adm-panel-head">
@@ -162,27 +203,37 @@
                   </div>
                   <div>
                     <div class="adm-panel-head-title">Importar servicios</div>
-                    <div class="adm-panel-head-sub">Subí un Excel (.xlsx / .xls)</div>
+                    <div class="adm-panel-head-sub">
+                      Subí un Excel (.xlsx / .xls)
+                    </div>
                   </div>
                 </div>
                 <div class="adm-panel-body">
-
                   <div class="adm-drop-zone" id="dropZone">
                     <div class="adm-drop-icon-wrap">
                       <i class="bi bi-cloud-upload-fill"></i>
                     </div>
                     <div class="adm-drop-title">Arrastrá tu archivo acá</div>
-                    <div class="adm-drop-hint">o hacé click para seleccionar — .xlsx / .xls</div>
+                    <div class="adm-drop-hint">
+                      o hacé click para seleccionar — .xlsx / .xls
+                    </div>
                   </div>
 
-                  <input type="file" id="fileInput"
+                  <input
+                    type="file"
+                    id="fileInput"
                     accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
-                    hidden />
+                    hidden
+                  />
 
                   <div class="adm-file-info-row" id="fileInfoRow">
                     <i class="bi bi-file-earmark-check-fill"></i>
                     <span id="fileInfoName"></span>
-                    <button class="adm-file-remove" id="btnEliminar" title="Quitar archivo">
+                    <button
+                      class="adm-file-remove"
+                      id="btnEliminar"
+                      title="Quitar archivo"
+                    >
                       <i class="bi bi-x-lg"></i>
                     </button>
                   </div>
@@ -196,7 +247,6 @@
                     <div class="adm-log-label">Log de actividad</div>
                     <div class="adm-log" id="log"></div>
                   </div>
-
                 </div>
               </div>
 
@@ -207,30 +257,69 @@
                     <i class="bi bi-search"></i>
                   </div>
                   <div>
-                    <div class="adm-panel-head-title">Buscar y editar registro</div>
+                    <div class="adm-panel-head-title">
+                      Buscar y editar registro
+                    </div>
                     <div class="adm-panel-head-sub">Por número de patente</div>
                   </div>
                 </div>
                 <div class="adm-panel-body">
-
-                  <div style="display:flex; gap:10px; margin-bottom:8px;">
-                    <input type="text" id="searchPatente" class="adm-input"
+                  <div style="display: flex; gap: 10px; margin-bottom: 8px">
+                    <input
+                      type="text"
+                      id="searchPatente"
+                      class="adm-input"
                       placeholder="Ej: AB123CD"
-                      style="flex:1; text-transform:uppercase; letter-spacing:3px; font-weight:700;"
-                      maxlength="7" />
-                    <button id="btnSearchPatente" class="adm-upload-btn"
-                      style="width:auto; padding:0 20px; margin-top:0; opacity:1; cursor:pointer;">
+                      style="
+                        flex: 1;
+                        text-transform: uppercase;
+                        letter-spacing: 3px;
+                        font-weight: 700;
+                      "
+                      maxlength="7"
+                    />
+                    <button
+                      id="btnSearchPatente"
+                      class="adm-upload-btn"
+                      style="
+                        width: auto;
+                        padding: 0 20px;
+                        margin-top: 0;
+                        opacity: 1;
+                        cursor: pointer;
+                      "
+                    >
                       <i class="bi bi-search"></i>
                     </button>
                   </div>
-                  <p style="font-size:12px; color:rgba(255,255,255,0.28); margin-bottom:20px;">
-                    Formatos válidos: <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">ABC123</code>
+                  <p
+                    style="
+                      font-size: 12px;
+                      color: rgba(255, 255, 255, 0.28);
+                      margin-bottom: 20px;
+                    "
+                  >
+                    Formatos válidos:
+                    <code
+                      style="
+                        background: rgba(255, 255, 255, 0.08);
+                        padding: 1px 6px;
+                        border-radius: 4px;
+                      "
+                      >ABC123</code
+                    >
                     &nbsp;o&nbsp;
-                    <code style="background:rgba(255,255,255,0.08); padding:1px 6px; border-radius:4px;">AB123CD</code>
+                    <code
+                      style="
+                        background: rgba(255, 255, 255, 0.08);
+                        padding: 1px 6px;
+                        border-radius: 4px;
+                      "
+                      >AB123CD</code
+                    >
                   </p>
 
                   <div id="searchResults"></div>
-
                 </div>
               </div>
 
@@ -242,7 +331,9 @@
                   </div>
                   <div>
                     <div class="adm-panel-head-title">Seguridad</div>
-                    <div class="adm-panel-head-sub">Actualizá tu contraseña</div>
+                    <div class="adm-panel-head-sub">
+                      Actualizá tu contraseña
+                    </div>
                   </div>
                 </div>
 
@@ -251,9 +342,19 @@
                   <div class="adm-field">
                     <label for="currentPass">Contraseña actual</label>
                     <div class="adm-input-wrap">
-                      <input type="password" id="currentPass" class="adm-input has-toggle"
-                        placeholder="••••••••" autocomplete="current-password" />
-                      <button class="adm-eye-btn" data-target="currentPass" type="button" aria-label="Ver contraseña actual">
+                      <input
+                        type="password"
+                        id="currentPass"
+                        class="adm-input has-toggle"
+                        placeholder="••••••••"
+                        autocomplete="current-password"
+                      />
+                      <button
+                        class="adm-eye-btn"
+                        data-target="currentPass"
+                        type="button"
+                        aria-label="Ver contraseña actual"
+                      >
                         <i class="bi bi-eye"></i>
                       </button>
                     </div>
@@ -261,9 +362,19 @@
                   <div class="adm-field">
                     <label for="newPass">Nueva contraseña</label>
                     <div class="adm-input-wrap">
-                      <input type="password" id="newPass" class="adm-input has-toggle"
-                        placeholder="Mínimo 8 caracteres" autocomplete="new-password" />
-                      <button class="adm-eye-btn" data-target="newPass" type="button" aria-label="Ver nueva contraseña">
+                      <input
+                        type="password"
+                        id="newPass"
+                        class="adm-input has-toggle"
+                        placeholder="Mínimo 8 caracteres"
+                        autocomplete="new-password"
+                      />
+                      <button
+                        class="adm-eye-btn"
+                        data-target="newPass"
+                        type="button"
+                        aria-label="Ver nueva contraseña"
+                      >
                         <i class="bi bi-eye"></i>
                       </button>
                     </div>
@@ -271,14 +382,27 @@
                   <div class="adm-field">
                     <label for="confirmPass">Confirmar nueva contraseña</label>
                     <div class="adm-input-wrap">
-                      <input type="password" id="confirmPass" class="adm-input has-toggle"
-                        placeholder="Repetí la contraseña" autocomplete="new-password" />
-                      <button class="adm-eye-btn" data-target="confirmPass" type="button" aria-label="Confirmar contraseña">
+                      <input
+                        type="password"
+                        id="confirmPass"
+                        class="adm-input has-toggle"
+                        placeholder="Repetí la contraseña"
+                        autocomplete="new-password"
+                      />
+                      <button
+                        class="adm-eye-btn"
+                        data-target="confirmPass"
+                        type="button"
+                        aria-label="Confirmar contraseña"
+                      >
                         <i class="bi bi-eye"></i>
                       </button>
                     </div>
                   </div>
-                  <button id="btnChangePass" class="adm-submit-btn adm-submit-btn--top">
+                  <button
+                    id="btnChangePass"
+                    class="adm-submit-btn adm-submit-btn--top"
+                  >
                     <i class="bi bi-key-fill"></i> Actualizar contraseña
                   </button>
                 </div>
@@ -286,7 +410,8 @@
                 <!-- Solo Google -->
                 <div class="adm-panel-body" id="changePassUnavailable">
                   <p class="adm-pass-unavailable">
-                    El cambio de contraseña solo está disponible para cuentas con email y contraseña.
+                    El cambio de contraseña solo está disponible para cuentas
+                    con email y contraseña.
                   </p>
                 </div>
               </div>
@@ -303,12 +428,14 @@
                 </div>
                 <div class="adm-panel-body">
                   <div class="adm-instructions">
-
                     <div class="adm-instr-item">
                       <div class="adm-instr-num adm-instr-num--red">1</div>
                       <div>
                         <p class="adm-instr-title">Formato del Excel</p>
-                        <p class="adm-instr-desc">Columnas: PATENTE · FECHA · KMS ACTUALES · KMS PROX. CAMBIO</p>
+                        <p class="adm-instr-desc">
+                          Columnas: PATENTE · FECHA · KMS ACTUALES · KMS PROX.
+                          CAMBIO
+                        </p>
                       </div>
                     </div>
 
@@ -316,7 +443,9 @@
                       <div class="adm-instr-num adm-instr-num--red">2</div>
                       <div>
                         <p class="adm-instr-title">Formato de fecha</p>
-                        <p class="adm-instr-desc">DD/MM/AAAA, AAAA-MM-DD o número serial de Excel</p>
+                        <p class="adm-instr-desc">
+                          DD/MM/AAAA, AAAA-MM-DD o número serial de Excel
+                        </p>
                       </div>
                     </div>
 
@@ -324,7 +453,9 @@
                       <div class="adm-instr-num adm-instr-num--red">3</div>
                       <div>
                         <p class="adm-instr-title">Patentes válidas</p>
-                        <p class="adm-instr-desc">ABC123 (viejo formato) o AB123CD (nuevo)</p>
+                        <p class="adm-instr-desc">
+                          ABC123 (viejo formato) o AB123CD (nuevo)
+                        </p>
                       </div>
                     </div>
 
@@ -334,29 +465,35 @@
                       </div>
                       <div>
                         <p class="adm-instr-title">Sin duplicados</p>
-                        <p class="adm-instr-desc">Los registros con mismo ID se sobrescriben automáticamente</p>
+                        <p class="adm-instr-desc">
+                          Los registros con mismo ID se sobrescriben
+                          automáticamente
+                        </p>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
-
-            </div><!-- /adm-panels -->
-          </div><!-- /adminPanel -->
-
-        </div><!-- /adm-content -->
+            </div>
+            <!-- /adm-panels -->
+          </div>
+          <!-- /adminPanel -->
+        </div>
+        <!-- /adm-content -->
 
         <!-- FOOTER -->
         <div class="adm-footer">
-          <p class="adm-footer-note">Lubricentro O'Higgins — Área interna · v2.0</p>
+          <p class="adm-footer-note">
+            Lubricentro O'Higgins — Área interna · v2.0
+          </p>
           <a href="./index.html" class="adm-footer-link">
             <i class="bi bi-house-fill"></i> Ir al sitio
           </a>
         </div>
-
-      </div><!-- /adm-main -->
-    </div><!-- /adm-shell -->
+      </div>
+      <!-- /adm-main -->
+    </div>
+    <!-- /adm-shell -->
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
