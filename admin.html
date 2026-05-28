@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
@@ -167,8 +166,9 @@
 
           <!-- ░░ ADMIN PANEL ░░ -->
           <div id="adminPanel" class="adm-hidden">
-            <!-- STATS -->
-            <div class="adm-stats-grid">
+
+            <!-- STATS — se muestra solo en sección "Importar datos" -->
+            <div class="adm-stats-grid adm-hidden" id="statsGrid">
               <div class="adm-stat-card adm-stat-red">
                 <div class="adm-stat-label">
                   <i class="bi bi-database-fill"></i> Total registros
@@ -196,10 +196,11 @@
               </div>
             </div>
 
-            <!-- PANELS -->
-            <div class="adm-panels">
+            <!-- PANELS GRID -->
+            <div class="adm-panels" id="panelsGrid">
+
               <!-- ── IMPORTAR ── -->
-              <div class="adm-panel" id="sectionImport">
+              <div class="adm-panel adm-hidden" id="sectionImport">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-red">
                     <i class="bi bi-file-earmark-excel-fill"></i>
@@ -420,7 +421,7 @@
               </div>
 
               <!-- ── INSTRUCCIONES (col derecha de importar) ── -->
-              <div class="adm-panel" id="sectionImportSide">
+              <div class="adm-panel adm-hidden" id="sectionImportSide">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-green">
                     <i class="bi bi-info-circle-fill"></i>
@@ -477,6 +478,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
             <!-- /adm-panels -->
           </div>
