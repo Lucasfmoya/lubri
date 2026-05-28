@@ -637,112 +637,62 @@ btnSearchPatente?.addEventListener("click", async () => {
 
     /* Cabecera de resultados */
     const header = `
-      <div style="font-size:11px; font-weight:700; letter-spacing:1.5px;
-        text-transform:uppercase; color:rgba(255,255,255,0.3);
-        margin-bottom:14px; display:flex; align-items:center; gap:8px;">
-        <i class="bi bi-list-ul"></i>
-        ${docs.length} registro${docs.length !== 1 ? "s" : ""} encontrado${docs.length !== 1 ? "s" : ""}
-        <span style="flex:1; height:1px; background:rgba(255,255,255,0.08); display:block;"></span>
-      </div>`;
+  <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--sr-muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+    <i class="bi bi-list-ul"></i>
+    ${docs.length} registro${docs.length !== 1 ? "s" : ""} encontrado${docs.length !== 1 ? "s" : ""}
+    <span style="flex:1;height:1px;background:var(--sr-border);display:block;"></span>
+  </div>`;
 
     const cards = docs
       .map(
         (d, idx) => `
-      <div id="card-${d.id}" style="
-        background:rgba(255,255,255,0.04);
-        border:0.5px solid rgba(255,255,255,${idx === 0 ? "0.15" : "0.07"});
-        border-top:2px solid ${idx === 0 ? "#e30613" : "rgba(255,255,255,0.1)"};
-        border-radius:14px;
-        padding:18px;
-        margin-bottom:12px;
-        transition: border-color 0.2s;">
+  <div id="card-${d.id}" class="sr-card ${idx === 0 ? "sr-card--recent" : "sr-card--old"}">
 
-        <!-- Cabecera de la card -->
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
-          <div style="display:flex; align-items:center; gap:10px;">
-            ${
-              idx === 0
-                ? `<span style="
-              background:rgba(227,6,19,0.15); border:0.5px solid rgba(227,6,19,0.3);
-              border-radius:50px; padding:3px 10px; font-size:11px; font-weight:700;
-              color:#e30613; display:inline-flex; align-items:center; gap:5px;">
-              <i class="bi bi-star-fill"></i> Más reciente
-            </span>`
-                : ""
-            }
-            <span style="
-              background:rgba(255,255,255,0.08); border-radius:6px;
-              padding:4px 12px; font-size:13px; font-weight:700;
-              letter-spacing:2.5px; color:rgba(255,255,255,0.8);">${d.patente}</span>
-          </div>
-          <div style="display:flex; gap:8px;">
-            <button onclick="editarRegistro('${d.id}')"
-              id="btn-edit-${d.id}"
-              style="background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.15);
-                border-radius:8px; padding:6px 14px; cursor:pointer; font-size:12px;
-                font-weight:600; color:rgba(255,255,255,0.7); font-family:inherit;
-                display:inline-flex; align-items:center; gap:6px; transition:background 0.2s;">
-              <i class="bi bi-pencil-fill"></i> Editar
-            </button>
-            <button onclick="eliminarRegistro('${d.id}', '${d.fecha}')"
-              style="background:rgba(227,6,19,0.08); border:0.5px solid rgba(227,6,19,0.25);
-                border-radius:8px; padding:6px 14px; cursor:pointer; font-size:12px;
-                font-weight:600; color:#e30613; font-family:inherit;
-                display:inline-flex; align-items:center; gap:6px; transition:background 0.2s;">
-              <i class="bi bi-trash3-fill"></i> Eliminar
-            </button>
-          </div>
-        </div>
-
-        <!-- Campos editables -->
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
-          <div>
-            <div style="font-size:11px; font-weight:700; letter-spacing:1px;
-              text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px;">
-              <i class="bi bi-calendar3"></i> Fecha
-            </div>
-            <input id="fecha-${d.id}" type="date" value="${d.fecha}"
-              class="adm-input" style="width:100%;" disabled />
-          </div>
-          <div>
-            <div style="font-size:11px; font-weight:700; letter-spacing:1px;
-              text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px;">
-              <i class="bi bi-speedometer2"></i> Km actuales
-            </div>
-            <input id="km-${d.id}" type="number" value="${d.km}"
-              class="adm-input" style="width:100%;" disabled />
-          </div>
-          <div>
-            <div style="font-size:11px; font-weight:700; letter-spacing:1px;
-              text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px;">
-              <i class="bi bi-arrow-right-circle"></i> Próximo service
-            </div>
-            <input id="prox-${d.id}" type="number" value="${d.proximo}"
-              class="adm-input" style="width:100%;" disabled />
-          </div>
-        </div>
-
-        <!-- Botones guardar/cancelar (ocultos hasta editar) -->
-        <div id="edit-actions-${d.id}"
-          style="display:none; margin-top:14px; gap:8px; flex-wrap:wrap;">
-          <button onclick="guardarRegistro('${d.id}')"
-            style="background:rgba(5,150,105,0.12); border:0.5px solid rgba(5,150,105,0.3);
-              border-radius:8px; padding:8px 18px; cursor:pointer; font-size:13px;
-              font-weight:600; color:#34d399; font-family:inherit;
-              display:inline-flex; align-items:center; gap:6px;">
-            <i class="bi bi-check-lg"></i> Guardar cambios
-          </button>
-          <button onclick="cancelarEdicion('${d.id}', ${d.km}, ${d.proximo}, '${d.fecha}')"
-            style="background:none; border:0.5px solid rgba(255,255,255,0.12);
-              border-radius:8px; padding:8px 18px; cursor:pointer; font-size:13px;
-              color:rgba(255,255,255,0.4); font-family:inherit;
-              display:inline-flex; align-items:center; gap:6px;">
-            Cancelar
-          </button>
-        </div>
-
+    <div class="sr-card-head">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        ${idx === 0 ? `<span class="sr-badge-recent"><i class="bi bi-star-fill"></i> Más reciente</span>` : ""}
+        <span class="sr-plate">${d.patente}</span>
       </div>
-    `,
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+        <button onclick="editarRegistro('${d.id}')"
+          id="btn-edit-${d.id}" class="sr-btn sr-btn--edit">
+          <i class="bi bi-pencil-fill"></i> Editar
+        </button>
+        <button onclick="eliminarRegistro('${d.id}', '${d.fecha}')"
+          class="sr-btn sr-btn--delete">
+          <i class="bi bi-trash3-fill"></i> Eliminar
+        </button>
+      </div>
+    </div>
+
+    <div class="sr-fields">
+      <div class="sr-field">
+        <div class="sr-field-label"><i class="bi bi-calendar3"></i> Fecha</div>
+        <input id="fecha-${d.id}" type="date" value="${d.fecha}" class="adm-input sr-input" disabled />
+      </div>
+      <div class="sr-field">
+        <div class="sr-field-label"><i class="bi bi-speedometer2"></i> Km actuales</div>
+        <input id="km-${d.id}" type="number" value="${d.km}" class="adm-input sr-input" disabled />
+      </div>
+      <div class="sr-field">
+        <div class="sr-field-label"><i class="bi bi-arrow-right-circle"></i> Próximo</div>
+        <input id="prox-${d.id}" type="number" value="${d.proximo}" class="adm-input sr-input" disabled />
+      </div>
+    </div>
+
+    <div id="edit-actions-${d.id}" class="sr-edit-actions" style="display:none;">
+      <button onclick="guardarRegistro('${d.id}')" class="sr-btn sr-btn--save">
+        <i class="bi bi-check-lg"></i> Guardar cambios
+      </button>
+      <button onclick="cancelarEdicion('${d.id}', ${d.km}, ${d.proximo}, '${d.fecha}')"
+        class="sr-btn sr-btn--cancel">
+        Cancelar
+      </button>
+    </div>
+
+  </div>
+`,
       )
       .join("");
 
@@ -897,5 +847,70 @@ window.eliminarRegistro = async (id, fecha) => {
   toggle.addEventListener("click", () => {
     const isDark = body.classList.toggle("dark-mode");
     localStorage.setItem("adm-theme", isDark ? "dark" : "light");
+  });
+})();
+
+/* ── TOGGLE SIDEBAR ── */
+(function () {
+  const btn = document.getElementById("btnToggleSidebar");
+  const shell = document.querySelector(".adm-shell");
+  const sidebar = document.querySelector(".adm-sidebar");
+  if (!shell || !sidebar) return;
+
+  /* Crear overlay mobile */
+  const overlay = document.createElement("div");
+  overlay.className = "adm-sidebar-overlay";
+  document.body.appendChild(overlay);
+
+  function closeMobile() {
+    sidebar.classList.remove("mobile-open");
+    overlay.classList.remove("visible");
+  }
+
+  /* Desktop: restaurar estado guardado */
+  if (window.innerWidth > 900) {
+    if (localStorage.getItem("adm-sidebar") === "collapsed") {
+      shell.classList.add("sidebar-collapsed");
+    }
+  }
+
+  /* Desktop: botón hamburguesa en topbar */
+  if (btn) {
+    btn.addEventListener("click", () => {
+      if (window.innerWidth > 900) {
+        const collapsed = shell.classList.toggle("sidebar-collapsed");
+        localStorage.setItem("adm-sidebar", collapsed ? "collapsed" : "open");
+      }
+    });
+  }
+
+  /* Mobile: botón chevron dentro del sidebar */
+  const mobileBtn = document.createElement("button");
+  mobileBtn.className = "adm-mobile-toggle";
+  mobileBtn.setAttribute("aria-label", "Expandir menú");
+  mobileBtn.innerHTML = '<i class="bi bi-chevron-down"></i>';
+  mobileBtn.style.display = window.innerWidth <= 900 ? "flex" : "none";
+  sidebar.appendChild(mobileBtn);
+
+  window.addEventListener("resize", () => {
+    mobileBtn.style.display = window.innerWidth <= 900 ? "flex" : "none";
+    if (window.innerWidth > 900) {
+      closeMobile();
+    }
+  });
+
+  mobileBtn.addEventListener("click", () => {
+    const isOpen = sidebar.classList.toggle("mobile-open");
+    overlay.classList.toggle("visible", isOpen);
+  });
+
+  /* Cerrar al tocar el overlay */
+  overlay.addEventListener("click", closeMobile);
+
+  /* Cerrar al tocar un nav-item en mobile */
+  sidebar.querySelectorAll(".adm-nav-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      if (window.innerWidth <= 900) closeMobile();
+    });
   });
 })();

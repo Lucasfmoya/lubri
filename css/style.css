@@ -4537,6 +4537,534 @@ textarea.form-control {
   color: rgba(255, 255, 255, 0.65);
 }
 
+/* Login sin sidebar — centrar contenido */
+.adm-shell:has(#adminSidebar.adm-hidden) {
+  grid-template-columns: 1fr;
+}
+
+.adm-shell:has(#adminSidebar.adm-hidden) .adm-main {
+  background: #f0f2f7;
+}
+
+.adm-shell:has(#adminSidebar.adm-hidden) .adm-topbar {
+  display: none;
+}
+
+.adm-shell:has(#adminSidebar.adm-hidden) .adm-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+.adm-body.dark-mode .adm-shell:has(#adminSidebar.adm-hidden) .adm-main {
+  background: #07102e;
+}
+/* ── HAMBURGER ── */
+.adm-hamburger {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 1.2rem;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  flex-shrink: 0;
+}
+
+.adm-hamburger:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.adm-body.dark-mode .adm-hamburger {
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.adm-body.dark-mode .adm-hamburger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* ── SIDEBAR COLAPSADO — solo desktop ── */
+@media (min-width: 901px) {
+  .adm-shell {
+    transition: grid-template-columns 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .adm-sidebar {
+    transition:
+      width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      padding 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.28s ease;
+    overflow: hidden;
+  }
+
+  .adm-shell.sidebar-collapsed {
+    grid-template-columns: 0 1fr;
+  }
+
+  .adm-shell.sidebar-collapsed .adm-sidebar {
+    width: 0;
+    padding: 0;
+    border-right: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* ── MOBILE: ocultar hamburguesa, usar drawer ── */
+@media (max-width: 900px) {
+  .adm-hamburger {
+    display: none;
+  }
+
+  .adm-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  /* Barra superior fija */
+  .adm-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    height: 56px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+    gap: 0;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition:
+      height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s ease;
+  }
+
+  .adm-body.dark-mode .adm-sidebar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .adm-sidebar.mobile-open {
+    height: auto;
+    max-height: 360px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 0 16px 16px;
+    overflow-y: auto;
+  }
+
+  /* Logo siempre visible */
+  .adm-sidebar-logo {
+    padding: 0;
+    border: none;
+    margin: 0;
+    flex-shrink: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+  }
+
+  .adm-sidebar-logo img {
+    max-width: 90px;
+  }
+
+  /* Botón hamburguesa DENTRO del sidebar en mobile */
+  .adm-mobile-toggle {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Ocultar todo excepto logo y toggle cuando está cerrado */
+  .adm-sidebar:not(.mobile-open) .adm-sidebar-label,
+  .adm-sidebar:not(.mobile-open) .adm-nav-item,
+  .adm-sidebar:not(.mobile-open) .adm-sidebar-spacer,
+  .adm-sidebar:not(.mobile-open) .adm-theme-toggle,
+  .adm-sidebar:not(.mobile-open) .adm-user-pill {
+    display: none;
+  }
+
+  /* Cuando está abierto, mostrar todo en columna */
+  .adm-sidebar.mobile-open .adm-sidebar-logo {
+    width: 100%;
+    height: 56px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 8px;
+  }
+
+  .adm-body.dark-mode .adm-sidebar.mobile-open .adm-sidebar-logo {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+  }
+
+  .adm-sidebar.mobile-open .adm-mobile-toggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+
+  .adm-sidebar.mobile-open .adm-sidebar-label {
+    display: block;
+    width: 100%;
+    padding: 8px 0 4px;
+  }
+
+  .adm-sidebar.mobile-open .adm-nav-item {
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .adm-sidebar.mobile-open .adm-nav-item span {
+    display: inline;
+  }
+
+  .adm-sidebar.mobile-open .adm-sidebar-spacer {
+    display: none;
+  }
+
+  .adm-sidebar.mobile-open .adm-theme-toggle {
+    display: flex;
+    width: 100%;
+    margin: 8px 0 0;
+    box-sizing: border-box;
+  }
+
+  .adm-sidebar.mobile-open .adm-theme-toggle span {
+    display: inline;
+  }
+
+  .adm-sidebar.mobile-open .adm-user-pill {
+    display: flex;
+    width: 100%;
+    margin: 8px 0 0;
+    box-sizing: border-box;
+  }
+
+  .adm-sidebar.mobile-open .adm-user-info {
+    display: block;
+  }
+
+  /* Main con padding-top por la barra fija */
+  .adm-main {
+    padding-top: 56px;
+    min-width: 0;
+  }
+
+  /* Overlay oscuro detrás del drawer */
+  .adm-sidebar.mobile-open::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .adm-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .adm-panels {
+    grid-template-columns: 1fr;
+  }
+  .adm-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .adm-content {
+    padding: 16px 12px;
+  }
+  .adm-topbar {
+    padding: 14px 12px;
+  }
+}
+
+/* Fix: ocultar mobile-toggle en desktop */
+@media (min-width: 901px) {
+  .adm-mobile-toggle {
+    display: none;
+  }
+}
+
+/* Fix: drawer mobile ocupa todo el ancho y no se corta */
+@media (max-width: 900px) {
+  .adm-sidebar {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Overlay que cierra el drawer al tocar fuera */
+  .adm-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 199;
+  }
+
+  .adm-sidebar-overlay.visible {
+    display: block;
+  }
+
+  /* El drawer abierto queda por encima del overlay */
+  .adm-sidebar.mobile-open {
+    z-index: 200;
+    height: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 32px);
+  }
+
+  /* Quitar el ::after falso overlay (no funciona bien con z-index) */
+  .adm-sidebar.mobile-open::after {
+    display: none;
+  }
+
+  /* Chevron apunta para abajo cerrado, arriba abierto */
+  .adm-mobile-toggle i {
+    transition: transform 0.3s ease;
+    display: inline-block;
+  }
+
+  .adm-sidebar.mobile-open .adm-mobile-toggle i {
+    transform: rotate(180deg);
+  }
+}
+
+/* ── MOBILE TOGGLE BUTTON ── */
+.adm-mobile-toggle {
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #e30613;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.adm-mobile-toggle:hover {
+  background: rgba(227, 6, 19, 0.14);
+  border-color: rgba(227, 6, 19, 0.35);
+}
+
+.adm-body.dark-mode .adm-mobile-toggle {
+  background: rgba(227, 6, 19, 0.1);
+  border-color: rgba(227, 6, 19, 0.25);
+  color: #ff4d57;
+}
+
+.adm-body.dark-mode .adm-mobile-toggle:hover {
+  background: rgba(227, 6, 19, 0.18);
+}
+
+.adm-mobile-toggle i {
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  line-height: 1;
+}
+
+.adm-sidebar.mobile-open .adm-mobile-toggle i {
+  transform: rotate(180deg);
+}
+
+/* ── SEARCH RESULTS CARDS ── */
+:root {
+  --sr-bg: #ffffff;
+  --sr-bg-head: #f8fafc;
+  --sr-border: #e2e8f0;
+  --sr-border-old: #e2e8f0;
+  --sr-text: #1e293b;
+  --sr-muted: #64748b;
+  --sr-recent: #e30613;
+}
+
+.adm-body.dark-mode {
+  --sr-bg: rgba(255, 255, 255, 0.04);
+  --sr-bg-head: rgba(255, 255, 255, 0.06);
+  --sr-border: rgba(255, 255, 255, 0.08);
+  --sr-border-old: rgba(255, 255, 255, 0.06);
+  --sr-text: #ffffff;
+  --sr-muted: rgba(255, 255, 255, 0.4);
+  --sr-recent: #e30613;
+}
+
+.sr-card {
+  background: var(--sr-bg);
+  border: 1px solid var(--sr-border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.sr-card--recent {
+  border-top: 3px solid var(--sr-recent);
+}
+.sr-card--old {
+  border-top: 3px solid var(--sr-border-old);
+}
+
+.sr-card-head {
+  background: var(--sr-bg-head);
+  border-bottom: 1px solid var(--sr-border);
+  padding: 14px 16px;
+}
+
+.sr-plate {
+  background: #010a44;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.sr-badge-recent {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  border-radius: 50px;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #e30613;
+}
+
+.sr-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px;
+}
+
+@media (max-width: 500px) {
+  .sr-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sr-field-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sr-input {
+  width: 100% !important;
+}
+
+.sr-edit-actions {
+  padding: 0 16px 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Botones de acción */
+.sr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: "Google Sans", sans-serif;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+
+.sr-btn:hover {
+  transform: translateY(-1px);
+}
+
+.sr-btn--edit {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--sr-border);
+  color: var(--sr-text);
+}
+
+.sr-btn--edit:hover {
+  background: var(--sr-bg-head);
+  border-color: var(--sr-muted);
+}
+
+.sr-btn--delete {
+  background: rgba(227, 6, 19, 0.06);
+  border-color: rgba(227, 6, 19, 0.2);
+  color: #e30613;
+}
+
+.sr-btn--delete:hover {
+  background: rgba(227, 6, 19, 0.12);
+  border-color: rgba(227, 6, 19, 0.4);
+}
+
+.sr-btn--save {
+  background: rgba(5, 150, 105, 0.08);
+  border-color: rgba(5, 150, 105, 0.25);
+  color: #059669;
+}
+
+.adm-body.dark-mode .sr-btn--save {
+  color: #34d399;
+}
+
+.sr-btn--save:hover {
+  background: rgba(5, 150, 105, 0.15);
+  border-color: rgba(5, 150, 105, 0.4);
+}
+
+.sr-btn--cancel {
+  background: transparent;
+  border-color: var(--sr-border);
+  color: var(--sr-muted);
+}
+
+.sr-btn--cancel:hover {
+  background: var(--sr-bg-head);
+}
+
 /* ── RESPONSIVE ADMIN ── */
 @media (max-width: 1100px) {
   .adm-panels {
