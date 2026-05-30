@@ -227,29 +227,34 @@ function ocultarTodasSecciones() {
   hide(sectionSecurity);
 }
 
+/* ── Función central de navegación ── */
+function mostrarSeccion(section) {
+  document
+    .querySelectorAll(".adm-nav-item")
+    .forEach((b) => b.classList.remove("active"));
+  const activeBtn = document.querySelector(
+    `.adm-nav-item[data-section="${section}"]`,
+  );
+  if (activeBtn) activeBtn.classList.add("active");
+
+  ocultarTodasSecciones();
+
+  if (section === "import") {
+    show(sectionImport);
+    show(sectionImportSide);
+    if (topbarTitle) topbarTitle.textContent = "Importar datos";
+  } else if (section === "search") {
+    show(sectionSearch);
+    if (topbarTitle) topbarTitle.textContent = "Buscar patente";
+  } else if (section === "security") {
+    show(sectionSecurity);
+    if (topbarTitle) topbarTitle.textContent = "Seguridad";
+  }
+}
+
+/* Eventos de los botones del sidebar */
 document.querySelectorAll(".adm-nav-item[data-section]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".adm-nav-item")
-      .forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    ocultarTodasSecciones();
-
-    const section = btn.dataset.section;
-
-    if (section === "import") {
-      show(sectionImport);
-      show(sectionImportSide);
-      if (topbarTitle) topbarTitle.textContent = "Importar datos";
-    } else if (section === "search") {
-      show(sectionSearch);
-      if (topbarTitle) topbarTitle.textContent = "Buscar patente";
-    } else if (section === "security") {
-      show(sectionSecurity);
-      if (topbarTitle) topbarTitle.textContent = "Seguridad";
-    }
-  });
+  btn.addEventListener("click", () => mostrarSeccion(btn.dataset.section));
 });
 
 /* ═══════════════════════════════════════════
@@ -400,6 +405,10 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   cargarStats();
+
+  /* ── Mostrar "Importar datos" por defecto al entrar ── */
+  mostrarSeccion("import");
+
   logMsg("Sesión iniciada — " + user.email, "success");
   showToast("Bienvenido, " + user.email.split("@")[0], "success");
 });
@@ -581,38 +590,44 @@ btnSubir?.addEventListener("click", async () => {
    BUSCAR POR PATENTE
 ═══════════════════════════════════════════ */
 
-/* Sanitizar input en tiempo real */
-searchPatente?.addEventListener("input", () => {
-  searchPatente.value = searchPatente.value
-    .toUpperCase()
-    .replace(/[^A-Z0-9]/g, "");
-});
+let searchDebounceTimer = null;
+const searchCache = new Map();
 
-/* Enter en el input dispara búsqueda */
-searchPatente?.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") btnSearchPatente?.click();
-});
+function mostrarSkeletonAdmin() {
+  searchResults.innerHTML = `
+    <div class="hst-skeleton-wrap">
+      ${[1, 2]
+        .map(
+          () => `
+        <div class="hst-skeleton-card">
+          <div class="hst-sk-top">
+            <div class="hst-sk-block wide"></div>
+            <div class="hst-sk-block narrow"></div>
+          </div>
+          <div class="hst-sk-body">
+            <div class="hst-sk-block mid"></div>
+            <div class="hst-sk-block mid"></div>
+          </div>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>`;
+}
 
-btnSearchPatente?.addEventListener("click", async () => {
+async function ejecutarBusquedaAdmin() {
   const patente = searchPatente?.value.trim();
   const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
-  if (!patente) {
-    showToast("Ingresá una patente", "warning");
-    return;
-  }
-  if (!regex.test(patente)) {
-    showToast("Formato de patente inválido (ej: ABC123 o AB123CD)", "warning");
+  if (!patente || !regex.test(patente)) return;
+
+  /* Cache */
+  if (searchCache.has(patente)) {
+    renderResultadosAdmin(searchCache.get(patente), patente);
     return;
   }
 
-  /* Estado de carga */
-  searchResults.innerHTML = `
-    <div style="display:flex; align-items:center; gap:10px;
-      color:rgba(255,255,255,0.4); font-size:14px; padding:16px 0;">
-      <span class="spinner-border spinner-border-sm"></span>
-      Buscando registros para <strong style="color:rgba(255,255,255,0.7);">${patente}</strong>…
-    </div>`;
+  mostrarSkeletonAdmin();
 
   try {
     const q = query(
@@ -621,115 +636,158 @@ btnSearchPatente?.addEventListener("click", async () => {
     );
     const snap = await getDocs(q);
 
-    if (snap.empty) {
-      searchResults.innerHTML = `
-        <div style="text-align:center; padding:32px 0; color:rgba(255,255,255,0.35);">
-          <i class="bi bi-inbox" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
-          No se encontraron registros para <strong style="color:rgba(255,255,255,0.6);">${patente}</strong>
-        </div>`;
-      return;
-    }
-
-    /* Ordenar por fecha descendente */
     const docs = [];
     snap.forEach((d) => docs.push({ id: d.id, ...d.data() }));
     docs.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
-    /* Cabecera de resultados */
-    const header = `
-  <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--sr-muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-    <i class="bi bi-list-ul"></i>
-    ${docs.length} registro${docs.length !== 1 ? "s" : ""} encontrado${docs.length !== 1 ? "s" : ""}
-    <span style="flex:1;height:1px;background:var(--sr-border);display:block;"></span>
-  </div>`;
-
-    const cards = docs
-      .map(
-        (d, idx) => `
-  <div id="card-${d.id}" class="sr-card ${idx === 0 ? "sr-card--recent" : "sr-card--old"}">
-
-    <div class="sr-card-head">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        ${idx === 0 ? `<span class="sr-badge-recent"><i class="bi bi-star-fill"></i> Más reciente</span>` : ""}
-        <span class="sr-plate">${d.patente}</span>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
-        <button onclick="editarRegistro('${d.id}')"
-          id="btn-edit-${d.id}" class="sr-btn sr-btn--edit">
-          <i class="bi bi-pencil-fill"></i> Editar
-        </button>
-        <button onclick="eliminarRegistro('${d.id}', '${d.fecha}')"
-          class="sr-btn sr-btn--delete">
-          <i class="bi bi-trash3-fill"></i> Eliminar
-        </button>
-      </div>
-    </div>
-
-    <div class="sr-fields">
-      <div class="sr-field">
-        <div class="sr-field-label"><i class="bi bi-calendar3"></i> Fecha</div>
-        <input id="fecha-${d.id}" type="date" value="${d.fecha}" class="adm-input sr-input" disabled />
-      </div>
-      <div class="sr-field">
-        <div class="sr-field-label"><i class="bi bi-speedometer2"></i> Km actuales</div>
-        <input id="km-${d.id}" type="number" value="${d.km}" class="adm-input sr-input" disabled />
-      </div>
-      <div class="sr-field">
-        <div class="sr-field-label"><i class="bi bi-arrow-right-circle"></i> Próximo</div>
-        <input id="prox-${d.id}" type="number" value="${d.proximo}" class="adm-input sr-input" disabled />
-      </div>
-    </div>
-
-    <div id="edit-actions-${d.id}" class="sr-edit-actions" style="display:none;">
-      <button onclick="guardarRegistro('${d.id}')" class="sr-btn sr-btn--save">
-        <i class="bi bi-check-lg"></i> Guardar cambios
-      </button>
-      <button onclick="cancelarEdicion('${d.id}', ${d.km}, ${d.proximo}, '${d.fecha}')"
-        class="sr-btn sr-btn--cancel">
-        Cancelar
-      </button>
-    </div>
-
-  </div>
-`,
-      )
-      .join("");
-
-    searchResults.innerHTML = header + cards;
+    searchCache.set(patente, docs);
+    renderResultadosAdmin(docs, patente);
   } catch (err) {
     console.error(err);
     showToast("Error al buscar: " + err.message, "error");
     searchResults.innerHTML = `
-      <div style="color:rgba(255,100,100,0.7); font-size:14px; padding:12px 0;">
+      <div class="sr-error">
         <i class="bi bi-exclamation-triangle-fill"></i> ${err.message}
       </div>`;
   }
+}
+
+function renderResultadosAdmin(docs, patente) {
+  if (!docs.length) {
+    searchResults.innerHTML = `
+      <div class="sr-empty">
+        <i class="bi bi-inbox"></i>
+        <p>No se encontraron registros para <strong>${patente}</strong></p>
+      </div>`;
+    return;
+  }
+
+  function fmtFecha(f) {
+    if (!f) return "—";
+    const [y, m, d] = f.split("-");
+    return `${d}/${m}/${y}`;
+  }
+
+  const header = `
+    <div class="sr-header">
+      <i class="bi bi-list-ul"></i>
+      ${docs.length} registro${docs.length !== 1 ? "s" : ""} encontrado${docs.length !== 1 ? "s" : ""}
+    </div>`;
+
+  const cards = docs
+    .map(
+      (d) => `
+    <div id="card-${d.id}" class="sr-card sr-card--old">
+      <div class="sr-card-head">
+        <div class="sr-card-head-left">
+          <span class="sr-plate">${d.patente}</span>
+          <span class="sr-fecha-display">${fmtFecha(d.fecha)}</span>
+        </div>
+        <div class="sr-card-head-right">
+          <button onclick="editarRegistro('${d.id}')"
+            id="btn-edit-${d.id}" class="sr-btn sr-btn--edit">
+            <i class="bi bi-pencil-fill"></i> Editar
+          </button>
+          <button onclick="eliminarRegistro('${d.id}', '${d.fecha}')"
+            class="sr-btn sr-btn--delete">
+            <i class="bi bi-trash3-fill"></i> Eliminar
+          </button>
+        </div>
+      </div>
+      <div class="sr-fields">
+        <div class="sr-field">
+          <div class="sr-field-label"><i class="bi bi-calendar3"></i> Fecha</div>
+          <input id="fecha-${d.id}" type="date" value="${d.fecha}" class="adm-input sr-input" disabled />
+        </div>
+        <div class="sr-field">
+          <div class="sr-field-label"><i class="bi bi-speedometer2"></i> Km actuales</div>
+          <input id="km-${d.id}" type="number" value="${d.km}" class="adm-input sr-input" disabled />
+        </div>
+        <div class="sr-field">
+          <div class="sr-field-label"><i class="bi bi-arrow-right-circle"></i> Próximo service</div>
+          <input id="prox-${d.id}" type="number" value="${d.proximo}" class="adm-input sr-input" disabled />
+        </div>
+      </div>
+      <div id="edit-actions-${d.id}" class="sr-edit-actions" style="display:none;">
+        <button onclick="guardarRegistro('${d.id}')" class="sr-btn sr-btn--save">
+          <i class="bi bi-check-lg"></i> Guardar cambios
+        </button>
+        <button onclick="cancelarEdicion('${d.id}', ${d.km}, ${d.proximo}, '${d.fecha}')"
+          class="sr-btn sr-btn--cancel">
+          <i class="bi bi-x-lg"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  `,
+    )
+    .join("");
+
+  searchResults.innerHTML = header + cards;
+}
+
+/* Sanitizar input + debounce automático */
+searchPatente?.addEventListener("input", () => {
+  searchPatente.value = searchPatente.value
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+
+  clearTimeout(searchDebounceTimer);
+
+  const val = searchPatente.value;
+  const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
+  if (val.length < 6) {
+    searchResults.innerHTML = "";
+    return;
+  }
+
+  if (regex.test(val)) {
+    searchDebounceTimer = setTimeout(() => ejecutarBusquedaAdmin(), 500);
+  }
+});
+
+/* Enter en el input */
+searchPatente?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    clearTimeout(searchDebounceTimer);
+    ejecutarBusquedaAdmin();
+  }
+});
+
+btnSearchPatente?.addEventListener("click", () => {
+  const patente = searchPatente?.value.trim();
+  const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+  if (!patente) {
+    showToast("Ingresá una patente", "warning");
+    return;
+  }
+  if (!regex.test(patente)) {
+    showToast("Formato de patente inválido (ej: ABC123 o AB123CD)", "warning");
+    return;
+  }
+  clearTimeout(searchDebounceTimer);
+  ejecutarBusquedaAdmin();
 });
 
 /* ═══════════════════════════════════════════
-   CRUD — funciones globales (llamadas desde onclick en el HTML generado)
+   CRUD — funciones globales
 ═══════════════════════════════════════════ */
 
 window.editarRegistro = (id) => {
-  /* Habilitar los tres inputs */
   ["fecha-" + id, "km-" + id, "prox-" + id].forEach((fieldId) => {
     const el = document.getElementById(fieldId);
     if (el) {
       el.disabled = false;
-      el.style.borderColor = "rgba(255,255,255,0.3)";
+      el.classList.add("sr-input--editing");
     }
   });
-  /* Mostrar botones guardar/cancelar */
   const actions = document.getElementById("edit-actions-" + id);
   if (actions) actions.style.display = "flex";
-  /* Ocultar botón editar para evitar doble click */
   const btnEdit = document.getElementById("btn-edit-" + id);
   if (btnEdit) btnEdit.style.display = "none";
 };
 
 window.cancelarEdicion = (id, km, proximo, fecha) => {
-  /* Restaurar valores originales */
   const fechaEl = document.getElementById("fecha-" + id);
   const kmEl = document.getElementById("km-" + id);
   const proxEl = document.getElementById("prox-" + id);
@@ -737,22 +795,21 @@ window.cancelarEdicion = (id, km, proximo, fecha) => {
   if (fechaEl) {
     fechaEl.value = fecha;
     fechaEl.disabled = true;
-    fechaEl.style.borderColor = "";
+    fechaEl.classList.remove("sr-input--editing");
   }
   if (kmEl) {
     kmEl.value = km;
     kmEl.disabled = true;
-    kmEl.style.borderColor = "";
+    kmEl.classList.remove("sr-input--editing");
   }
   if (proxEl) {
     proxEl.value = proximo;
     proxEl.disabled = true;
-    proxEl.style.borderColor = "";
+    proxEl.classList.remove("sr-input--editing");
   }
 
   const actions = document.getElementById("edit-actions-" + id);
   if (actions) actions.style.display = "none";
-
   const btnEdit = document.getElementById("btn-edit-" + id);
   if (btnEdit) btnEdit.style.display = "";
 };
@@ -769,21 +826,18 @@ window.guardarRegistro = async (id) => {
 
   try {
     await updateDoc(doc(db, "servicios", id), { km, proximo, fecha });
-
     showToast("Registro actualizado correctamente", "success");
 
-    /* Deshabilitar inputs y ocultar acciones */
     ["fecha-" + id, "km-" + id, "prox-" + id].forEach((fieldId) => {
       const el = document.getElementById(fieldId);
       if (el) {
         el.disabled = true;
-        el.style.borderColor = "";
+        el.classList.remove("sr-input--editing");
       }
     });
 
     const actions = document.getElementById("edit-actions-" + id);
     if (actions) actions.style.display = "none";
-
     const btnEdit = document.getElementById("btn-edit-" + id);
     if (btnEdit) btnEdit.style.display = "";
   } catch (err) {
@@ -810,8 +864,6 @@ window.eliminarRegistro = async (id, fecha) => {
 
   try {
     await deleteDoc(doc(db, "servicios", id));
-
-    /* Animación de salida */
     const card = document.getElementById("card-" + id);
     if (card) {
       card.style.transition = "opacity 0.3s, transform 0.3s";
@@ -819,7 +871,6 @@ window.eliminarRegistro = async (id, fecha) => {
       card.style.transform = "translateX(-10px)";
       setTimeout(() => card.remove(), 300);
     }
-
     showToast("Registro eliminado", "success");
     cargarStats();
   } catch (err) {
@@ -828,53 +879,47 @@ window.eliminarRegistro = async (id, fecha) => {
   }
 };
 
-/* =============================================
-   THEME TOGGLE — agregar en admin.js
-   (pegar al final del archivo, antes del último ;)
-   ============================================= */
-
-/* ── DARK / LIGHT MODE ── */
+/* ═══════════════════════════════════════════
+   DARK / LIGHT MODE
+═══════════════════════════════════════════ */
 (function () {
   const body = document.querySelector(".adm-body");
   if (!body) return;
-
   const saved = localStorage.getItem("adm-theme");
   if (saved === "dark") body.classList.add("dark-mode");
-
   const toggle = document.getElementById("themeToggle");
   if (!toggle) return;
-
   toggle.addEventListener("click", () => {
     const isDark = body.classList.toggle("dark-mode");
     localStorage.setItem("adm-theme", isDark ? "dark" : "light");
   });
 })();
 
-/* ── TOGGLE SIDEBAR ── */
+/* ═══════════════════════════════════════════
+   TOGGLE SIDEBAR
+═══════════════════════════════════════════ */
 (function () {
   const btn = document.getElementById("btnToggleSidebar");
   const shell = document.querySelector(".adm-shell");
   const sidebar = document.querySelector(".adm-sidebar");
   if (!shell || !sidebar) return;
 
-  /* Crear overlay mobile */
   const overlay = document.createElement("div");
   overlay.className = "adm-sidebar-overlay";
   document.body.appendChild(overlay);
 
   function closeMobile() {
+    document.body.style.overflow = "";
     sidebar.classList.remove("mobile-open");
     overlay.classList.remove("visible");
   }
 
-  /* Desktop: restaurar estado guardado */
   if (window.innerWidth > 900) {
     if (localStorage.getItem("adm-sidebar") === "collapsed") {
       shell.classList.add("sidebar-collapsed");
     }
   }
 
-  /* Desktop: botón hamburguesa en topbar */
   if (btn) {
     btn.addEventListener("click", () => {
       if (window.innerWidth > 900) {
@@ -884,7 +929,6 @@ window.eliminarRegistro = async (id, fecha) => {
     });
   }
 
-  /* Mobile: botón chevron dentro del sidebar */
   const mobileBtn = document.createElement("button");
   mobileBtn.className = "adm-mobile-toggle";
   mobileBtn.setAttribute("aria-label", "Expandir menú");
@@ -894,20 +938,17 @@ window.eliminarRegistro = async (id, fecha) => {
 
   window.addEventListener("resize", () => {
     mobileBtn.style.display = window.innerWidth <= 900 ? "flex" : "none";
-    if (window.innerWidth > 900) {
-      closeMobile();
-    }
+    if (window.innerWidth > 900) closeMobile();
   });
 
   mobileBtn.addEventListener("click", () => {
     const isOpen = sidebar.classList.toggle("mobile-open");
+    document.body.style.overflow = isOpen ? "hidden" : "";
     overlay.classList.toggle("visible", isOpen);
   });
 
-  /* Cerrar al tocar el overlay */
   overlay.addEventListener("click", closeMobile);
 
-  /* Cerrar al tocar un nav-item en mobile */
   sidebar.querySelectorAll(".adm-nav-item").forEach((item) => {
     item.addEventListener("click", () => {
       if (window.innerWidth <= 900) closeMobile();

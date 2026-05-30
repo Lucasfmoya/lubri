@@ -4894,8 +4894,13 @@ textarea.form-control {
 .adm-sidebar.mobile-open .adm-mobile-toggle i {
   transform: rotate(180deg);
 }
+/* =============================================
+   SEARCH RESULT CARDS — estilos mejorados
+   Reemplazar el bloque "── SEARCH RESULTS CARDS ──"
+   en style.css (desde ":root { --sr-bg:" hasta el final
+   del bloque de .sr-btn)
+   ============================================= */
 
-/* ── SEARCH RESULTS CARDS ── */
 :root {
   --sr-bg: #ffffff;
   --sr-bg-head: #f8fafc;
@@ -4916,27 +4921,112 @@ textarea.form-control {
   --sr-recent: #e30613;
 }
 
+/* ── Cabecera de resultados ── */
+.sr-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+  margin-bottom: 16px;
+}
+
+.sr-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--sr-border);
+  display: block;
+}
+
+/* ── Estado vacío / error / cargando ── */
+.sr-empty,
+.sr-error,
+.sr-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 0;
+  font-size: 14px;
+}
+
+.sr-empty {
+  flex-direction: column;
+  text-align: center;
+  color: var(--sr-muted);
+}
+
+.sr-empty i {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.sr-error {
+  color: rgba(255, 100, 100, 0.8);
+}
+
+.sr-loading {
+  color: var(--sr-muted);
+}
+
+/* ── Card ── */
 .sr-card {
   background: var(--sr-bg);
   border: 1px solid var(--sr-border);
   border-radius: 14px;
   overflow: hidden;
   margin-bottom: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.sr-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.adm-body.dark-mode .sr-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .sr-card--recent {
   border-top: 3px solid var(--sr-recent);
 }
+
 .sr-card--old {
   border-top: 3px solid var(--sr-border-old);
 }
 
+/* ── Head: layout horizontal ── */
 .sr-card-head {
   background: var(--sr-bg-head);
   border-bottom: 1px solid var(--sr-border);
-  padding: 14px 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
+.sr-card-head-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.sr-card-head-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Patente */
 .sr-plate {
   background: #010a44;
   color: #ffffff;
@@ -4945,8 +5035,18 @@ textarea.form-control {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 2px;
+  white-space: nowrap;
 }
 
+/* Fecha visible en el head */
+.sr-fecha-display {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sr-muted);
+  white-space: nowrap;
+}
+
+/* Badge "Más reciente" */
 .sr-badge-recent {
   display: inline-flex;
   align-items: center;
@@ -4958,51 +5058,90 @@ textarea.form-control {
   font-size: 0.72rem;
   font-weight: 600;
   color: #e30613;
+  white-space: nowrap;
 }
 
+/* ── Fields: grid 3 columnas ── */
 .sr-fields {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 16px;
+  gap: 0;
+  padding: 0;
 }
 
-@media (max-width: 500px) {
-  .sr-fields {
-    grid-template-columns: 1fr;
-  }
+.sr-field {
+  padding: 16px 18px;
+  border-right: 1px solid var(--sr-border);
+}
+
+.sr-field:last-child {
+  border-right: none;
 }
 
 .sr-field-label {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--sr-muted);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
+/* Input del campo */
 .sr-input {
-  width: 100% !important;
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sr-text);
+  font-family: "Google Sans", sans-serif;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+  outline: none;
 }
 
+.sr-input:disabled {
+  cursor: default;
+  -webkit-text-fill-color: var(--sr-text);
+  opacity: 1;
+}
+
+/* Input en modo edición */
+.sr-input--editing {
+  background: var(--sr-bg-head) !important;
+  border-color: rgba(227, 6, 19, 0.4) !important;
+  cursor: text !important;
+}
+
+.sr-input--editing:focus {
+  border-color: #e30613 !important;
+  box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+}
+
+/* ── Acciones de edición ── */
 .sr-edit-actions {
-  padding: 0 16px 16px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--sr-border);
   display: flex;
   gap: 8px;
+  background: var(--sr-bg-head);
   flex-wrap: wrap;
 }
 
-/* Botones de acción */
+/* ── Botones ── */
 .sr-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   border-radius: 8px;
-  padding: 6px 14px;
+  padding: 7px 14px;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: "Google Sans", sans-serif;
@@ -5011,11 +5150,17 @@ textarea.form-control {
   transition:
     background 0.2s,
     border-color 0.2s,
-    transform 0.15s;
+    transform 0.15s,
+    opacity 0.2s;
+  white-space: nowrap;
 }
 
 .sr-btn:hover {
   transform: translateY(-1px);
+}
+
+.sr-btn:active {
+  transform: translateY(0);
 }
 
 .sr-btn--edit {
@@ -5065,122 +5210,269 @@ textarea.form-control {
   background: var(--sr-bg-head);
 }
 
-/* ── RESPONSIVE ADMIN ── */
-@media (max-width: 1100px) {
-  .adm-panels {
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .sr-fields {
     grid-template-columns: 1fr;
   }
+
+  .sr-field {
+    border-right: none;
+    border-bottom: 1px solid var(--sr-border);
+  }
+
+  .sr-field:last-child {
+    border-bottom: none;
+  }
+
+  .sr-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sr-card-head-right {
+    width: 100%;
+  }
+
+  .sr-btn {
+    flex: 1;
+    justify-content: center;
+  }
 }
+/* =============================================
+   FIX SIDEBAR MOBILE — reemplazar el bloque
+   "@media (max-width: 900px)" del admin
+   en style.css (hay DOS bloques, reemplazar
+   el primero que empieza con:
+   "── MOBILE: ocultar hamburguesa, usar drawer ──")
+   ============================================= */
 
 @media (max-width: 900px) {
+
+  /* Ocultar hamburguesa del topbar en mobile */
+  .adm-hamburger {
+    display: none;
+  }
+
+  /* El shell ocupa una sola columna */
   .adm-shell {
     grid-template-columns: 1fr;
   }
 
+  /* ── SIDEBAR como drawer fijo ── */
   .adm-sidebar {
-    height: auto;
-    position: static;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 300;                          /* por encima de todo */
+    height: 56px;                          /* colapsado: solo barra */
     flex-direction: row;
-    flex-wrap: wrap;
-    padding: 12px 16px;
-    gap: 6px;
+    align-items: center;
+    padding: 0 16px;
+    gap: 0;
+    overflow: hidden;
+    flex-wrap: nowrap;
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
-    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s ease;
+    /* Fondo sólido para que tape el contenido de abajo */
+    background: #ffffff;
   }
 
   .adm-body.dark-mode .adm-sidebar {
+    background: #0d1830;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 
+  /* ── Sidebar ABIERTO ── */
+  .adm-sidebar.mobile-open {
+    height: auto;
+    max-height: calc(100vh - 0px);
+    overflow-y: auto;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 0 16px 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    /* Asegurar que tape absolutamente todo */
+    z-index: 300;
+  }
+
+  .adm-body.dark-mode .adm-sidebar.mobile-open {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Main con padding-top para no quedar debajo del sidebar fijo */
+  .adm-main {
+    padding-top: 56px;
+    min-width: 0;
+  }
+
+  /* Logo siempre visible en la barra */
   .adm-sidebar-logo {
     padding: 0;
     border: none;
     margin: 0;
     flex-shrink: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
   }
 
   .adm-sidebar-logo img {
-    max-width: 100px;
+    max-width: 90px;
   }
 
-  .adm-sidebar-label {
+  /* Ocultar elementos cuando está cerrado */
+  .adm-sidebar:not(.mobile-open) .adm-sidebar-label,
+  .adm-sidebar:not(.mobile-open) .adm-nav-item,
+  .adm-sidebar:not(.mobile-open) .adm-sidebar-spacer,
+  .adm-sidebar:not(.mobile-open) .adm-theme-toggle,
+  .adm-sidebar:not(.mobile-open) .adm-user-pill {
     display: none;
   }
 
-  .adm-nav-item {
-    padding: 8px 14px;
+  /* Cuando está abierto, mostrar elementos en columna */
+  .adm-sidebar.mobile-open .adm-sidebar-logo {
+    width: 100%;
+    height: 56px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 8px;
+  }
+
+  .adm-body.dark-mode .adm-sidebar.mobile-open .adm-sidebar-logo {
+    border-bottom-color: rgba(255, 255, 255, 0.07);
+  }
+
+  .adm-sidebar.mobile-open .adm-mobile-toggle {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+
+  .adm-sidebar.mobile-open .adm-sidebar-label {
+    display: block;
+    width: 100%;
+    padding: 8px 0 4px;
+  }
+
+  .adm-sidebar.mobile-open .adm-nav-item {
+    display: flex;
+    width: 100%;
     border-radius: 8px;
-    flex: 0 0 auto;
+    padding: 10px 12px;
   }
 
-  .adm-nav-item span {
+  .adm-sidebar.mobile-open .adm-sidebar-spacer {
     display: none;
   }
 
-  .adm-nav-item i {
-    width: auto;
-    font-size: 1.1rem;
+  .adm-sidebar.mobile-open .adm-theme-toggle {
+    display: flex;
+    width: 100%;
+    margin: 8px 0 0;
+    box-sizing: border-box;
   }
 
-  .adm-sidebar-spacer {
+  .adm-sidebar.mobile-open .adm-user-pill {
+    display: flex;
+    width: 100%;
+    margin: 8px 0 0;
+    box-sizing: border-box;
+  }
+
+  .adm-sidebar.mobile-open .adm-user-info {
+    display: block;
+  }
+}
+
+/* ── OVERLAY — tapa el contenido cuando el drawer está abierto ── */
+.adm-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 299;           /* justo debajo del sidebar (300) */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.adm-sidebar-overlay.visible {
+  display: block;
+}
+
+/* ── Mobile toggle (chevron dentro del sidebar) ── */
+.adm-mobile-toggle {
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #e30613;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+  margin-left: auto;
+}
+
+.adm-mobile-toggle:hover {
+  background: rgba(227, 6, 19, 0.14);
+  border-color: rgba(227, 6, 19, 0.35);
+}
+
+.adm-body.dark-mode .adm-mobile-toggle {
+  background: rgba(227, 6, 19, 0.1);
+  border-color: rgba(227, 6, 19, 0.25);
+  color: #ff4d57;
+}
+
+.adm-mobile-toggle i {
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  line-height: 1;
+}
+
+.adm-sidebar.mobile-open .adm-mobile-toggle i {
+  transform: rotate(180deg);
+}
+
+/* Ocultar el mobile-toggle en desktop */
+@media (min-width: 901px) {
+  .adm-mobile-toggle {
     display: none;
   }
+}
 
-  .adm-user-pill {
-    margin: 0;
-    flex: 0 0 auto;
-    padding: 8px 12px;
-  }
-
-  .adm-user-info {
-    display: none;
-  }
-
-  .adm-theme-toggle {
-    margin: 0;
-    padding: 8px 12px;
-    flex: 0 0 auto;
-  }
-
-  .adm-theme-toggle span {
-    display: none;
-  }
-
+/* Ajustes responsive menores para mobile */
+@media (max-width: 600px) {
   .adm-stats-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
-
-  .adm-content {
-    padding: 20px 16px;
+  .adm-panels {
+    grid-template-columns: 1fr;
   }
   .adm-topbar {
-    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .adm-content {
+    padding: 16px 12px;
+  }
+  .adm-topbar {
+    padding: 14px 12px;
   }
   .adm-footer {
     padding: 12px 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .adm-stats-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .adm-nav-item span {
-    display: none;
-  }
-
-  .adm-topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .adm-panel-head {
-    flex-wrap: wrap;
   }
 }
