@@ -1210,6 +1210,14 @@ img.img-salita {
   text-decoration: underline;
   color: white;
 }
+.admin-link {
+  opacity: 0.25;
+  font-size: 0.7rem;
+  cursor: default;
+}
+.admin-link:hover {
+  transform: none;
+}
 
 .footer-bottom {
   display: flex;
@@ -1563,6 +1571,31 @@ img.img-salita {
   border-radius: 6px;
   animation: skeleton-loading 1.2s infinite ease-in-out;
   background: linear-gradient(90deg, #f0f0f0 25%, #e2e2e2 37%, #f0f0f0 63%);
+  background-size: 400% 100%;
+}
+
+/* Skeleton — modo oscuro (admin) */
+.adm-body.dark-mode .hst-skeleton-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.adm-body.dark-mode .hst-sk-top {
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.adm-body.dark-mode .hst-sk-body {
+  background: transparent;
+}
+
+.adm-body.dark-mode .hst-sk-block {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.12) 37%,
+    rgba(255, 255, 255, 0.06) 63%
+  );
   background-size: 400% 100%;
 }
 
@@ -5248,7 +5281,6 @@ textarea.form-control {
    ============================================= */
 
 @media (max-width: 900px) {
-
   /* Ocultar hamburguesa del topbar en mobile */
   .adm-hamburger {
     display: none;
@@ -5265,8 +5297,8 @@ textarea.form-control {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 300;                          /* por encima de todo */
-    height: 56px;                          /* colapsado: solo barra */
+    z-index: 300; /* por encima de todo */
+    height: 56px; /* colapsado: solo barra */
     flex-direction: row;
     align-items: center;
     padding: 0 16px;
@@ -5276,8 +5308,9 @@ textarea.form-control {
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s ease;
+    transition:
+      height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s ease;
     /* Fondo sólido para que tape el contenido de abajo */
     background: #ffffff;
   }
@@ -5395,7 +5428,7 @@ textarea.form-control {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
-  z-index: 299;           /* justo debajo del sidebar (300) */
+  z-index: 299; /* justo debajo del sidebar (300) */
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
 }
@@ -5418,7 +5451,9 @@ textarea.form-control {
   color: #e30613;
   font-size: 0.95rem;
   flex-shrink: 0;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   margin-left: auto;
 }
 
