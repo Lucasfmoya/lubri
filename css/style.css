@@ -183,6 +183,31 @@ select {
   background: rgba(0, 0, 0, 0.12);
 }
 
+.navbar-toggler {
+  border: none;
+  padding: 4px 8px;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon-custom {
+  font-size: 1.8rem;
+  color: var(--navy);
+  transition: transform 0.25s ease;
+  display: block;
+  line-height: 1;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon-custom {
+  content: "";
+}
+
+.navbar-toggler[aria-expanded="true"] .bi-list::before {
+  content: "\F659"; /* bootstrap-icons: x-lg */
+}
+
 /* =============================================
    5. HELPERS DE SECCIÓN
    ============================================= */
@@ -3421,8 +3446,6 @@ textarea.form-control {
 
 /* =============================================
    ADMIN PANEL — Layout, Light Mode & Responsive Fixes
-   Reemplazar el bloque "ADMIN DASHBOARD" al final de style.css
-   (desde el comentario "ADMIN DASHBOARD — style block" hasta el final)
    ============================================= */
 
 /* ── BASE ── */
