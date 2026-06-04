@@ -5534,3 +5534,121 @@ textarea.form-control {
     gap: 4px;
   }
 }
+
+/* Reseñas a chequear*/
+
+/* --- Sección General --- */
+.seccion-resenas {
+  background-color: #f8f9fa;
+  padding: 60px 20px;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+.resenas-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+.resenas-contenido h2 {
+  font-size: 2rem;
+  color: #202124;
+  margin-bottom: 5px;
+}
+.subtitulo-resenas {
+  color: #5f6368;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+/* --- Grid de Tarjetas (Responsivo) --- */
+.contenedor-tarjetas-resenas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  justify-content: center;
+}
+
+/* --- Tarjeta Individual --- */
+.tarjeta-resena {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.tarjeta-resena:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Cabecera de la Tarjeta --- */
+.cabecera-tarjeta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.avatar-cliente {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+  background-color: #e8eaed;
+}
+.datos-cliente h3 {
+  margin: 0;
+  font-size: 15px;
+  color: #202124;
+  font-weight: 600;
+}
+.marca-google {
+  font-size: 11px;
+  color: #1a73e8; /* Azul corporativo de Google */
+  font-weight: 500;
+}
+
+/* --- Estrellas y Comentario --- */
+.estrellas-resena {
+  color: #fbbc05; /* Amarillo corporativo de Google */
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.comentario-resena {
+  margin: 0;
+  font-size: 14px;
+  color: #3c4043;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* --- Estados de Carga y Error --- */
+.cargando-resenas,
+.error-resenas,
+.sin-resenas {
+  grid-column: 1 / -1;
+  padding: 40px;
+  color: #5f6368;
+  font-size: 15px;
+}
+.spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #dadce0;
+  border-top-color: #1a73e8;
+  border-radius: 50%;
+  animation: girar 1s linear infinite;
+  margin-bottom: 10px;
+}
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

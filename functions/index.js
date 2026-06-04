@@ -212,3 +212,43 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
     return res.status(500).json({ error: "Error al importar datos" });
   }
 });
+
+
+/* =========================
+   ⭐️ REVIEWS DE GOOGLE
+========================= */
+// Necesitamos requerir la librería de google al final si no está arriba
+const { google } = require("googleapis");
+
+// Reemplaza estos dos datos con los de tu negocio cuando los tengas
+const ACCOUNT_ID = "TU_ACCOUNT_ID"; 
+const LOCATION_ID = "TU_LOCATION_ID"; 
+
+exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
+  try {
+    // Configuramos los encabezados CORS manualmente igual que tus otras funciones
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+
+    if (req.method === "OPTIONS") {
+      return res.status(204).send("");
+    }
+
+    // El entorno de Firebase lee automáticamente la cuenta de servicio del proyecto
+    const auth = new google.auth.GoogleAuth({
+      scopes: ["https://googleapis.com"]
+    });
+    const authClient = await auth.getClient();
+
+    // URL oficial corregida de la API de Google Business Profile
+    const url = `https://googleapis.com{ACCOUNT_ID}/locations/${LOCATION_ID}/reviews`;
+    
+    const googleResponse = await authClient.request({ url });
+
+    return res.status(200).json(googleResponse.data.reviews || []);
+  } catch (error) {
+    console.error("ERROR GOOGLE REVIEWS:", error);
+    return res.status(500).json({ error: "No se pudieron obtener las reseñas corporativas" });
+  }
+});
