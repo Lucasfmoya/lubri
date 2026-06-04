@@ -213,42 +213,83 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
   }
 });
 
-
 /* =========================
-   ⭐️ REVIEWS DE GOOGLE
+   ⭐ OBTENER RESEÑAS — Places API
+   Agregá esta función al final de functions/index.js
+   Reemplazá la función "obtenerResenas" que ya existe
 ========================= */
-// Necesitamos requerir la librería de google al final si no está arriba
-const { google } = require("googleapis");
 
-// Reemplaza estos dos datos con los de tu negocio cuando los tengas
-const ACCOUNT_ID = "TU_ACCOUNT_ID"; 
-const LOCATION_ID = "TU_LOCATION_ID"; 
+const https = require("https");
+
+// ── Constantes ──────────────────────────────────────────
+const PLACE_ID = "ChIJwVKYWN6iMpQR6pckLMcr6O8";
+const API_KEY = "SECRETO_ELIMINADO";
+const FIELDS = "reviews,rating,user_ratings_total,name";
+const LANGUAGE = "es";
+
+// ── Helper: fetch con https nativo (no hay node-fetch en Cloud Functions v1) ──
+function fetchJSON(url) {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, (res) => {
+        let data = "";
+        res.on("data", (chunk) => (data += chunk));
+        res.on("end", () => {
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error("JSON parse error"));
+          }
+        });
+      })
+      .on("error", reject);
+  });
+}
 
 exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
   try {
-    // Configuramos los encabezados CORS manualmente igual que tus otras funciones
     res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
     res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
 
-    if (req.method === "OPTIONS") {
-      return res.status(204).send("");
+    if (req.method === "OPTIONS") return res.status(204).send("");
+    if (req.method !== "GET")
+      return res.status(405).json({ error: "Método no permitido" });
+
+    const url =
+      `https://maps.googleapis.com/maps/api/place/details/json` +
+      `?place_id=${PLACE_ID}` +
+      `&fields=${FIELDS}` +
+      `&language=${LANGUAGE}` +
+      `&key=${API_KEY}`;
+
+    const data = await fetchJSON(url);
+
+    if (data.status !== "OK") {
+      console.error("Places API error:", data.status, data.error_message);
+      return res
+        .status(502)
+        .json({ error: "Error al consultar Places API", status: data.status });
     }
 
-    // El entorno de Firebase lee automáticamente la cuenta de servicio del proyecto
-    const auth = new google.auth.GoogleAuth({
-      scopes: ["https://googleapis.com"]
+    const result = data.result;
+
+    // Devolvemos solo lo que necesita el frontend
+    return res.json({
+      nombre: result.name || "",
+      rating: result.rating || 0,
+      total_resenas: result.user_ratings_total || 0,
+      resenas: (result.reviews || []).map((r) => ({
+        autor: r.author_name,
+        foto: r.profile_photo_url,
+        rating: r.rating,
+        texto: r.text,
+        tiempo: r.relative_time_description,
+        url_autor: r.author_url,
+      })),
     });
-    const authClient = await auth.getClient();
-
-    // URL oficial corregida de la API de Google Business Profile
-    const url = `https://googleapis.com{ACCOUNT_ID}/locations/${LOCATION_ID}/reviews`;
-    
-    const googleResponse = await authClient.request({ url });
-
-    return res.status(200).json(googleResponse.data.reviews || []);
   } catch (error) {
-    console.error("ERROR GOOGLE REVIEWS:", error);
-    return res.status(500).json({ error: "No se pudieron obtener las reseñas corporativas" });
+    console.error("ERROR obtenerResenas:", error);
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 });

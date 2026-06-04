@@ -1,76 +1,105 @@
-// 1. URL pública que te entregó la consola de Firebase al desplegar
-const URL_FIREBASE_REVIEWS = "COLOCA_AQUI_LA_URL_DE_TU_FUNCTION_URL";
+/* =============================================
+   LUBRICENTRO O'HIGGINS — review.js
+   Carga reseñas desde la Cloud Function
+   (que a su vez consulta Google Places API)
+   ============================================= */
 
-async function inicializarResenasGoogle() {
-    const contenedor = document.getElementById("google-reviews");
-    if (!contenedor) return; // Seguridad por si no estás en la página con esta sección
+// URL de tu Cloud Function (la obtenés tras deployar)
+// Formato: https://us-central1-lubricentro--ohiggins.cloudfunctions.net/obtenerResenas
+const URL_RESENAS = "https://obtenerresenas-pbgzdzmh5q-uc.a.run.app";
 
-    try {
-        const respuesta = await fetch(URL_FIREBASE_REVIEWS);
-        
-        if (!respuesta.ok) {
-            throw new Error(`Error en el servidor: ${respuesta.status}`);
-        }
+/* ── Generar estrellas SVG ───────────────────── */
+function renderEstrellas(rating) {
+  const llenas = Math.floor(rating);
+  const media = rating % 1 >= 0.5 ? 1 : 0;
+  const vacias = 5 - llenas - media;
+  let html = "";
 
-        const listaResenas = await respuesta.json();
+  for (let i = 0; i < llenas; i++)
+    html += `<i class="bi bi-star-fill rev-star-llena"></i>`;
+  if (media) html += `<i class="bi bi-star-half rev-star-llena"></i>`;
+  for (let i = 0; i < vacias; i++)
+    html += `<i class="bi bi-star rev-star-vacia"></i>`;
 
-        // Si la API responde pero el negocio aún no tiene ninguna reseña redactada
-        if (listaResenas.length === 0) {
-            contenedor.innerHTML = "<p class='sin-resenas'>Aún no hay opiniones disponibles.</p>";
-            return;
-        }
+  return html;
+}
 
-        // Limpiamos el mensaje de "Cargando..." antes de inyectar las tarjetas
-        contenedor.innerHTML = "";
+/* ── Iniciales del autor (fallback foto) ────── */
+function iniciales(nombre) {
+  if (!nombre) return "?";
+  return nombre
+    .split(" ")
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() || "")
+    .join("");
+}
 
-        // Recorremos el JSON enviado por Firebase para armar las tarjetas HTML
-        listaResenas.forEach(item => {
-            const tarjeta = document.createElement("div");
-            tarjeta.className = "tarjeta-resena";
+/* ── Render de una tarjeta ───────────────────── */
+function crearTarjeta(r) {
+  const card = document.createElement("div");
+  card.className = "rev-google-card";
 
-            // Pasamos la calificación de texto ("FIVE", "FOUR", etc.) a número entero
-            const estrellasNumero = convertirEstrellasANumero(item.starRating);
-            const estrellasVisuales = "★".repeat(estrellasNumero) + "☆".repeat(5 - estrellasNumero);
+  // Avatar: usa foto de Google si existe, sino iniciales
+  const avatarHTML = r.foto
+    ? `<img src="${r.foto}" alt="${r.autor}" class="rev-google-avatar-img" referrerpolicy="no-referrer" />`
+    : `<div class="rev-google-avatar-txt">${iniciales(r.autor)}</div>`;
 
-            // Controlamos si el cliente tiene foto de perfil cargada en Google
-            const fotoPerfil = item.reviewer && item.reviewer.profilePhotoUrl 
-                ? item.reviewer.profilePhotoUrl 
-                : "https://wikimedia.org";
+  card.innerHTML = `
+    <div class="rev-google-head">
+      <div class="rev-google-avatar">${avatarHTML}</div>
+      <div class="rev-google-meta">
+        <a href="${r.url_autor || "#"}" target="_blank" rel="noopener noreferrer" class="rev-google-nombre">
+          ${r.autor || "Usuario de Google"}
+        </a>
+        <span class="rev-google-tiempo">${r.tiempo || ""}</span>
+      </div>
+      <img src="https://www.gstatic.com/images/branding/product/2x/maps_48dp.png"
+           class="rev-google-logo" alt="Google" />
+    </div>
+    <div class="rev-google-estrellas">${renderEstrellas(r.rating)}</div>
+    <p class="rev-google-texto">${r.texto || "<em>Sin comentario escrito.</em>"}</p>
+  `;
 
-            // Nombre del cliente
-            const nombreCliente = item.reviewer && item.reviewer.displayName 
-                ? item.reviewer.displayName 
-                : "Usuario de Google";
+  return card;
+}
 
-            // Texto de la reseña (manejamos opción por si solo dejaron estrellas sin texto)
-            const comentario = item.comment ? item.comment.trim() : "Calificó este negocio sin dejar un comentario escrito.";
+/* ── Función principal ───────────────────────── */
+async function cargarResenas() {
+  const contenedor = document.getElementById("google-reviews-cards");
+  const scoreEl = document.getElementById("google-reviews-score");
+  const totalEl = document.getElementById("google-reviews-total");
+  const starsEl = document.getElementById("google-reviews-stars");
 
-            tarjeta.innerHTML = `
-                <div class="cabecera-tarjeta">
-                    <img src="${fotoPerfil}" alt="${nombreCliente}" class="avatar-cliente" referrerpolicy="no-referrer">
-                    <div class="datos-cliente">
-                        <h3>${nombreCliente}</h3>
-                        <span class="marca-google">Reseña verificada</span>
-                    </div>
-                </div>
-                <div class="estrellas-resena" data-rating="${estrellasNumero}">${estrellasVisuales}</div>
-                <p class="comentario-resena">"${comentario}"</p>
-            `;
-            
-            contenedor.appendChild(tarjeta);
-        });
+  if (!contenedor) return;
 
-    } catch (error) {
-        console.error("Error al cargar opiniones desde Firebase:", error);
-        contenedor.innerHTML = "<p class='error-resenas'>No se pudieron cargar las opiniones en este momento.</p>";
+  try {
+    const resp = await fetch(URL_RESENAS);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+
+    // Score global
+    if (scoreEl) scoreEl.textContent = data.rating?.toFixed(1) || "—";
+    if (totalEl)
+      totalEl.textContent = `${data.total_resenas || 0} reseñas en Google`;
+    if (starsEl) starsEl.innerHTML = renderEstrellas(data.rating || 0);
+
+    // Tarjetas
+    contenedor.innerHTML = "";
+
+    if (!data.resenas || data.resenas.length === 0) {
+      contenedor.innerHTML = `<p class="rev-google-empty">No hay reseñas disponibles.</p>`;
+      return;
     }
+
+    // Google devuelve hasta 5 reseñas ordenadas por relevancia
+    data.resenas.forEach((r) => {
+      contenedor.appendChild(crearTarjeta(r));
+    });
+  } catch (err) {
+    console.error("Error al cargar reseñas:", err);
+    if (contenedor)
+      contenedor.innerHTML = `<p class="rev-google-empty">No se pudieron cargar las reseñas.</p>`;
+  }
 }
 
-// Función auxiliar: Traduce el formato string de Google a números enteros
-function convertirEstrellasANumero(ratingTexto) {
-    const mapeo = { "ONE": 1, "TWO": 2, "THREE": 3, "FOUR": 4, "FIVE": 5 };
-    return mapeo[ratingTexto] || 5; 
-}
-
-// Disparar la carga de datos de forma automática en cuanto la estructura web esté lista
-document.addEventListener("DOMContentLoaded", inicializarResenasGoogle);
+document.addEventListener("DOMContentLoaded", cargarResenas);

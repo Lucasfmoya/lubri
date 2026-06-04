@@ -669,64 +669,45 @@
       <!-- ===== RESEÑAS GOOGLE ===== -->
       <section class="py-5 bg-white">
         <div class="container">
-          <div class="row align-items-center justify-content-center g-5">
-            <div class="col-lg-5" data-animate="fade-right">
+          <div class="row align-items-start g-5">
+            <!-- Izquierda: título + score -->
+            <div class="col-lg-4" data-animate="fade-right">
               <span class="section-eyebrow">RESEÑAS DE CLIENTES</span>
               <h2 class="section-title">Lo que dicen<br />de nosotros</h2>
               <p class="section-text">
                 Opiniones reales de quienes confían en nosotros hace años.
               </p>
+
+              <!-- Score block -->
               <div class="rev-score-block">
-                <span class="rev-score-num">4.7</span>
+                <span class="rev-score-num" id="google-reviews-score">4.7</span>
                 <div>
-                  <div class="rev-score-stars">★★★★★</div>
-                  <div class="rev-score-count">381 reseñas en Google</div>
+                  <div class="rev-google-score-stars" id="google-reviews-stars">
+                    ★★★★★
+                  </div>
+                  <div class="rev-score-count" id="google-reviews-total">
+                    381 reseñas en Google
+                  </div>
                 </div>
               </div>
+
+              <!-- Link a Google Maps -->
+              <a
+                href="https://maps.google.com/?cid=1728711530410073085"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline-dark mt-4"
+                style="font-size: 0.85rem"
+              >
+                <i class="bi bi-google me-2"></i>Ver todas las reseñas
+              </a>
             </div>
-            <div class="col-lg-5" data-animate="fade-left">
-              <div class="rev-carousel">
-                <div class="rev-card" id="rev-card">
-                  <div class="rev-card-header">
-                    <div class="rev-avatar" id="rev-av">MG</div>
-                    <div class="rev-meta">
-                      <span class="rev-name" id="rev-name"
-                        >Martín González</span
-                      >
-                      <span class="rev-date" id="rev-date">hace 2 semanas</span>
-                    </div>
-                    <div class="rev-stars" id="rev-stars">★★★★★</div>
-                  </div>
-                  <p class="rev-text" id="rev-text">
-                    Excelente atención, rápidos y honestos. Me avisaron que el
-                    filtro todavía estaba bien y no me lo cambiaron
-                    innecesariamente. Eso genera mucha confianza.
-                  </p>
-                  <div class="rev-footer">
-                    <i class="bi bi-patch-check-fill"></i>
-                    Reseña verificada en Google
-                  </div>
-                </div>
-                <div class="rev-controls">
-                  <div class="rev-dots" id="rev-dots"></div>
-                  <div class="rev-arrows">
-                    <button
-                      class="rev-btn"
-                      id="rev-prev"
-                      aria-label="Anterior"
-                      disabled
-                    >
-                      <i class="bi bi-arrow-left"></i>
-                    </button>
-                    <button
-                      class="rev-btn"
-                      id="rev-next"
-                      aria-label="Siguiente"
-                    >
-                      <i class="bi bi-arrow-right"></i>
-                    </button>
-                  </div>
-                </div>
+
+            <!-- Derecha: tarjetas dinámicas -->
+            <div class="col-lg-8" data-animate="fade-left">
+              <div class="rev-google-wrap" id="google-reviews-cards">
+                <!-- Las tarjetas se inyectan desde review.js -->
+                <p class="rev-google-empty">Cargando reseñas...</p>
               </div>
             </div>
           </div>
@@ -865,5 +846,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="../js/main.js?v=2.0"></script>
+    <script src="../js/review.js"></script>
   </body>
 </html>
