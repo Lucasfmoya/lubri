@@ -220,20 +220,35 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
 ========================= */
 
 const https = require("https");
+const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
+
+const secretClient = new SecretManagerServiceClient();
 
 // ── Constantes ──────────────────────────────────────────
 const PLACE_ID = "ChIJwVKYWN6iMpQR6pckLMcr6O8";
-const API_KEY = "SECRETO_ELIMINADO";
 const FIELDS = "reviews,rating,user_ratings_total,name";
 const LANGUAGE = "es";
 
-// ── Helper: fetch con https nativo (no hay node-fetch en Cloud Functions v1) ──
+// ── Obtener API Key desde Secret Manager ────────────────
+async function getApiKey() {
+  const [version] = await secretClient.accessSecretVersion({
+    name: "projects/lubricentro--ohiggins/secrets/PLACES_API_KEY/versions/latest",
+  });
+
+  return version.payload.data.toString("utf8");
+}
+
+// ── Helper: fetch con https nativo ──────────────────────
 function fetchJSON(url) {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
         let data = "";
-        res.on("data", (chunk) => (data += chunk));
+
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
+
         res.on("end", () => {
           try {
             resolve(JSON.parse(data));
@@ -252,9 +267,18 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
     res.set("Access-Control-Allow-Headers", "Content-Type");
 
-    if (req.method === "OPTIONS") return res.status(204).send("");
-    if (req.method !== "GET")
-      return res.status(405).json({ error: "Método no permitido" });
+    if (req.method === "OPTIONS") {
+      return res.status(204).send("");
+    }
+
+    if (req.method !== "GET") {
+      return res.status(405).json({
+        error: "Método no permitido",
+      });
+    }
+
+    // Obtener API Key desde Secret Manager
+    const API_KEY = await getApiKey();
 
     const url =
       `https://maps.googleapis.com/maps/api/place/details/json` +
@@ -266,15 +290,20 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     const data = await fetchJSON(url);
 
     if (data.status !== "OK") {
-      console.error("Places API error:", data.status, data.error_message);
-      return res
-        .status(502)
-        .json({ error: "Error al consultar Places API", status: data.status });
+      console.error(
+        "Places API error:",
+        data.status,
+        data.error_message
+      );
+
+      return res.status(502).json({
+        error: "Error al consultar Places API",
+        status: data.status,
+      });
     }
 
     const result = data.result;
 
-    // Devolvemos solo lo que necesita el frontend
     return res.json({
       nombre: result.name || "",
       rating: result.rating || 0,
@@ -290,6 +319,9 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     });
   } catch (error) {
     console.error("ERROR obtenerResenas:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+
+    return res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 });
