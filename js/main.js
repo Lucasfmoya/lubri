@@ -200,7 +200,12 @@ if (contactForm) {
           `HTTP ${response.status}`;
         throw new Error(msg);
       }
-
+      // Trackear formulario enviado exitosamente
+      gtag("event", "formulario_enviado", {
+        event_category: "conversion",
+        event_label:
+          document.getElementById("servicio")?.value || "sin servicio",
+      });
       contactForm.reset();
       contactForm.style.display = "none";
       formSuccess.classList.add("show");
@@ -371,4 +376,70 @@ if (contactForm) {
     },
     true,
   );
+})();
+
+/* ===== GOOGLE ANALYTICS — eventos personalizados ===== */
+(function () {
+  // Todos los links de WhatsApp
+  document.querySelectorAll('a[href*="wa.me"]').forEach((btn) => {
+    btn.addEventListener("click", () => {
+      gtag("event", "click_whatsapp", {
+        event_category: "contacto",
+        event_label: btn.textContent.trim() || "WhatsApp",
+        page_location: window.location.pathname,
+      });
+    });
+  });
+
+  // Botón flotante de WhatsApp específicamente
+  const waFloat = document.querySelector(".whatsapp-float");
+  if (waFloat) {
+    waFloat.addEventListener("click", () => {
+      gtag("event", "click_whatsapp_flotante", {
+        event_category: "contacto",
+        event_label: "Botón flotante",
+      });
+    });
+  }
+
+  // Clicks en teléfono
+  document.querySelectorAll('a[href*="tel:"]').forEach((btn) => {
+    btn.addEventListener("click", () => {
+      gtag("event", "click_telefono", {
+        event_category: "contacto",
+        event_label: "Llamada directa",
+      });
+    });
+  });
+  // Botones "Consultar precio" (servicios.html)
+  document.querySelectorAll('a[href*="wa.me"]').forEach((btn) => {
+    const texto = btn.textContent.trim().toLowerCase();
+
+    if (texto.includes("consultar precio")) {
+      btn.addEventListener("click", () => {
+        gtag("event", "click_consultar_precio", {
+          event_category: "conversion",
+          event_label: btn.closest("section")?.id || "servicios",
+        });
+      });
+    }
+
+    if (texto.includes("empresa") || texto.includes("flota")) {
+      btn.addEventListener("click", () => {
+        gtag("event", "click_consulta_empresa", {
+          event_category: "conversion",
+          event_label: "Flotas y empresas",
+        });
+      });
+    }
+
+    if (texto.includes("turno")) {
+      btn.addEventListener("click", () => {
+        gtag("event", "click_solicitar_turno", {
+          event_category: "conversion",
+          event_label: btn.closest("section")?.id || window.location.pathname,
+        });
+      });
+    }
+  });
 })();

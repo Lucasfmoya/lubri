@@ -306,6 +306,11 @@ async function ejecutarBusqueda() {
     const resultados = await buscarPorPatente(patente);
     cache.set(patente, resultados);
     render(resultados, patente);
+    // Trackear búsquedas de patente
+    gtag("event", "busqueda_patente", {
+      event_category: "historial",
+      event_label: resultados.length > 0 ? "encontrado" : "no_encontrado",
+    });
   } catch (err) {
     console.error(err);
     contenedor.innerHTML = "";
