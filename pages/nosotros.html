@@ -682,7 +682,7 @@
       <!-- ===== RESEÑAS GOOGLE ===== -->
       <section class="py-5 bg-white">
         <div class="container">
-          <!-- Encabezado en dos columnas -->
+          <!-- Encabezado -->
           <div class="rev-header-grid">
             <div class="rev-header-left">
               <span class="section-eyebrow">Reseñas de clientes</span>
@@ -697,32 +697,36 @@
                   >★★★★★</span
                 >
                 <span class="rev-score-count" id="google-reviews-total"
-                  >381 reseñas en Google</span
+                  >Cargando...</span
                 >
               </div>
             </div>
           </div>
 
-          <!-- Carrusel de tarjetas -->
+          <!-- Carrusel -->
           <div class="rev-carousel-outer">
-            <div class="rev-google-wrap" id="google-reviews-cards">
-              <p class="rev-google-empty">Cargando reseñas...</p>
+            <button
+              class="rev-nav-btn"
+              id="rev-prev"
+              aria-label="Anterior"
+              disabled
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+
+            <div class="rev-cards-wrap">
+              <div class="rev-google-wrap" id="google-reviews-cards">
+                <p class="rev-google-empty">Cargando reseñas...</p>
+              </div>
             </div>
 
-            <!-- Controles -->
-            <div class="rev-carousel-controls">
-              <div class="rev-carousel-btns">
-                <button class="rev-btn" id="rev-prev" aria-label="Anterior">
-                  <i class="bi bi-chevron-left"></i>
-                </button>
-                <button class="rev-btn" id="rev-next" aria-label="Siguiente">
-                  <i class="bi bi-chevron-right"></i>
-                </button>
-              </div>
-              <div class="rev-dots" id="rev-dots"></div>
-              <div style="width: 80px"></div>
-            </div>
+            <button class="rev-nav-btn" id="rev-next" aria-label="Siguiente">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
+
+          <!-- Dots -->
+          <div class="rev-dots-wrap" id="rev-dots"></div>
 
           <!-- Botón ver todas -->
           <div class="rev-footer-btn-wrap">

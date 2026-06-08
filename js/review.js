@@ -42,8 +42,11 @@ function crearTarjeta(r) {
         </a>
         <span class="rev-google-tiempo">${r.tiempo || ""}</span>
       </div>
-      <img src="https://www.gstatic.com/images/branding/product/2x/maps_48dp.png"
-           class="rev-google-logo" alt="Google" />
+      <img
+        src="https://www.gstatic.com/images/branding/product/2x/maps_48dp.png"
+        class="rev-google-logo"
+        alt="Google"
+      />
     </div>
     <div class="rev-google-estrellas">${renderEstrellas(r.rating)}</div>
     <p class="rev-google-texto">${r.texto || "<em>Sin comentario escrito.</em>"}</p>
@@ -77,45 +80,78 @@ async function cargarResenas() {
       return;
     }
 
-    const visible = 3;
-    const maxOffset = resenas.length - visible;
     let cur = 0;
 
-    // Crear dots
-    dotsEl.innerHTML = "";
-    for (let i = 0; i <= maxOffset; i++) {
-      const dot = document.createElement("button");
-      dot.className = "rev-dot" + (i === 0 ? " active" : "");
-      dot.setAttribute("aria-label", `Página ${i + 1}`);
-      dot.addEventListener("click", () => ir(i));
-      dotsEl.appendChild(dot);
+    function isMobile() {
+      return window.innerWidth <= 768;
     }
 
-    function renderVisible() {
+    function visibles() {
+      return isMobile() ? 1 : 3;
+    }
+
+    function maxOffset() {
+      return resenas.length - visibles();
+    }
+
+    function renderDots() {
+      dotsEl.innerHTML = "";
+      const max = maxOffset();
+      for (let i = 0; i <= max; i++) {
+        const dot = document.createElement("button");
+        dot.className = "rev-dot" + (i === cur ? " active" : "");
+        dot.setAttribute("aria-label", `Página ${i + 1}`);
+        dot.addEventListener("click", () => ir(i));
+        dotsEl.appendChild(dot);
+      }
+    }
+
+    function renderCards() {
       contenedor.innerHTML = "";
-      for (let i = cur; i < cur + visible && i < resenas.length; i++) {
+      const v = visibles();
+
+      // Ajustar grid según dispositivo
+      contenedor.style.gridTemplateColumns =
+        v === 1 ? "1fr" : "repeat(3, minmax(0, 1fr))";
+
+      for (let i = cur; i < cur + v && i < resenas.length; i++) {
         contenedor.appendChild(crearTarjeta(resenas[i]));
       }
+    }
 
-      // Actualizar dots
+    function actualizarControles() {
       dotsEl.querySelectorAll(".rev-dot").forEach((d, i) => {
         d.classList.toggle("active", i === cur);
       });
-
-      // Botones
       btnPrev.disabled = cur === 0;
-      btnNext.disabled = cur >= maxOffset;
+      btnNext.disabled = cur >= maxOffset();
     }
 
     function ir(idx) {
-      cur = Math.max(0, Math.min(idx, maxOffset));
-      renderVisible();
+      cur = Math.max(0, Math.min(idx, maxOffset()));
+      renderCards();
+      actualizarControles();
     }
 
     btnPrev?.addEventListener("click", () => ir(cur - 1));
     btnNext?.addEventListener("click", () => ir(cur + 1));
 
-    renderVisible();
+    // Recalcular al cambiar tamaño de pantalla
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        cur = Math.min(cur, maxOffset());
+        renderDots();
+        renderCards();
+        actualizarControles();
+      }, 150);
+    });
+
+    // Init
+    renderDots();
+    renderCards();
+    actualizarControles();
   } catch (err) {
     console.error("Error al cargar reseñas:", err);
     if (contenedor)
