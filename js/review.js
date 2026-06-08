@@ -73,7 +73,7 @@ async function cargarResenas() {
     if (totalEl)
       totalEl.textContent = `${data.total_resenas || 0} reseñas en Google`;
 
-    const resenas = data.resenas || [];
+    const resenas = (data.resenas || []).filter((r) => r.rating === 5);
 
     if (!resenas.length) {
       contenedor.innerHTML = `<p class="rev-google-empty">No hay reseñas disponibles.</p>`;
