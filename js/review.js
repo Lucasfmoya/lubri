@@ -1,30 +1,22 @@
 /* =============================================
-   LUBRICENTRO O'HIGGINS — review.js
-   Carga reseñas desde la Cloud Function
-   (que a su vez consulta Google Places API)
+   LUBRICENTRO O'HIGGINS — review.js v2
    ============================================= */
 
-// URL de tu Cloud Function (la obtenés tras deployar)
-// Formato: https://us-central1-lubricentro--ohiggins.cloudfunctions.net/obtenerResenas
 const URL_RESENAS = "https://obtenerresenas-pbgzdzmh5q-uc.a.run.app";
 
-/* ── Generar estrellas SVG ───────────────────── */
 function renderEstrellas(rating) {
   const llenas = Math.floor(rating);
   const media = rating % 1 >= 0.5 ? 1 : 0;
   const vacias = 5 - llenas - media;
   let html = "";
-
   for (let i = 0; i < llenas; i++)
     html += `<i class="bi bi-star-fill rev-star-llena"></i>`;
   if (media) html += `<i class="bi bi-star-half rev-star-llena"></i>`;
   for (let i = 0; i < vacias; i++)
     html += `<i class="bi bi-star rev-star-vacia"></i>`;
-
   return html;
 }
 
-/* ── Iniciales del autor (fallback foto) ────── */
 function iniciales(nombre) {
   if (!nombre) return "?";
   return nombre
@@ -34,16 +26,13 @@ function iniciales(nombre) {
     .join("");
 }
 
-/* ── Render de una tarjeta ───────────────────── */
 function crearTarjeta(r) {
-  const card = document.createElement("div");
-  card.className = "rev-google-card";
-
-  // Avatar: usa foto de Google si existe, sino iniciales
   const avatarHTML = r.foto
     ? `<img src="${r.foto}" alt="${r.autor}" class="rev-google-avatar-img" referrerpolicy="no-referrer" />`
     : `<div class="rev-google-avatar-txt">${iniciales(r.autor)}</div>`;
 
+  const card = document.createElement("div");
+  card.className = "rev-google-card";
   card.innerHTML = `
     <div class="rev-google-head">
       <div class="rev-google-avatar">${avatarHTML}</div>
@@ -59,16 +48,16 @@ function crearTarjeta(r) {
     <div class="rev-google-estrellas">${renderEstrellas(r.rating)}</div>
     <p class="rev-google-texto">${r.texto || "<em>Sin comentario escrito.</em>"}</p>
   `;
-
   return card;
 }
 
-/* ── Función principal ───────────────────────── */
 async function cargarResenas() {
   const contenedor = document.getElementById("google-reviews-cards");
-  const scoreEl = document.getElementById("google-reviews-score");
   const totalEl = document.getElementById("google-reviews-total");
   const starsEl = document.getElementById("google-reviews-stars");
+  const btnPrev = document.getElementById("rev-prev");
+  const btnNext = document.getElementById("rev-next");
+  const dotsEl = document.getElementById("rev-dots");
 
   if (!contenedor) return;
 
@@ -77,24 +66,56 @@ async function cargarResenas() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
 
-    // Score global
-    if (scoreEl) scoreEl.textContent = data.rating?.toFixed(1) || "—";
+    if (starsEl) starsEl.innerHTML = renderEstrellas(data.rating || 0);
     if (totalEl)
       totalEl.textContent = `${data.total_resenas || 0} reseñas en Google`;
-    if (starsEl) starsEl.innerHTML = renderEstrellas(data.rating || 0);
 
-    // Tarjetas
-    contenedor.innerHTML = "";
+    const resenas = data.resenas || [];
 
-    if (!data.resenas || data.resenas.length === 0) {
+    if (!resenas.length) {
       contenedor.innerHTML = `<p class="rev-google-empty">No hay reseñas disponibles.</p>`;
       return;
     }
 
-    // Google devuelve hasta 5 reseñas ordenadas por relevancia
-    data.resenas.forEach((r) => {
-      contenedor.appendChild(crearTarjeta(r));
-    });
+    const visible = 3;
+    const maxOffset = resenas.length - visible;
+    let cur = 0;
+
+    // Crear dots
+    dotsEl.innerHTML = "";
+    for (let i = 0; i <= maxOffset; i++) {
+      const dot = document.createElement("button");
+      dot.className = "rev-dot" + (i === 0 ? " active" : "");
+      dot.setAttribute("aria-label", `Página ${i + 1}`);
+      dot.addEventListener("click", () => ir(i));
+      dotsEl.appendChild(dot);
+    }
+
+    function renderVisible() {
+      contenedor.innerHTML = "";
+      for (let i = cur; i < cur + visible && i < resenas.length; i++) {
+        contenedor.appendChild(crearTarjeta(resenas[i]));
+      }
+
+      // Actualizar dots
+      dotsEl.querySelectorAll(".rev-dot").forEach((d, i) => {
+        d.classList.toggle("active", i === cur);
+      });
+
+      // Botones
+      btnPrev.disabled = cur === 0;
+      btnNext.disabled = cur >= maxOffset;
+    }
+
+    function ir(idx) {
+      cur = Math.max(0, Math.min(idx, maxOffset));
+      renderVisible();
+    }
+
+    btnPrev?.addEventListener("click", () => ir(cur - 1));
+    btnNext?.addEventListener("click", () => ir(cur + 1));
+
+    renderVisible();
   } catch (err) {
     console.error("Error al cargar reseñas:", err);
     if (contenedor)

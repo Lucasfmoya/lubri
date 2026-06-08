@@ -682,47 +682,59 @@
       <!-- ===== RESEÑAS GOOGLE ===== -->
       <section class="py-5 bg-white">
         <div class="container">
-          <div class="row align-items-start g-5">
-            <!-- Izquierda: título + score -->
-            <div class="col-lg-4" data-animate="fade-right">
-              <span class="section-eyebrow">RESEÑAS DE CLIENTES</span>
+          <!-- Encabezado en dos columnas -->
+          <div class="rev-header-grid">
+            <div class="rev-header-left">
+              <span class="section-eyebrow">Reseñas de clientes</span>
               <h2 class="section-title">Lo que dicen<br />de nosotros</h2>
-              <p class="section-text">
+            </div>
+            <div class="rev-header-right">
+              <p class="rev-header-desc">
                 Opiniones reales de quienes confían en nosotros hace años.
               </p>
-
-              <!-- Score block -->
-              <div class="rev-score-block">
-                <span class="rev-score-num" id="google-reviews-score">4.7</span>
-                <div>
-                  <div class="rev-google-score-stars" id="google-reviews-stars">
-                    ★★★★★
-                  </div>
-                  <div class="rev-score-count" id="google-reviews-total">
-                    381 reseñas en Google
-                  </div>
-                </div>
-              </div>
-
-              <!-- Link a Google Maps -->
-              <a
-                href="https://maps.google.com/?cid=1728711530410073085"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-outline-dark mt-4"
-                style="font-size: 0.85rem"
-              >
-                <i class="bi bi-google me-2"></i>Ver todas las reseñas
-              </a>
-            </div>
-
-            <!-- Derecha: tarjetas dinámicas -->
-            <div class="col-lg-8" data-animate="fade-left">
-              <div class="rev-google-wrap" id="google-reviews-cards">
-                <!-- Las tarjetas se inyectan desde review.js -->
-                <p class="rev-google-empty">Cargando reseñas...</p>
+              <div class="rev-stars-row">
+                <span class="rev-google-score-stars" id="google-reviews-stars"
+                  >★★★★★</span
+                >
+                <span class="rev-score-count" id="google-reviews-total"
+                  >381 reseñas en Google</span
+                >
               </div>
             </div>
+          </div>
+
+          <!-- Carrusel de tarjetas -->
+          <div class="rev-carousel-outer">
+            <div class="rev-google-wrap" id="google-reviews-cards">
+              <p class="rev-google-empty">Cargando reseñas...</p>
+            </div>
+
+            <!-- Controles -->
+            <div class="rev-carousel-controls">
+              <div class="rev-carousel-btns">
+                <button class="rev-btn" id="rev-prev" aria-label="Anterior">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="rev-btn" id="rev-next" aria-label="Siguiente">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              <div class="rev-dots" id="rev-dots"></div>
+              <div style="width: 80px"></div>
+            </div>
+          </div>
+
+          <!-- Botón ver todas -->
+          <div class="rev-footer-btn-wrap">
+            <a
+              href="https://maps.google.com/?cid=1728711530410073085"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline-dark"
+              style="font-size: 0.85rem"
+            >
+              <i class="bi bi-google me-2"></i>Ver todas las reseñas en Google
+            </a>
           </div>
         </div>
       </section>
