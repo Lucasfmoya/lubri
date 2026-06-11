@@ -157,7 +157,7 @@ select {
 }
 
 .navbar-nav .nav-link:hover {
-  color: var(--navy);
+  color: var(--blue);
 }
 
 .nav-icon-btn {

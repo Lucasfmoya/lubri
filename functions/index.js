@@ -50,10 +50,10 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0] ||
-      req.socket.remoteAddress ||
-      "unknown";
+    const forwarded = req.headers["x-forwarded-for"];
+    const ip = forwarded
+      ? forwarded.split(",").pop().trim()
+      : req.socket.remoteAddress || "unknown";
 
     const ahora = Date.now();
     const ventana = 60000;
@@ -290,11 +290,7 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     const data = await fetchJSON(url);
 
     if (data.status !== "OK") {
-      console.error(
-        "Places API error:",
-        data.status,
-        data.error_message
-      );
+      console.error("Places API error:", data.status, data.error_message);
 
       return res.status(502).json({
         error: "Error al consultar Places API",
