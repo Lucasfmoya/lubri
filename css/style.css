@@ -4593,6 +4593,9 @@ textarea.form-control {
   .hero-section-ser {
     min-height: 100svh;
   }
+  .payment-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* ── 576px ── */
@@ -4600,6 +4603,7 @@ textarea.form-control {
   .payment-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+ 
   .amenities-grid {
     grid-template-columns: 1fr 1fr;
   }
