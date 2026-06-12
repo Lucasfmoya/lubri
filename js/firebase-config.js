@@ -4,7 +4,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 
 const firebaseConfig = {
   apiKey: "AIzaSyBC4jKdacTE3AMvku5rIjutFu7Qu2W5_vQ",
-  authDomain: "lubricentro--ohiggins.firebaseapp.com", // ← Verificá este valor en Firebase Console
+  authDomain: "lubricentro--ohiggins.firebaseapp.com",
   projectId: "lubricentro--ohiggins",
   storageBucket: "lubricentro--ohiggins.firebasestorage.app",
   messagingSenderId: "166455629207",
@@ -14,4 +14,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
-export const auth = getAuth(app); // ← Exportar auth desde acá evita instancias duplicadas
+export const auth = getAuth(app);

@@ -34,13 +34,87 @@ function normalizarFecha(valor) {
 }
 
 /* =========================
+   🛡️ HEADERS DE SEGURIDAD
+========================= */
+function setCORSHeaders(
+  res,
+  allowedOrigins = [
+    "https://lucasfmoya.github.io",
+    "https://lubricentro--ohiggins.web.app",
+    "https://lubricentro--ohiggins.firebaseapp.com",
+  ],
+) {
+  const origin = res.req?.headers?.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.set("Access-Control-Allow-Origin", origin);
+  }
+  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.set("X-Content-Type-Options", "nosniff");
+  res.set("X-Frame-Options", "DENY");
+}
+
+/* =========================
+   🔒 RATE LIMITING MEJORADO
+   Limita por IP + fingerprint de user-agent para dificultar rotación de IPs
+========================= */
+async function checkRateLimit(req, res, opciones = {}) {
+  const { ventana = 60000, limite = 5, coleccion = "rate_limits" } = opciones;
+
+  const forwarded = req.headers["x-forwarded-for"];
+  const ip = forwarded
+    ? forwarded.split(",")[0].trim()
+    : req.socket?.remoteAddress || "unknown";
+
+  // Fingerprint adicional: IP + fragmento de user-agent
+  const ua = (req.headers["user-agent"] || "").substring(0, 40);
+  const fingerprint = `${ip}::${ua}`;
+  const docId = Buffer.from(fingerprint).toString("base64").substring(0, 100);
+
+  const ahora = Date.now();
+  const refLimit = db.collection(coleccion).doc(docId);
+
+  try {
+    await db.runTransaction(async (tx) => {
+      const doc = await tx.get(refLimit);
+
+      if (!doc.exists) {
+        tx.set(refLimit, { count: 1, time: ahora, ip });
+        return;
+      }
+
+      const data = doc.data();
+
+      if (ahora - data.time > ventana) {
+        tx.set(refLimit, { count: 1, time: ahora, ip });
+        return;
+      }
+
+      if (data.count >= limite) {
+        throw new Error("RATE_LIMIT");
+      }
+
+      tx.update(refLimit, { count: data.count + 1 });
+    });
+
+    return true;
+  } catch (err) {
+    if (err.message === "RATE_LIMIT") {
+      res.status(429).json({
+        error: "Demasiadas solicitudes. Esperá 1 minuto.",
+      });
+      return false;
+    }
+    throw err;
+  }
+}
+
+/* =========================
    🔎 BUSCAR POR PATENTE
 ========================= */
 exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
   try {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    setCORSHeaders(res);
 
     if (req.method === "OPTIONS") {
       return res.status(204).send("");
@@ -50,55 +124,20 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
-    const forwarded = req.headers["x-forwarded-for"];
-    const ip = forwarded
-      ? forwarded.split(",").pop().trim()
-      : req.socket.remoteAddress || "unknown";
+    const permitido = await checkRateLimit(req, res, {
+      ventana: 60000,
+      limite: 5,
+      coleccion: "rate_limits",
+    });
+    if (!permitido) return;
 
-    const ahora = Date.now();
-    const ventana = 60000;
-    const limite = 5;
+    const { patente } = req.body || {};
 
-    const refLimit = db.collection("rate_limits").doc(ip);
-
-    try {
-      await db.runTransaction(async (tx) => {
-        const doc = await tx.get(refLimit);
-
-        if (!doc.exists) {
-          tx.set(refLimit, { count: 1, time: ahora });
-          return;
-        }
-
-        const data = doc.data();
-
-        if (ahora - data.time > ventana) {
-          tx.set(refLimit, { count: 1, time: ahora });
-          return;
-        }
-
-        if (data.count >= limite) {
-          throw new Error("RATE_LIMIT");
-        }
-
-        tx.update(refLimit, { count: data.count + 1 });
-      });
-    } catch (err) {
-      if (err.message === "RATE_LIMIT") {
-        return res.status(429).json({
-          error: "Demasiadas consultas. Esperá 1 minuto.",
-        });
-      }
-      throw err;
-    }
-
-    const { patente } = req.body;
-
-    if (!patente) {
+    if (!patente || typeof patente !== "string") {
       return res.status(400).json({ error: "Patente requerida" });
     }
 
-    const patenteNormalizada = patente.toUpperCase().trim();
+    const patenteNormalizada = patente.trim().toUpperCase().substring(0, 10);
     const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
 
     if (!regex.test(patenteNormalizada)) {
@@ -115,24 +154,32 @@ exports.buscarPorPatente = functions.https.onRequest(async (req, res) => {
     }
 
     const resultados = [];
-    snapshot.forEach((doc) => resultados.push(doc.data()));
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      // Solo devolver los campos necesarios (no exponer el ID interno)
+      resultados.push({
+        patente: data.patente,
+        fecha: data.fecha,
+        km: data.km,
+        proximo: data.proximo,
+      });
+    });
     resultados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
     return res.json(resultados);
   } catch (error) {
-    console.error("ERROR FUNCTION:", error);
+    console.error("ERROR buscarPorPatente:", error);
     return res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
 /* =========================
    📥 IMPORTAR SERVICIOS
+   La verificación de admin ocurre EN EL SERVIDOR — no puede bypassearse desde el cliente
 ========================= */
 exports.importarServicios = functions.https.onRequest(async (req, res) => {
   try {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+    setCORSHeaders(res);
 
     if (req.method === "OPTIONS") {
       return res.status(204).send("");
@@ -142,8 +189,8 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
+    // 1. Verificar token JWT (emitido por Firebase Auth, firmado con clave privada de Google)
     const authHeader = req.headers.authorization;
-
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ error: "No autorizado" });
     }
@@ -154,43 +201,85 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
     try {
       decodedToken = await admin.auth().verifyIdToken(token);
     } catch (error) {
-      return res.status(401).json({ error: "Token inválido" });
+      return res.status(401).json({ error: "Token inválido o expirado" });
     }
 
+    // 2. Verificar que el email está en la colección admins CON activo === true
+    //    Esta verificación ocurre en el servidor — el cliente no puede manipularla
     const adminRef = db.collection("admins").doc(decodedToken.email);
     const adminDoc = await adminRef.get();
 
     if (!adminDoc.exists || adminDoc.data().activo !== true) {
+      // Log intento no autorizado
+      console.warn(
+        `Acceso denegado: ${decodedToken.email} intentó importar sin ser admin activo`,
+      );
       return res.status(403).json({ error: "Acceso denegado" });
     }
 
+    // 3. Validar payload
     const data = req.body;
-
     if (!Array.isArray(data)) {
-      return res.status(400).json({ error: "Formato inválido" });
+      return res
+        .status(400)
+        .json({ error: "Formato inválido: se esperaba un array" });
+    }
+
+    // Límite de tamaño para evitar DoS
+    if (data.length > 10000) {
+      return res
+        .status(400)
+        .json({
+          error: "Demasiados registros en una sola importación (máx. 10.000)",
+        });
     }
 
     let batch = db.batch();
     let count = 0;
     let total = 0;
+    let omitidos = 0;
 
     for (const item of data) {
-      if (!item.PATENTE || !item.FECHA) continue;
+      if (!item.PATENTE || !item.FECHA) {
+        omitidos++;
+        continue;
+      }
 
-      const patente = item.PATENTE.trim().toUpperCase();
+      const patente = String(item.PATENTE).trim().toUpperCase();
+
+      // Validar formato de patente antes de guardar
+      const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+      if (!regex.test(patente)) {
+        omitidos++;
+        continue;
+      }
+
       const fecha = normalizarFecha(item.FECHA);
-
-      if (!fecha) continue;
+      if (!fecha) {
+        omitidos++;
+        continue;
+      }
 
       const km = Number(item["KMS ACTUALES"] || item.km);
       const proximo = Number(item["KMS PROX. CAMBIO"] || item.proximo);
 
-      if (isNaN(km) || isNaN(proximo)) continue;
+      if (isNaN(km) || isNaN(proximo) || km < 0 || proximo < 0) {
+        omitidos++;
+        continue;
+      }
 
       const id = `${patente}_${fecha}_${km}`;
       const ref = db.collection("servicios").doc(id);
 
-      batch.set(ref, { patente, fecha, km, proximo });
+      batch.set(ref, {
+        patente,
+        fecha,
+        km,
+        proximo,
+        // Registrar quién importó y cuándo
+        _importadoPor: decodedToken.email,
+        _importadoEn: admin.firestore.FieldValue.serverTimestamp(),
+      });
 
       count++;
       total++;
@@ -206,7 +295,11 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
       await batch.commit();
     }
 
-    return res.json({ success: true, total });
+    console.info(
+      `Importación completada por ${decodedToken.email}: ${total} registros, ${omitidos} omitidos`,
+    );
+
+    return res.json({ success: true, total, omitidos });
   } catch (error) {
     console.error("IMPORT ERROR:", error);
     return res.status(500).json({ error: "Error al importar datos" });
@@ -214,41 +307,32 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
 });
 
 /* =========================
-   ⭐ OBTENER RESEÑAS — Places API
-   Agregá esta función al final de functions/index.js
-   Reemplazá la función "obtenerResenas" que ya existe
+   ⭐ OBTENER RESEÑAS
 ========================= */
-
 const https = require("https");
 const { SecretManagerServiceClient } = require("@google-cloud/secret-manager");
 
 const secretClient = new SecretManagerServiceClient();
 
-// ── Constantes ──────────────────────────────────────────
 const PLACE_ID = "ChIJwVKYWN6iMpQR6pckLMcr6O8";
 const FIELDS = "reviews,rating,user_ratings_total,name";
 const LANGUAGE = "es";
 
-// ── Obtener API Key desde Secret Manager ────────────────
 async function getApiKey() {
   const [version] = await secretClient.accessSecretVersion({
     name: "projects/lubricentro--ohiggins/secrets/PLACES_API_KEY/versions/latest",
   });
-
   return version.payload.data.toString("utf8");
 }
 
-// ── Helper: fetch con https nativo ──────────────────────
 function fetchJSON(url) {
   return new Promise((resolve, reject) => {
     https
       .get(url, (res) => {
         let data = "";
-
         res.on("data", (chunk) => {
           data += chunk;
         });
-
         res.on("end", () => {
           try {
             resolve(JSON.parse(data));
@@ -263,21 +347,24 @@ function fetchJSON(url) {
 
 exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
   try {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
+    setCORSHeaders(res);
 
     if (req.method === "OPTIONS") {
       return res.status(204).send("");
     }
 
     if (req.method !== "GET") {
-      return res.status(405).json({
-        error: "Método no permitido",
-      });
+      return res.status(405).json({ error: "Método no permitido" });
     }
 
-    // Obtener API Key desde Secret Manager
+    // Rate limit leve para reseñas (más permisivo, son GET públicos)
+    const permitido = await checkRateLimit(req, res, {
+      ventana: 60000,
+      limite: 20,
+      coleccion: "rate_limits_reviews",
+    });
+    if (!permitido) return;
+
     const API_KEY = await getApiKey();
 
     const url =
@@ -291,7 +378,6 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
 
     if (data.status !== "OK") {
       console.error("Places API error:", data.status, data.error_message);
-
       return res.status(502).json({
         error: "Error al consultar Places API",
         status: data.status,
@@ -315,9 +401,6 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     });
   } catch (error) {
     console.error("ERROR obtenerResenas:", error);
-
-    return res.status(500).json({
-      error: "Error interno del servidor",
-    });
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 });
