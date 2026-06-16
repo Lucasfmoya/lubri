@@ -42,6 +42,12 @@ function setCORSHeaders(
     "https://lucasfmoya.github.io",
     "https://lubricentro--ohiggins.web.app",
     "https://lubricentro--ohiggins.firebaseapp.com",
+    "https://www.lubricentroohiggins.com.ar",
+    "http://localhost:3000",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
   ],
 ) {
   const origin = res.req?.headers?.origin;
@@ -227,11 +233,9 @@ exports.importarServicios = functions.https.onRequest(async (req, res) => {
 
     // Límite de tamaño para evitar DoS
     if (data.length > 10000) {
-      return res
-        .status(400)
-        .json({
-          error: "Demasiados registros en una sola importación (máx. 10.000)",
-        });
+      return res.status(400).json({
+        error: "Demasiados registros en una sola importación (máx. 10.000)",
+      });
     }
 
     let batch = db.batch();
@@ -357,7 +361,6 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
       return res.status(405).json({ error: "Método no permitido" });
     }
 
-    // Rate limit leve para reseñas (más permisivo, son GET públicos)
     const permitido = await checkRateLimit(req, res, {
       ventana: 60000,
       limite: 20,
@@ -365,6 +368,22 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     });
     if (!permitido) return;
 
+    // Intentar leer desde caché (TTL: 24 horas)
+    const cacheRef = db.collection("cache_resenas").doc("google_places");
+    const cacheDoc = await cacheRef.get();
+
+    if (cacheDoc.exists) {
+      const cached = cacheDoc.data();
+      const ahora = Date.now();
+      const TTL = 24 * 60 * 60 * 1000; // 24 horas
+
+      if (ahora - cached.timestamp < TTL) {
+        res.set("X-Cache", "HIT");
+        return res.json(cached.data);
+      }
+    }
+
+    // Caché expirado o inexistente — llamar a Places API
     const API_KEY = await getApiKey();
 
     const url =
@@ -378,6 +397,13 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
 
     if (data.status !== "OK") {
       console.error("Places API error:", data.status, data.error_message);
+
+      // Si falla Places pero hay caché viejo, devolver el caché igual
+      if (cacheDoc.exists) {
+        res.set("X-Cache", "STALE");
+        return res.json(cacheDoc.data().data);
+      }
+
       return res.status(502).json({
         error: "Error al consultar Places API",
         status: data.status,
@@ -386,7 +412,7 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
 
     const result = data.result;
 
-    return res.json({
+    const respuesta = {
       nombre: result.name || "",
       rating: result.rating || 0,
       total_resenas: result.user_ratings_total || 0,
@@ -398,7 +424,16 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
         tiempo: r.relative_time_description,
         url_autor: r.author_url,
       })),
+    };
+
+    // Guardar en caché
+    await cacheRef.set({
+      data: respuesta,
+      timestamp: Date.now(),
     });
+
+    res.set("X-Cache", "MISS");
+    return res.json(respuesta);
   } catch (error) {
     console.error("ERROR obtenerResenas:", error);
     return res.status(500).json({ error: "Error interno del servidor" });
