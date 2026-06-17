@@ -3,8 +3,10 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /servicios/{doc} {
-      allow read: if false; // Cloud Function usa admin SDK, no necesita esto
+      // ✅ Permite leer a cualquier usuario autenticado de tu app
+      allow read: if request.auth != null; 
 
+      // 🔒 Mantiene la escritura exclusiva para administradores
       allow write: if request.auth != null
         && request.auth.token.email != null
         && exists(
