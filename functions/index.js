@@ -398,7 +398,6 @@ exports.obtenerResenas = functions.https.onRequest(async (req, res) => {
     if (data.status !== "OK") {
       console.error("Places API error:", data.status, data.error_message);
 
-      // Si falla Places pero hay caché viejo, devolver el caché igual
       if (cacheDoc.exists) {
         res.set("X-Cache", "STALE");
         return res.json(cacheDoc.data().data);

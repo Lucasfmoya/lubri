@@ -1520,17 +1520,6 @@ img.img-salita {
   text-decoration: underline;
   color: white;
 }
-
-.admin-link {
-  opacity: 0.25;
-  font-size: 0.7rem;
-  cursor: default;
-}
-
-.admin-link:hover {
-  transform: none;
-}
-
 .footer-bottom {
   display: flex;
   align-items: center;
