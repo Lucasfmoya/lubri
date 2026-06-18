@@ -77,9 +77,9 @@ async function checkRateLimit(req, res, opciones = {}) {
   const docId = Buffer.from(fingerprint).toString("base64").substring(0, 100);
 
   const ahora = Date.now();
-  const VENTANA_BASE = 60000;
-  const TIEMPO_RESET = 2 * 60 * 60 * 1000;
-  const BLOQUEOS = [0, 5 * 60000, 10 * 60000, 15 * 60000];
+  const VENTANA_BASE = 60000; // ventana de 1 minuto
+  const TIEMPO_RESET = 15 * 60000; // reset tras 15 min sin actividad
+  const BLOQUEOS = [0, 60000, 2 * 60000, 5 * 60000]; // máximo 5 min
 
   const ref = db.collection(coleccion).doc(docId);
 
