@@ -77,20 +77,19 @@ async function checkRateLimit(req, res, opciones = {}) {
   const docId = Buffer.from(fingerprint).toString("base64").substring(0, 100);
 
   const ahora = Date.now();
-  const VENTANA_BASE = 60000; // 1 minuto
-  const TIEMPO_RESET = 2 * 60 * 60 * 1000; // 2 horas sin actividad = reset total
-
+  const VENTANA_BASE = 60000;
+  const TIEMPO_RESET = 2 * 60 * 60 * 1000;
   const BLOQUEOS = [0, 5 * 60000, 10 * 60000, 15 * 60000];
 
   const ref = db.collection(coleccion).doc(docId);
 
-  try {
-    let mensajeError = null;
+  // Resultado que la transacción nos devuelve
+  let resultado = null; // { permitido: bool, mensajeError?: string }
 
+  try {
     await db.runTransaction(async (tx) => {
       const doc = await tx.get(ref);
 
-      // ── IP nueva ──
       if (!doc.exists) {
         tx.set(ref, {
           count: 1,
@@ -101,39 +100,42 @@ async function checkRateLimit(req, res, opciones = {}) {
           bloqueadoHasta: null,
           expireAt: new Date(ahora + VENTANA_BASE),
         });
+        resultado = { permitido: true };
         return;
       }
 
       const data = doc.data();
-
-      // ── Reset total si estuvo 2 horas sin actividad ──
       const ultimaActividad = data.ultimaActividad || data.time || 0;
+
+      // Reset total por inactividad
       if (ahora - ultimaActividad > TIEMPO_RESET) {
         tx.set(ref, {
           count: 1,
           time: ahora,
           ultimaActividad: ahora,
           ip,
-          nivel: 0, // reset nivel
+          nivel: 0,
           bloqueadoHasta: null,
           expireAt: new Date(ahora + VENTANA_BASE),
         });
+        resultado = { permitido: true };
         return;
       }
 
       const bloqueadoHasta = data.bloqueadoHasta || null;
 
-      // ── En período de bloqueo activo ──
+      // En período de bloqueo activo
       if (bloqueadoHasta && ahora < bloqueadoHasta) {
-        // Actualizar ultimaActividad igual para que el reset de 2hs funcione
         tx.update(ref, { ultimaActividad: ahora });
-
         const minutosRestantes = Math.ceil((bloqueadoHasta - ahora) / 60000);
-        mensajeError = `IP bloqueada. Intentá en ${minutosRestantes} minuto${minutosRestantes !== 1 ? "s" : ""}.`;
-        throw new Error("RATE_LIMIT");
+        resultado = {
+          permitido: false,
+          mensajeError: `Realizaste demasiadas búsquedas. Intentá nuevamente en ${minutosRestantes} minuto${minutosRestantes !== 1 ? "s" : ""}.`,
+        };
+        return;
       }
 
-      // ── Venció el bloqueo, resetear contador pero mantener nivel ──
+      // Venció el bloqueo → resetear contador, mantener nivel
       if (bloqueadoHasta && ahora >= bloqueadoHasta) {
         tx.set(ref, {
           count: 1,
@@ -144,10 +146,11 @@ async function checkRateLimit(req, res, opciones = {}) {
           bloqueadoHasta: null,
           expireAt: new Date(ahora + VENTANA_BASE),
         });
+        resultado = { permitido: true };
         return;
       }
 
-      // ── Ventana de 1 minuto expiró normalmente ──
+      // Ventana de 1 minuto expiró normalmente
       if (ahora - data.time > VENTANA_BASE) {
         tx.set(ref, {
           count: 1,
@@ -158,10 +161,11 @@ async function checkRateLimit(req, res, opciones = {}) {
           bloqueadoHasta: null,
           expireAt: new Date(ahora + VENTANA_BASE),
         });
+        resultado = { permitido: true };
         return;
       }
 
-      // ── Dentro de la ventana: verificar límite ──
+      // Dentro de la ventana: verificar límite
       if (data.count >= limite) {
         const nivelActual = data.nivel || 0;
         const nivelNuevo = Math.min(nivelActual + 1, BLOQUEOS.length - 1);
@@ -176,24 +180,33 @@ async function checkRateLimit(req, res, opciones = {}) {
         });
 
         const minutosBloqueo = duracionBloqueo / 60000;
-        mensajeError = `Demasiadas consultas. IP bloqueada por ${minutosBloqueo} minuto${minutosBloqueo !== 1 ? "s" : ""}.`;
-        throw new Error("RATE_LIMIT");
+        resultado = {
+          permitido: false,
+          mensajeError: `Demasiadas consultas. IP bloqueada por ${minutosBloqueo} minuto${minutosBloqueo !== 1 ? "s" : ""}.`,
+        };
+        return;
       }
 
-      // ── Todo bien, incrementar ──
+      // Todo bien, incrementar
       tx.update(ref, {
         count: data.count + 1,
         ultimaActividad: ahora,
       });
+      resultado = { permitido: true };
     });
 
-    return true;
-  } catch (err) {
-    if (err.message === "RATE_LIMIT") {
-      res.status(429).json({ error: mensajeError });
+    // Evaluar resultado FUERA de la transacción
+    if (!resultado || !resultado.permitido) {
+      const msg = resultado?.mensajeError || "Demasiadas consultas.";
+      res.status(429).json({ error: msg });
       return false;
     }
-    throw err;
+    return true;
+  } catch (err) {
+    // Error real de Firestore, no de rate limit
+    console.error("checkRateLimit error:", err);
+    // Dejar pasar para no bloquear al usuario por fallo interno
+    return true;
   }
 }
 /* =========================

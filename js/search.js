@@ -21,12 +21,7 @@ async function buscarPorPatente(patente) {
   const data = await res.json();
 
   if (!res.ok) {
-    if (res.status === 429) {
-      throw new Error(
-        "Demasiadas consultas. Esperá 1 minuto e intentá nuevamente.",
-      );
-    }
-    throw new Error(data.error || "Error en backend");
+    throw new Error(data.error || `Error en backend`);
   }
 
   return data;
