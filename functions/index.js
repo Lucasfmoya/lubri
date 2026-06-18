@@ -62,59 +62,140 @@ function setCORSHeaders(
 
 /* =========================
    🔒 RATE LIMITING MEJORADO
-   Limita por IP + fingerprint de user-agent para dificultar rotación de IPs
+        Limita por IP
 ========================= */
 async function checkRateLimit(req, res, opciones = {}) {
-  const { ventana = 60000, limite = 5, coleccion = "rate_limits" } = opciones;
+  const { limite = 5, coleccion = "rate_limits" } = opciones;
 
   const forwarded = req.headers["x-forwarded-for"];
   const ip = forwarded
     ? forwarded.split(",")[0].trim()
     : req.socket?.remoteAddress || "unknown";
 
-  // Fingerprint adicional: IP + fragmento de user-agent
   const ua = (req.headers["user-agent"] || "").substring(0, 40);
   const fingerprint = `${ip}::${ua}`;
   const docId = Buffer.from(fingerprint).toString("base64").substring(0, 100);
 
   const ahora = Date.now();
-  const refLimit = db.collection(coleccion).doc(docId);
+  const VENTANA_BASE = 60000; // 1 minuto
+  const TIEMPO_RESET = 2 * 60 * 60 * 1000; // 2 horas sin actividad = reset total
+
+  const BLOQUEOS = [0, 5 * 60000, 10 * 60000, 15 * 60000];
+
+  const ref = db.collection(coleccion).doc(docId);
 
   try {
-    await db.runTransaction(async (tx) => {
-      const doc = await tx.get(refLimit);
+    let mensajeError = null;
 
+    await db.runTransaction(async (tx) => {
+      const doc = await tx.get(ref);
+
+      // ── IP nueva ──
       if (!doc.exists) {
-        tx.set(refLimit, { count: 1, time: ahora, ip });
+        tx.set(ref, {
+          count: 1,
+          time: ahora,
+          ultimaActividad: ahora,
+          ip,
+          nivel: 0,
+          bloqueadoHasta: null,
+          expireAt: new Date(ahora + VENTANA_BASE),
+        });
         return;
       }
 
       const data = doc.data();
 
-      if (ahora - data.time > ventana) {
-        tx.set(refLimit, { count: 1, time: ahora, ip });
+      // ── Reset total si estuvo 2 horas sin actividad ──
+      const ultimaActividad = data.ultimaActividad || data.time || 0;
+      if (ahora - ultimaActividad > TIEMPO_RESET) {
+        tx.set(ref, {
+          count: 1,
+          time: ahora,
+          ultimaActividad: ahora,
+          ip,
+          nivel: 0, // reset nivel
+          bloqueadoHasta: null,
+          expireAt: new Date(ahora + VENTANA_BASE),
+        });
         return;
       }
 
-      if (data.count >= limite) {
+      const bloqueadoHasta = data.bloqueadoHasta || null;
+
+      // ── En período de bloqueo activo ──
+      if (bloqueadoHasta && ahora < bloqueadoHasta) {
+        // Actualizar ultimaActividad igual para que el reset de 2hs funcione
+        tx.update(ref, { ultimaActividad: ahora });
+
+        const minutosRestantes = Math.ceil((bloqueadoHasta - ahora) / 60000);
+        mensajeError = `IP bloqueada. Intentá en ${minutosRestantes} minuto${minutosRestantes !== 1 ? "s" : ""}.`;
         throw new Error("RATE_LIMIT");
       }
 
-      tx.update(refLimit, { count: data.count + 1 });
+      // ── Venció el bloqueo, resetear contador pero mantener nivel ──
+      if (bloqueadoHasta && ahora >= bloqueadoHasta) {
+        tx.set(ref, {
+          count: 1,
+          time: ahora,
+          ultimaActividad: ahora,
+          ip,
+          nivel: data.nivel,
+          bloqueadoHasta: null,
+          expireAt: new Date(ahora + VENTANA_BASE),
+        });
+        return;
+      }
+
+      // ── Ventana de 1 minuto expiró normalmente ──
+      if (ahora - data.time > VENTANA_BASE) {
+        tx.set(ref, {
+          count: 1,
+          time: ahora,
+          ultimaActividad: ahora,
+          ip,
+          nivel: data.nivel,
+          bloqueadoHasta: null,
+          expireAt: new Date(ahora + VENTANA_BASE),
+        });
+        return;
+      }
+
+      // ── Dentro de la ventana: verificar límite ──
+      if (data.count >= limite) {
+        const nivelActual = data.nivel || 0;
+        const nivelNuevo = Math.min(nivelActual + 1, BLOQUEOS.length - 1);
+        const duracionBloqueo = BLOQUEOS[nivelNuevo];
+        const nuevoBloqueadoHasta = ahora + duracionBloqueo;
+
+        tx.update(ref, {
+          nivel: nivelNuevo,
+          bloqueadoHasta: nuevoBloqueadoHasta,
+          ultimaActividad: ahora,
+          expireAt: new Date(nuevoBloqueadoHasta + 60000),
+        });
+
+        const minutosBloqueo = duracionBloqueo / 60000;
+        mensajeError = `Demasiadas consultas. IP bloqueada por ${minutosBloqueo} minuto${minutosBloqueo !== 1 ? "s" : ""}.`;
+        throw new Error("RATE_LIMIT");
+      }
+
+      // ── Todo bien, incrementar ──
+      tx.update(ref, {
+        count: data.count + 1,
+        ultimaActividad: ahora,
+      });
     });
 
     return true;
   } catch (err) {
     if (err.message === "RATE_LIMIT") {
-      res.status(429).json({
-        error: "Demasiadas solicitudes. Esperá 1 minuto.",
-      });
+      res.status(429).json({ error: mensajeError });
       return false;
     }
     throw err;
   }
 }
-
 /* =========================
    🔎 BUSCAR POR PATENTE
 ========================= */
