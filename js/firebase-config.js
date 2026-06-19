@@ -23,7 +23,6 @@ const hostname = window.location.hostname;
 
 const IS_DEV = hostname === "localhost" || hostname === "127.0.0.1";
 
-const DEBUG_TOKEN = "70EB639C-D351-4234-9EF2-A4536EB32C04"; // token de depuracion
 const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW"; //  Site Key de recaptcha v3
 
 initializeAppCheck(app, {
