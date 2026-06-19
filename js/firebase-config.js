@@ -26,15 +26,7 @@ const IS_DEV = hostname === "localhost" || hostname === "127.0.0.1";
 const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW"; //  Site Key de recaptcha v3
 
 initializeAppCheck(app, {
-  provider: IS_DEV
-    ? new CustomProvider({
-        getToken: () =>
-          Promise.resolve({
-            token: DEBUG_TOKEN,
-            expireTimeMillis: Date.now() + 3600000,
-          }),
-      })
-    : new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
+  provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
   isTokenAutoRefreshEnabled: true,
 });
 // ─────────────────────────────────────────────────────
