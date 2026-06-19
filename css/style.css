@@ -3955,6 +3955,18 @@ img.img-salita {
   margin-bottom: 0.25rem;
 }
 
+.link-privacity {
+  display: inline-block;
+  color: --var(--navy);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  transform-origin: left center;
+}
+.link-privacity:hover {
+  color: var(--red-dark);
+  transform: scale(1.04);
+}
+
 /* =============================================
    27. PÁGINA DE CONTACTO
    ============================================= */
@@ -4592,7 +4604,7 @@ textarea.form-control {
   .payment-grid {
     grid-template-columns: repeat(2, 1fr);
   }
- 
+
   .amenities-grid {
     grid-template-columns: 1fr 1fr;
   }
