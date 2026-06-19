@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lucasfmoya.github.io/lubri/sitemap.xml
+Sitemap: https://www.lubricentroohiggins.com.ar/sitemap.xml
