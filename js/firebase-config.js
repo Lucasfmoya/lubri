@@ -4,7 +4,6 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 import {
   initializeAppCheck,
   ReCaptchaV3Provider,
-  CustomProvider,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js";
 
 const firebaseConfig = {
@@ -19,11 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // ─── App Check ───────────────────────────────────────
-const hostname = window.location.hostname;
-
-const IS_DEV = hostname === "localhost" || hostname === "127.0.0.1";
-
-const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW"; //  Site Key de recaptcha v3
+const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW";
 
 initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
