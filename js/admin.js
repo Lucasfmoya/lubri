@@ -1,7 +1,5 @@
 import { db, auth } from "./firebase-config.js";
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
@@ -41,7 +39,6 @@ const adminSidebar = document.getElementById("adminSidebar");
 /* ─────────────────────────────────────────────
    ELEMENTOS — login
 ───────────────────────────────────────────── */
-const btnLoginBtn = document.getElementById("btnLoginBtn");
 const btnLoginEmail = document.getElementById("btnLoginEmail");
 const emailInput = document.getElementById("emailInput");
 const passInput = document.getElementById("passInput");
@@ -281,24 +278,6 @@ document.querySelectorAll(".adm-eye-btn[data-target]").forEach((btn) => {
 /* Limpiar campos al cargar para evitar autocompletado */
 window.addEventListener("load", () => limpiarCamposLogin());
 
-/* ═══════════════════════════════════════════
-   LOGIN — GOOGLE
-═══════════════════════════════════════════ */
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
-
-btnLoginBtn?.addEventListener("click", async () => {
-  try {
-    sessionStorage.setItem("loginManual", "clicking");
-    await signOut(auth);
-    await setPersistence(auth, browserSessionPersistence);
-    await signInWithPopup(auth, provider);
-    sessionStorage.setItem("loginManual", "loggedIn");
-  } catch (err) {
-    sessionStorage.removeItem("loginManual");
-    showToast("Error al iniciar sesión con Google: " + err.message, "error");
-  }
-});
 
 /* ═══════════════════════════════════════════
    LOGIN — EMAIL / CONTRASEÑA

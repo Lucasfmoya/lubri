@@ -20,10 +20,12 @@ const app = initializeApp(firebaseConfig);
 // ─── App Check ───────────────────────────────────────
 const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW";
 
-initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
-  isTokenAutoRefreshEnabled: true,
-});
+if (!window.location.pathname.includes("admin")) {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true,
+  });
+}
 // ─────────────────────────────────────────────────────
 
 export const db = getFirestore(app);
