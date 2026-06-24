@@ -772,22 +772,23 @@ img.img-salita {
    ============================================= */
 .payment-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
+/* DESPUÉS */
 .payment-item {
   background: white;
   border-radius: var(--radius);
-  padding: 24px 16px;
+  padding: 14px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--text);
   box-shadow: var(--shadow);
@@ -797,14 +798,14 @@ img.img-salita {
     box-shadow var(--transition);
 }
 
+.payment-item i {
+  font-size: 1.3rem;
+  color: var(--red);
+}
+
 .payment-item:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-}
-
-.payment-item i {
-  font-size: 1.8rem;
-  color: var(--red);
 }
 
 /* =============================================
@@ -4452,6 +4453,7 @@ textarea.form-control {
   .amenities-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .experience-photo {
     aspect-ratio: 16 / 9;
   }
@@ -4578,13 +4580,6 @@ textarea.form-control {
 
 /* ── 576px ── */
 @media (max-width: 576px) {
-  .payment-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .amenities-grid {
-    grid-template-columns: 1fr 1fr;
-  }
   .control-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -4593,6 +4588,48 @@ textarea.form-control {
   }
   .btn-whatsapp {
     display: none;
+  }
+  .amenities-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .payment-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .payment-item {
+    padding: 10px 6px;
+    gap: 5px;
+    font-size: 0.68rem;
+    border-radius: 10px;
+  }
+
+  .payment-item img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .payment-item i {
+    font-size: 1.1rem;
+  }
+}
+/* ── Medios de pago tablet chica ── */
+@media (min-width: 577px) and (max-width: 768px) {
+  .payment-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .payment-item {
+    padding: 12px 8px;
+    gap: 6px;
+    font-size: 0.75rem;
+  }
+
+  .payment-item i {
+    font-size: 1.2rem;
   }
 }
 
