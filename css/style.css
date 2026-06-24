@@ -2935,7 +2935,6 @@ img.img-salita {
 .adm-separator {
   display: flex;
   align-items: center;
-  gap: 10px;
   margin-bottom: 16px;
 }
 
@@ -2996,15 +2995,6 @@ img.img-salita {
 
 .adm-submit-btn--top {
   margin-top: 6px;
-}
-
-/* ── SECURITY — unavailable ── */
-.adm-pass-unavailable {
-  font-size: 0.84rem;
-  color: #94a3b8;
-  text-align: center;
-  padding: 20px 0;
-  margin: 0;
 }
 
 /* ── INSTRUCTIONS ── */
