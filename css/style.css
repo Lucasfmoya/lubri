@@ -191,6 +191,10 @@ select {
   border-color: rgba(193, 53, 132, 0.25);
 }
 
+.nav-icon-fb {
+  border-color: rgba(23, 55, 236, 0.329);
+}
+
 .nav-icon-loc {
   color: var(--navy);
 }
@@ -3879,6 +3883,26 @@ img.img-salita {
   font-size: 0.92rem;
   line-height: 1.65;
   color: #2b2b2b;
+}
+
+.breadcrumb-item::before {
+  --bs-breadcrumb-divider-color: var(--red-dark);
+}
+.breadcrumb-item.active {
+  color: var(--navy);
+}
+
+.breadcrumb-item-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--gray-600);
+  transition: transform 0.2s ease;
+  transform-origin: left center;
+}
+
+.breadcrumb-item-link:hover {
+  color: var(--red-dark);
+  transform: scale(1.04);
 }
 
 .privacy-content h1 {
