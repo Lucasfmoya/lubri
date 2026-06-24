@@ -2931,7 +2931,6 @@ img.img-salita {
   color: rgba(255, 255, 255, 0.7);
 }
 
-
 /* ── SEPARATOR ── */
 .adm-separator {
   display: flex;
@@ -4580,6 +4579,9 @@ textarea.form-control {
   .accessories-grid {
     gap: 8px;
   }
+  .btn-whatsapp {
+    display: none;
+  }
 }
 
 /* ── 768px+ ── */
@@ -4877,4 +4879,3 @@ textarea.form-control {
     justify-content: center;
   }
 }
-

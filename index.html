@@ -99,23 +99,39 @@
       {
         "@context": "https://schema.org",
         "@type": "AutoRepair",
+        "@id": "https://www.lubricentroohiggins.com.ar/#negocio",
         "name": "Lubricentro O'Higgins",
-        "image": "https://www.lubricentroohiggins.com.ar/img/lubri-abierto-ia.png",
-        "@id": "https://www.lubricentroohiggins.com.ar/",
+        "alternateName": "Lubricentro Ohiggins",
+        "description": "Lubricentro O'Higgins ofrece servicios de cambio de aceite, filtros y mantenimiento vehicular en Córdoba desde 2014. Atención personalizada, productos de primeras marcas y atención a flotas empresariales.",
         "url": "https://www.lubricentroohiggins.com.ar/",
+        "logo": "https://www.lubricentroohiggins.com.ar/img/logo-ovalado.png",
+        "image": "https://www.lubricentroohiggins.com.ar/img/lubri-abierto-ia.png",
         "telephone": "+5493516517525",
+        "email": "lubricentroohiggins@hotmail.com",
+        "foundingDate": "2014",
+        "priceRange": "$$",
+        "currenciesAccepted": "ARS",
+        "paymentAccepted": "Efectivo, Tarjeta de crédito, Tarjeta de débito, Mercado Pago, Transferencia bancaria",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Av. O'Higgins 3111",
+          "streetAddress": "Av. Gral. Bernardo O'Higgins 3111 Local 4",
           "addressLocality": "Córdoba",
           "addressRegion": "Córdoba",
-          "postalCode": "5000",
+          "postalCode": "X5014IGK",
           "addressCountry": "AR"
         },
         "geo": {
           "@type": "GeoCoordinates",
           "latitude": "-31.44807894156484",
           "longitude": "-64.16810474471131"
+        },
+        "hasMap": "https://www.google.com/maps/place/Lubricentro+O%27Higgins/@-31.4481796,-64.1711839,17z",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.7",
+          "reviewCount": "382",
+          "bestRating": "5",
+          "worstRating": "1"
         },
         "openingHoursSpecification": [
           {
@@ -149,9 +165,77 @@
             "closes": "13:00"
           }
         ],
+        "areaServed": {
+          "@type": "City",
+          "name": "Córdoba",
+          "sameAs": "https://www.wikidata.org/wiki/Q171034"
+        },
+        "serviceArea": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": "-31.44807894156484",
+            "longitude": "-64.16810474471131"
+          },
+          "geoRadius": "15000"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servicios de lubricentro",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cambio de aceite de motor",
+                "description": "Cambio de aceite de motor con lubricantes de primeras marcas nacionales e importadas: Castrol, Shell, Mobil, Liqui-Moly, ELF, Petronas."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cambio de aceite de transmisión",
+                "description": "Cambio de aceite de caja manual, automática y diferencial."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cambio de filtros",
+                "description": "Cambio de filtro de aceite, aire, combustible y habitáculo con piezas de calidad certificada."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Control general del vehículo",
+                "description": "Revisión de luces, refrigerante, líquido de frenos, dirección hidráulica y lavaparabrisas. Sin cargo adicional."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cambio de lámparas",
+                "description": "Cambio de lámparas halógenas y LED. Instalación sin cargo de mano de obra."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Atención a flotas empresariales",
+                "description": "Servicio especializado para empresas con flota de vehículos. Precios especiales y seguimiento individualizado."
+              }
+            }
+          ]
+        },
         "sameAs": [
-          "https://instagram.com/grupoohiggins/",
-          "https://wa.me/5493516517525"
+          "https://www.instagram.com/grupoohiggins/",
+          "https://www.facebook.com/RepuestosyLubricantesOhiggins"
         ]
       }
     </script>
@@ -322,7 +406,7 @@
             </a>
             <a
               href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
-              class="btn btn-outline-light btn-lg"
+              class="btn btn-outline-light btn-lg btn-whatsapp"
               target="_blank"
               rel="noopener noreferrer"
             >
