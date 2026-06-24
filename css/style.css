@@ -3148,8 +3148,6 @@ img.img-salita {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 40px 16px;
 }
 
 .adm-body.dark-mode .adm-shell:has(#adminSidebar.adm-hidden) .adm-main {
