@@ -1531,7 +1531,7 @@ img.img-salita {
 }
 
 .footer-qr {
-  max-width: 40px;
+  max-width: 40px !important;
 }
 
 .footer-margin {
