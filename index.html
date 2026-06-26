@@ -406,38 +406,86 @@
     <section class="hero-section">
       <div class="hero-overlay"></div>
       <div class="container hero-content">
-        <div data-animate="fade-left" data-delay="100">
-          <h1 class="hero-title">
-            TU AUTO EN<br />LAS MEJORES<br /><span class="hero-accent"
-              >MANOS</span
-            >
-          </h1>
-          <p class="hero-lead">
-            Cambio de aceite, filtros y mantenimiento vehicular<br />con
-            atención profesional en Córdoba.
-          </p>
-          <div class="hero-actions">
-            <a
-              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
-              class="btn btn-danger btn-lg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
-            </a>
-            <a
-              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
-              class="btn btn-outline-light btn-lg btn-whatsapp"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-whatsapp me-2"></i>WhatsApp
-            </a>
+        <div class="hero-grid">
+          <!-- Columna izquierda: texto y botones (igual que antes) -->
+          <div data-animate="fade-left" data-delay="100">
+            <h1 class="hero-title">
+              TU AUTO EN<br />LAS MEJORES<br /><span class="hero-accent"
+                >MANOS</span
+              >
+            </h1>
+            <p class="hero-lead">
+              Cambio de aceite, filtros y mantenimiento vehicular<br />con
+              atención profesional en Córdoba.
+            </p>
+            <div class="hero-actions">
+              <a
+                href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
+                class="btn btn-danger btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
+              </a>
+              <a
+                href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
+                class="btn btn-outline-light btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i class="bi bi-whatsapp me-2"></i>WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Columna derecha: buscador de patente -->
+          <div data-animate="fade-left" data-delay="200">
+            <div class="hst-search-panel hero-search-panel">
+              <p class="hst-search-panel-label">Historial de service</p>
+              <p class="hero-search-headline">
+                ¿Cuándo fue tu último<br />cambio de aceite?
+              </p>
+              <p class="hst-search-panel-label" style="margin-bottom: 10px">
+                Ingresá tu patente
+              </p>
+              <div class="search-box" style="margin-bottom: 12px">
+                <input
+                  type="text"
+                  id="heroBuscarPatente"
+                  class="search-input hst-input"
+                  placeholder="Ej: AB123CD"
+                  maxlength="7"
+                  inputmode="text"
+                  enterkeyhint="search"
+                  autocomplete="off"
+                  aria-label="Ingresá tu patente para ver el historial"
+                />
+                <button
+                  id="heroBtnBuscar"
+                  class="search-btn"
+                  aria-label="Buscar historial"
+                >
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+              <p class="hst-format-hint">
+                Formatos: <code>ABC123</code> &nbsp;·&nbsp;
+                <code>AB123CD</code>
+              </p>
+              <div class="hero-search-footer">
+                <div class="hero-search-shield">
+                  <i class="bi bi-shield-check-fill"></i>
+                </div>
+                <p class="hero-search-privacy">
+                  Tu búsqueda es privada. Solo vos podés ver el historial de tu
+                  patente.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-
     <!-- ===== MARCAS ===== -->
     <section class="brands-section py-4">
       <div class="container text-center mb-3">
@@ -1113,5 +1161,56 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js?v=2.0"></script>
+    <script>
+      (function () {
+        const heroInput = document.getElementById("heroBuscarPatente");
+        const heroBtn = document.getElementById("heroBtnBuscar");
+        if (!heroInput || !heroBtn) return;
+
+        const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
+        // Sanitizar mientras escribe
+        heroInput.addEventListener("input", function () {
+          this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        });
+
+        function irAHistorial() {
+          const patente = heroInput.value.trim().toUpperCase();
+
+          if (!patente) {
+            heroInput.focus();
+            heroInput.placeholder = "Ingresá una patente…";
+            setTimeout(() => {
+              heroInput.placeholder = "Ej: AB123CD";
+            }, 2000);
+            return;
+          }
+
+          if (!regex.test(patente)) {
+            heroInput.style.borderColor = "rgba(227,6,19,0.7)";
+            heroInput.style.boxShadow = "0 0 0 3px rgba(227,6,19,0.2)";
+            heroInput.focus();
+            setTimeout(() => {
+              heroInput.style.borderColor = "";
+              heroInput.style.boxShadow = "";
+            }, 1800);
+            return;
+          }
+
+          // Redirigir a historial con la patente como query param
+          window.location.href =
+            "./pages/historial.html?patente=" + encodeURIComponent(patente);
+        }
+
+        heroBtn.addEventListener("click", irAHistorial);
+
+        heroInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            irAHistorial();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

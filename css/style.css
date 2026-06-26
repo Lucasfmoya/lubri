@@ -346,7 +346,73 @@ select {
   gap: 14px;
   flex-wrap: wrap;
 }
+/* =============================================
+   HERO — GRID CON BUSCADOR (index)
+   ============================================= */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  width: 100%;
+}
 
+.hero-search-panel {
+  /* Hereda .hst-search-panel — solo overrides */
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 28px 24px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-search-headline {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+  margin: 0 0 18px;
+}
+
+.hero-search-footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.hero-search-shield {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(227, 6, 19, 0.15);
+  border: 1px solid rgba(227, 6, 19, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-search-shield i {
+  color: #e30613;
+  font-size: 0.9rem;
+}
+
+.hero-search-privacy {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.32);
+  line-height: 1.45;
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
 /* =============================================
    7. HERO — PÁGINAS INTERNAS
    ============================================= */

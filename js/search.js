@@ -335,3 +335,38 @@ input.addEventListener("input", () => {
     debounceTimer = setTimeout(() => ejecutarBusqueda(), 600);
   }
 });
+
+// ============================
+// AUTO-BÚSQUEDA DESDE ?patente=
+// Permite que index.html redirija con la patente ya ingresada
+// ============================
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const patenteParam = params.get("patente");
+  if (!patenteParam) return;
+
+  const patente = patenteParam
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "")
+    .slice(0, 7);
+  const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+  if (!regex.test(patente)) return;
+
+  // Limpiar la URL sin recargar la página
+  const url = new URL(window.location.href);
+  url.searchParams.delete("patente");
+  window.history.replaceState({}, "", url.toString());
+
+  // Poblar el input y disparar la búsqueda
+  input.value = patente;
+
+  // Scroll suave a los resultados después de un tick
+  setTimeout(() => {
+    ejecutarBusqueda();
+    const seccion = document.querySelector(".hero-section-historal");
+    if (seccion) {
+      seccion.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 100);
+})();
