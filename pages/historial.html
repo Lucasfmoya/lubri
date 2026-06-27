@@ -10,16 +10,10 @@
       name="description"
       content="Consultá el historial de cambios de aceite y servicios realizados a tu vehículo ingresando la patente. Lubricentro O'Higgins, Córdoba."
     />
-
-    <meta
-      name="keywords"
-      content="historial de service, historial cambio de aceite, consulta por patente, lubricentro córdoba, services realizados, lubricentro o'higgins"
-    />
-
     <meta name="author" content="Lubricentro O'Higgins" />
     <meta name="theme-color" content="#010a44" />
+    <meta name="robots" content="noindex,follow" />
 
-    <!-- Canonical -->
     <link
       rel="canonical"
       href="https://www.lubricentroohiggins.com.ar/pages/historial.html"
@@ -40,7 +34,7 @@
     />
     <meta
       property="og:image"
-      content="https://www.lubricentroohiggins.com.ar/img/img-compartir.jpg"
+      content="https://www.lubricentroohiggins.com.ar/img/lubri-abierto-ia.png"
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_AR" />
@@ -57,9 +51,9 @@
     />
     <meta
       name="twitter:image"
-      content="https://www.lubricentroohiggins.com.ar/img/img-compartir.jpg"
+      content="https://www.lubricentroohiggins.com.ar/img/lubri-abierto-ia.png"
     />
-    <meta name="robots" content="noindex,follow" />
+
     <!-- Favicons -->
     <link
       rel="icon"
@@ -227,28 +221,7 @@
             </a>
             <div class="nav-icon-divider"></div>
             <a
-              href="https://www.facebook.com/grupo.ohiggins.oficial"
-              class="nav-icon-btn nav-icon-fb"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Facebook"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-facebook"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"
-                />
-              </svg>
-            </a>
-            <div class="nav-icon-divider"></div>
-            <a
-              href="https://www.google.com/maps/place/Lubricentro+O'Higgins/@-31.4481796,-64.1711839,17z/data=!3m1!4b1!4m6!3m5!1s0x9432a2de589852c1:0xefe82bc72c2497ea!8m2!3d-31.4481842!4d-64.168609!16s%2Fg%2F11c3s962v_?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D"
+              href="https://www.google.com/maps/place/Lubricentro+O'Higgins/@-31.4481796,-64.1711839,17z"
               class="nav-icon-btn nav-icon-loc"
               target="_blank"
               rel="noopener noreferrer"
@@ -271,58 +244,81 @@
     </nav>
 
     <main>
-      <!-- ===== HERO + BUSCADOR ===== -->
-      <section class="hero-section-historal">
-        <div class="container page-hero-content mt-5">
-          <div class="row align-items-center g-5">
-            <!-- Izquierda: título -->
-            <div class="col-lg-6">
-              <div style="display: flex; align-items: center; gap: 1rem">
-                <div>
-                  <h1 class="page-hero-title">
-                    Historial
-                    <br />
-                    <span class="hero-accent">de Servicios</span>
-                  </h1>
-                </div>
-              </div>
-              <p class="page-hero-lead">
-                Consultá el registro de cambios de aceite de tu vehículo con
-                solo ingresar la patente.
-              </p>
-            </div>
-
-            <!-- Derecha: buscador -->
-            <div class="col-lg-6 input-historial-col">
-              <div class="hst-search-panel">
-                <p class="hst-search-panel-label">Ingresá tu patente</p>
-                <div class="search-box">
-                  <input
-                    type="text"
-                    id="buscarPatente"
-                    class="search-input hst-input"
-                    placeholder="Ej: AB123CD"
-                    maxlength="7"
-                    inputmode="text"
-                    enterkeyhint="search"
-                    autocomplete="off"
-                  />
-                  <button id="btnBuscar" class="search-btn">
-                    <i class="bi bi-search"></i>
-                  </button>
-                </div>
-                <p class="hst-format-hint">
-                  Formatos: <code>ABC123</code> &nbsp;·&nbsp;
-                  <code>AB123CD</code>
+      <!-- ===== HERO — se adapta según si hay patente o no ===== -->
+      <section class="hero-section-historal" id="heroSection">
+        <div class="container page-hero-content mt-5" id="heroContenido">
+          <!-- MODO BUSCADOR (default — sin ?patente=) -->
+          <div id="modosBuscador">
+            <div class="row align-items-center g-5">
+              <div class="col-lg-6">
+                <h1 class="page-hero-title">
+                  Historial
+                  <br />
+                  <span class="hero-accent">de Servicios</span>
+                </h1>
+                <p class="page-hero-lead">
+                  Consultá el registro de cambios de aceite de tu vehículo con
+                  solo ingresar la patente.
                 </p>
               </div>
+              <div class="col-lg-6 input-historial-col">
+                <div class="hst-search-panel">
+                  <p class="hst-search-panel-label">Ingresá tu patente</p>
+                  <div class="search-box">
+                    <input
+                      type="text"
+                      id="buscarPatente"
+                      class="search-input hst-input"
+                      placeholder="Ej: AB123CD"
+                      maxlength="7"
+                      inputmode="text"
+                      enterkeyhint="search"
+                      autocomplete="off"
+                    />
+                    <button id="btnBuscar" class="search-btn">
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                  <p class="hst-format-hint">
+                    Formatos: <code>ABC123</code> &nbsp;·&nbsp;
+                    <code>AB123CD</code>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODO RESULTADOS (activo cuando llega ?patente=) -->
+          <div id="modosResultados" style="display: none">
+            <div class="hst-hero-results">
+              <!-- Header: placa + contador + volver -->
+              <div class="hst-hero-results-header">
+                <h1
+                  class="page-hero-title"
+                  style="margin: 0; font-size: clamp(1.6rem, 3.5vw, 2.6rem)"
+                >
+                  Historial ·
+                  <span class="hero-accent" id="heroPlateTitle"></span>
+                </h1>
+                <span class="hst-hero-count" id="heroCountLabel"></span>
+                <a href="./historial.html" class="hst-hero-back">
+                  <i class="bi bi-arrow-left"></i> Nueva búsqueda
+                </a>
+              </div>
+
+              <!-- Resultados renderizados aquí por JS -->
+              <div id="heroResultadosCards"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ===== RESULTADOS ===== -->
-      <section class="py-5 bg-light">
+      <!-- MODO BUSCADOR: resultados bajo el hero -->
+      <section
+        class="py-5 bg-light hst-results-section"
+        id="seccionResultadosBajo"
+        style="display: none"
+      >
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -392,7 +388,6 @@
               <i class="bi bi-envelope-fill text-danger me-2"></i
               ><a
                 href="mailto:lubricentroohiggins@hotmail.com"
-                aria-label="Enviar correo a Lubricentro O'Higgins"
                 class="footer-link"
                 >lubricentroohiggins@hotmail.com</a
               >
@@ -454,15 +449,12 @@
             </p>
           </div>
           <div class="footer-qr-container">
-            <a
-              href="http://qr.afip.gob.ar/?qr=L0gTvjFrJJfWKuUjfPpzdw,,"
-              target="_F960AFIPInfo"
-            >
-              <img
-                class="footer-qr"
-                src="http://www.afip.gob.ar/images/f960/DATAWEB.jpg"
-                border="0"
-            /></a>
+            <img
+              src="../img/qr.png"
+              class="img-fluid footer-qr"
+              alt="Código QR fiscal de Lubricentro O'Higgins"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
@@ -481,7 +473,6 @@
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

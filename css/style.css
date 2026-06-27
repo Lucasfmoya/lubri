@@ -358,12 +358,15 @@ select {
 }
 
 .hero-search-panel {
-  /* Hereda .hst-search-panel — solo overrides */
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(1, 10, 68, 0.82);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 18px;
   padding: 28px 24px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .hero-search-headline {
@@ -378,7 +381,7 @@ select {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding-top: 14px;
   margin-top: 14px;
 }
@@ -387,8 +390,8 @@ select {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: rgba(227, 6, 19, 0.15);
-  border: 1px solid rgba(227, 6, 19, 0.28);
+  background: rgba(227, 6, 19, 0.18);
+  border: 1px solid rgba(227, 6, 19, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -402,7 +405,7 @@ select {
 
 .hero-search-privacy {
   font-size: 0.73rem;
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.45);
   line-height: 1.45;
   margin: 0;
 }
@@ -412,6 +415,193 @@ select {
     grid-template-columns: 1fr;
     gap: 32px;
   }
+}
+
+/* =============================================
+   HISTORIAL — HERO CON RESULTADOS INLINE
+   ============================================= */
+.hst-hero-results {
+  position: relative;
+  z-index: 2;
+  padding: 40px 0 56px;
+}
+
+.hst-hero-results-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.hst-hero-plate-badge {
+  background: white;
+  color: var(--navy);
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.hst-hero-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50px;
+  padding: 5px 14px;
+}
+
+.hst-hero-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.hst-hero-back:hover {
+  color: white;
+}
+
+/* Cards en hero oscuro */
+.hst-hero-results .hst-record-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: white;
+  box-shadow: none;
+}
+.hst-hero-results .hst-record-card:hover {
+  background: rgba(255, 255, 255, 0.11);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+.hst-hero-results .hst-record-card.is-recent {
+  border-top: 3px solid var(--red);
+}
+.hst-hero-results .hst-record-card.is-old {
+  border-top: 3px solid rgba(255, 255, 255, 0.18);
+  opacity: 1;
+}
+.hst-hero-results .hst-record-top {
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.hst-hero-results .hst-record-day {
+  color: white;
+}
+.hst-hero-results .hst-record-month {
+  color: rgba(255, 255, 255, 0.85);
+}
+.hst-hero-results .hst-record-year {
+  color: rgba(255, 255, 255, 0.5);
+}
+.hst-hero-results .hst-plate-tag {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+.hst-hero-results .hst-tag-reciente {
+  background: rgba(227, 6, 19, 0.2);
+  border: 1px solid rgba(227, 6, 19, 0.4);
+  color: #ff8088;
+}
+.hst-hero-results .hst-record-stat-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+.hst-hero-results .hst-record-stat-val {
+  color: white;
+}
+.hst-hero-results .hst-record-stat-val.is-next {
+  color: #ff8088;
+}
+.hst-hero-results .hst-record-divider {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Acordeón en hero oscuro */
+.hst-hero-results .hst-accordion-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+.hst-hero-results .hst-accordion-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+}
+.hst-hero-results .hst-accordion-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.hst-hero-results .hst-accordion-btn.expanded {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+.hst-hero-results .hst-accordion-year-label i {
+  color: var(--red);
+}
+.hst-hero-results .hst-accordion-count {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+.hst-hero-results .hst-accordion-chevron {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Skeleton en hero oscuro */
+.hst-hero-results .hst-skeleton-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.hst-hero-results .hst-sk-top {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hst-hero-results .hst-sk-block {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.07) 25%,
+    rgba(255, 255, 255, 0.13) 37%,
+    rgba(255, 255, 255, 0.07) 63%
+  );
+  background-size: 400% 100%;
+}
+
+/* Reportar error en hero oscuro */
+.hst-hero-results .hst-report-btn {
+  color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+.hst-hero-results .hst-report-btn:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Sin resultados */
+.hst-hero-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: rgba(255, 255, 255, 0.55);
+}
+.hst-hero-empty i {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+  opacity: 0.4;
+}
+.hst-hero-empty p {
+  font-size: 1rem;
+  margin: 0 0 20px;
+}
+
+.hst-results-section {
+  min-height: 120px;
 }
 /* =============================================
    7. HERO — PÁGINAS INTERNAS
@@ -844,7 +1034,6 @@ img.img-salita {
   margin: 0 auto;
 }
 
-/* DESPUÉS */
 .payment-item {
   background: white;
   border-radius: var(--radius);
