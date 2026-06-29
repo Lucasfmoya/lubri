@@ -358,7 +358,7 @@ select {
 }
 
 .hero-search-panel {
-  background: rgba(1, 10, 68, 0.82);
+  background: rgba(1, 10, 68, 0.459);
   border: 1.5px solid rgba(255, 255, 255, 0.28);
   border-radius: 18px;
   padding: 28px 24px;

@@ -221,7 +221,7 @@
             </a>
             <div class="nav-icon-divider"></div>
             <a
-              href="https://www.google.com/maps/place/Lubricentro+O'Higgins/@-31.4481796,-64.1711839,17z"
+              href="https://www.google.com/maps/place/Lubricentro+O'Higgins/@-31.4481796,-64.1711839,17z/data=!3m1!4b1!4m6!3m5!1s0x9432a2de589852c1:0xefe82bc72c2497ea!8m2!3d-31.4481842!4d-64.168609!16s%2Fg%2F11c3s962v_?entry=ttu&g_ep=EgoyMDI2MDYxNi4wIKXMDSoASAFQAw%3D%3D"
               class="nav-icon-btn nav-icon-loc"
               target="_blank"
               rel="noopener noreferrer"
@@ -244,81 +244,54 @@
     </nav>
 
     <main>
-      <!-- ===== HERO — se adapta según si hay patente o no ===== -->
-      <section class="hero-section-historal" id="heroSection">
-        <div class="container page-hero-content mt-5" id="heroContenido">
-          <!-- MODO BUSCADOR (default — sin ?patente=) -->
-          <div id="modosBuscador">
-            <div class="row align-items-center g-5">
-              <div class="col-lg-6">
-                <h1 class="page-hero-title">
-                  Historial
-                  <br />
-                  <span class="hero-accent">de Servicios</span>
-                </h1>
-                <p class="page-hero-lead">
-                  Consultá el registro de cambios de aceite de tu vehículo con
-                  solo ingresar la patente.
+      <!-- ===== HERO + BUSCADOR ===== -->
+      <section class="hero-section-historal">
+        <div class="container page-hero-content mt-5">
+          <div class="row align-items-center g-5">
+            <!-- Izquierda: título -->
+            <div class="col-lg-6">
+              <h1 class="page-hero-title">
+                Historial
+                <br />
+                <span class="hero-accent">de Servicios</span>
+              </h1>
+              <p class="page-hero-lead">
+                Consultá el registro de cambios de aceite de tu vehículo con
+                solo ingresar la patente.
+              </p>
+            </div>
+
+            <!-- Derecha: buscador -->
+            <div class="col-lg-6 input-historial-col">
+              <div class="hst-search-panel">
+                <p class="hst-search-panel-label">Ingresá tu patente</p>
+                <div class="search-box">
+                  <input
+                    type="text"
+                    id="buscarPatente"
+                    class="search-input hst-input"
+                    placeholder="Ej: AB123CD"
+                    maxlength="7"
+                    inputmode="text"
+                    enterkeyhint="search"
+                    autocomplete="off"
+                  />
+                  <button id="btnBuscar" class="search-btn">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+                <p class="hst-format-hint">
+                  Formatos: <code>ABC123</code> &nbsp;·&nbsp;
+                  <code>AB123CD</code>
                 </p>
               </div>
-              <div class="col-lg-6 input-historial-col">
-                <div class="hst-search-panel">
-                  <p class="hst-search-panel-label">Ingresá tu patente</p>
-                  <div class="search-box">
-                    <input
-                      type="text"
-                      id="buscarPatente"
-                      class="search-input hst-input"
-                      placeholder="Ej: AB123CD"
-                      maxlength="7"
-                      inputmode="text"
-                      enterkeyhint="search"
-                      autocomplete="off"
-                    />
-                    <button id="btnBuscar" class="search-btn">
-                      <i class="bi bi-search"></i>
-                    </button>
-                  </div>
-                  <p class="hst-format-hint">
-                    Formatos: <code>ABC123</code> &nbsp;·&nbsp;
-                    <code>AB123CD</code>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- MODO RESULTADOS (activo cuando llega ?patente=) -->
-          <div id="modosResultados" style="display: none">
-            <div class="hst-hero-results">
-              <!-- Header: placa + contador + volver -->
-              <div class="hst-hero-results-header">
-                <h1
-                  class="page-hero-title"
-                  style="margin: 0; font-size: clamp(1.6rem, 3.5vw, 2.6rem)"
-                >
-                  Historial ·
-                  <span class="hero-accent" id="heroPlateTitle"></span>
-                </h1>
-                <span class="hst-hero-count" id="heroCountLabel"></span>
-                <a href="./historial.html" class="hst-hero-back">
-                  <i class="bi bi-arrow-left"></i> Nueva búsqueda
-                </a>
-              </div>
-
-              <!-- Resultados renderizados aquí por JS -->
-              <div id="heroResultadosCards"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- MODO BUSCADOR: resultados bajo el hero -->
-      <section
-        class="py-5 bg-light hst-results-section"
-        id="seccionResultadosBajo"
-        style="display: none"
-      >
+      <!-- ===== RESULTADOS ===== -->
+      <section class="py-5 bg-light" id="seccionResultados">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-10">
@@ -388,6 +361,7 @@
               <i class="bi bi-envelope-fill text-danger me-2"></i
               ><a
                 href="mailto:lubricentroohiggins@hotmail.com"
+                aria-label="Enviar correo a Lubricentro O'Higgins"
                 class="footer-link"
                 >lubricentroohiggins@hotmail.com</a
               >
@@ -473,6 +447,7 @@
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
