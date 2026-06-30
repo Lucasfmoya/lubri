@@ -402,77 +402,86 @@
       </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- ===== HERO — UNIFICADO ===== -->
     <section class="hero-section">
       <div class="hero-overlay"></div>
-      <div class="container hero-content">
-        <div class="hero-grid">
-          <!-- Columna izquierda: texto y botones (igual que antes) -->
-          <div data-animate="fade-left" data-delay="100">
-            <h1 class="hero-title">
-              TU AUTO EN<br />LAS MEJORES<br /><span class="hero-accent"
-                >MANOS</span
-              >
-            </h1>
-            <p class="hero-lead">
-              Cambio de aceite, filtros y mantenimiento vehicular<br />con
-              atención profesional en Córdoba.
+      <div class="container hero-content-buscador">
+        <div class="hero-buscador-inner" data-animate="fade-up" data-delay="80">
+          <!-- Marca -->
+          <h1 class="hero-buscador-brand-title">
+            TU AUTO EN LAS MEJORES
+            <span class="hero-accent">MANOS</span>
+          </h1>
+          <p class="hero-buscador-brand-lead">
+            Cambio de aceite, filtros y mantenimiento vehicular con atención
+            profesional en Córdoba.
+          </p>
+          <div class="hero-buscador-blur">
+            <!-- Buscador -->
+            <p class="hero-buscador-title">¿Cuándo fue tu último service?</p>
+            <p class="hero-buscador-lead">
+              Consultá el historial de tu vehículo en segundos
             </p>
-            <div class="hero-actions">
-              <a
-                href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
-                class="btn btn-danger btn-lg"
-                target="_blank"
-                rel="noopener noreferrer"
+
+            <div class="hero-buscador-box">
+              <input
+                type="text"
+                id="heroBuscarPatente"
+                class="hero-buscador-input"
+                placeholder="Ingresá tu patente (Ej: AB123CD)"
+                maxlength="7"
+                inputmode="text"
+                enterkeyhint="search"
+                autocomplete="off"
+                aria-label="Ingresá tu patente para ver el historial"
+              />
+              <button
+                id="heroBtnBuscar"
+                class="hero-buscador-btn"
+                aria-label="Buscar historial"
               >
-                <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
-              </a>
-              <a
-                href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
-                class="btn btn-outline-light btn-lg"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i class="bi bi-whatsapp me-2"></i>WhatsApp
-              </a>
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+
+            <!-- Features -->
+            <div class="hero-buscador-features">
+              <div class="hero-buscador-feature">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>Historial de cambios de aceite</span>
+              </div>
+              <div class="hero-buscador-feature">
+                <i class="bi bi-calendar2-check"></i>
+                <span>Próximo service recomendado</span>
+              </div>
+              <div class="hero-buscador-feature">
+                <i class="bi bi-tools"></i>
+                <span>Servicios realizados</span>
+              </div>
+              <div class="hero-buscador-feature">
+                <i class="bi bi-shield-check"></i>
+                <span>Información segura y confiable</span>
+              </div>
             </div>
           </div>
-
-          <!-- Columna derecha: buscador de patente -->
-          <div data-animate="fade-left" data-delay="200">
-            <div class="hero-search-panel">
-              <p class="hst-search-panel-label">Historial de service</p>
-              <p class="hero-search-headline">
-                ¿Cuándo fue tu último<br />cambio de aceite?
-              </p>
-              <p class="hst-search-panel-label" style="margin-bottom: 10px">
-                Ingresá tu patente
-              </p>
-              <div class="search-box" style="margin-bottom: 12px">
-                <input
-                  type="text"
-                  id="heroBuscarPatente"
-                  class="search-input hst-input"
-                  placeholder="Ej: AB123CD"
-                  maxlength="7"
-                  inputmode="text"
-                  enterkeyhint="search"
-                  autocomplete="off"
-                  aria-label="Ingresá tu patente para ver el historial"
-                />
-                <button
-                  id="heroBtnBuscar"
-                  class="search-btn"
-                  aria-label="Buscar historial"
-                >
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-              <p class="hst-format-hint">
-                Formatos: <code>ABC123</code> &nbsp;·&nbsp;
-                <code>AB123CD</code>
-              </p>
-            </div>
+          <!-- Botones -->
+          <div class="hero-actions hero-actions-bottom">
+            <a
+              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
+              class="btn btn-danger btn-lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
+            </a>
+            <a
+              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
+              class="btn btn-outline-light btn-lg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-whatsapp me-2"></i>WhatsApp
+            </a>
           </div>
         </div>
       </div>
