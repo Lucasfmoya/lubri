@@ -490,3 +490,57 @@ if (contactForm) {
     }
   });
 })();
+
+//* BUSCADOR EN EL INDEX *//
+
+(function () {
+  const heroInput = document.getElementById("heroBuscarPatente");
+  const heroBtn = document.getElementById("heroBtnBuscar");
+
+  if (!heroInput || !heroBtn) return;
+
+  // Regex corregido sin espacios ocultos
+  const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+
+  // Sanitizar mientras escribe
+  heroInput.addEventListener("input", function () {
+    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  });
+
+  function irAHistorial() {
+    const patente = heroInput.value.trim().toUpperCase();
+
+    if (!patente) {
+      heroInput.focus();
+      heroInput.placeholder = "Ingresá una patente…";
+      setTimeout(() => {
+        heroInput.placeholder = "Ej: AB123CD";
+      }, 2000);
+      return;
+    }
+
+    if (!regex.test(patente)) {
+      heroInput.style.borderColor = "rgba(227,6,19,0.7)";
+      heroInput.style.boxShadow = "0 0 0 3px rgba(227,6,19,0.2)";
+      heroInput.focus();
+      setTimeout(() => {
+        heroInput.style.borderColor = "";
+        heroInput.style.boxShadow = "";
+      }, 1800);
+      return;
+    }
+
+    // Redirigir a historial con la patente como query param
+    window.location.href =
+      "./pages/historial.html?patente=" + encodeURIComponent(patente);
+  }
+
+  heroBtn.addEventListener("click", irAHistorial);
+
+  heroInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      irAHistorial();
+    }
+  });
+})();

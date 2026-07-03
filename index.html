@@ -443,45 +443,6 @@
                 <i class="bi bi-search"></i>
               </button>
             </div>
-
-            <!-- Features -->
-            <div class="hero-buscador-features">
-              <div class="hero-buscador-feature">
-                <i class="bi bi-file-earmark-text"></i>
-                <span>Historial de cambios de aceite</span>
-              </div>
-              <div class="hero-buscador-feature">
-                <i class="bi bi-calendar2-check"></i>
-                <span>Próximo service recomendado</span>
-              </div>
-              <div class="hero-buscador-feature">
-                <i class="bi bi-tools"></i>
-                <span>Servicios realizados</span>
-              </div>
-              <div class="hero-buscador-feature">
-                <i class="bi bi-shield-check"></i>
-                <span>Información segura y confiable</span>
-              </div>
-            </div>
-          </div>
-          <!-- Botones -->
-          <div class="hero-actions hero-actions-bottom">
-            <a
-              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
-              class="btn btn-danger btn-lg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-calendar-check me-2"></i>Solicitar Turno
-            </a>
-            <a
-              href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
-              class="btn btn-outline-light btn-lg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-whatsapp me-2"></i>WhatsApp
-            </a>
           </div>
         </div>
       </div>
@@ -1147,70 +1108,31 @@
         </div>
       </div>
     </footer>
+    <!-- Botones flotantes -->
+    <div class="floating-actions">
+      <a
+        href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins,%20quiero%20solicitar%20turno%20para%20cambio%20de%20aceite"
+        class="turno-float"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Solicitar turno"
+      >
+        <i class="bi bi-calendar-check-fill"></i>
+        <span class="turno-tooltip">Solicitar turno</span>
+      </a>
 
-    <!-- WhatsApp flotante -->
-    <a
-      href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
-      class="whatsapp-float"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="WhatsApp"
-    >
-      <img src="../img/whatsapp.svg" alt="WhatsApp Lubricentro O'Higgins" />
-    </a>
+      <a
+        href="https://wa.me/5493516517525?text=Hola%20Lubricentro%20O%27Higgins%20quiero%20hacer%20una%20consulta"
+        class="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+      >
+        <img src="./img/whatsapp.svg" alt="WhatsApp Lubricentro O'Higgins" />
+      </a>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js?v=2.0"></script>
-    <script>
-      (function () {
-        const heroInput = document.getElementById("heroBuscarPatente");
-        const heroBtn = document.getElementById("heroBtnBuscar");
-        if (!heroInput || !heroBtn) return;
-
-        const regex = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
-
-        // Sanitizar mientras escribe
-        heroInput.addEventListener("input", function () {
-          this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-        });
-
-        function irAHistorial() {
-          const patente = heroInput.value.trim().toUpperCase();
-
-          if (!patente) {
-            heroInput.focus();
-            heroInput.placeholder = "Ingresá una patente…";
-            setTimeout(() => {
-              heroInput.placeholder = "Ej: AB123CD";
-            }, 2000);
-            return;
-          }
-
-          if (!regex.test(patente)) {
-            heroInput.style.borderColor = "rgba(227,6,19,0.7)";
-            heroInput.style.boxShadow = "0 0 0 3px rgba(227,6,19,0.2)";
-            heroInput.focus();
-            setTimeout(() => {
-              heroInput.style.borderColor = "";
-              heroInput.style.boxShadow = "";
-            }, 1800);
-            return;
-          }
-
-          // Redirigir a historial con la patente como query param
-          window.location.href =
-            "./pages/historial.html?patente=" + encodeURIComponent(patente);
-        }
-
-        heroBtn.addEventListener("click", irAHistorial);
-
-        heroInput.addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            irAHistorial();
-          }
-        });
-      })();
-    </script>
   </body>
 </html>
