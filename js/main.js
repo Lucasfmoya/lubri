@@ -544,3 +544,46 @@ if (contactForm) {
     }
   });
 })();
+
+/* ===== BOTONES FLOTANTES — aparecen al salir del hero (mobile) ===== */
+(function () {
+  const floatingActions = document.querySelector(".floating-actions");
+  const hero = document.querySelector("#hero-buscador-tittle");
+  if (!floatingActions || !hero) return;
+
+  // --- Lógica del Hero (Mantiene tu comportamiento actual) ---
+  if (!("IntersectionObserver" in window)) {
+    floatingActions.classList.add("visible");
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            floatingActions.classList.remove("visible");
+          } else {
+            floatingActions.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(hero);
+  }
+
+  // --- NUEVA LÓGICA: Detección exacta del fin de scroll ---
+  window.addEventListener("scroll", () => {
+    // Lo que ya bajó el usuario
+    const scrollCima = window.scrollY || document.documentElement.scrollTop;
+    // El alto de la ventana del navegador
+    const altoPantalla = window.innerHeight;
+    // El alto total de toda la página web
+    const altoTotalWeb = document.documentElement.scrollHeight;
+
+    // Margen de 5 píxeles por si el navegador tiene mini errores de redondeo
+    if (scrollCima + altoPantalla >= altoTotalWeb - 5) {
+      floatingActions.classList.add("en-el-final");
+    } else {
+      floatingActions.classList.remove("en-el-final");
+    }
+  });
+})();
