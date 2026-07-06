@@ -5171,3 +5171,30 @@ textarea.form-control {
     justify-content: center;
   }
 }
+
+/* =============================================
+   32. SWEETALERT2 — PARTIDO DE ARGENTINA
+   ============================================= */
+
+/* Fuerza al contenedor oscuro de SweetAlert a estar arriba de todo */
+.swal2-container {
+  z-index: 999999 !important;
+}
+
+/* Estilo para el nuevo cartel basado 100% en la imagen */
+.swal-argentina-imagen {
+  z-index: 1000000 !important;
+  background: transparent !important; /* Hace el fondo invisible para que solo luzca tu imagen */
+  box-shadow: none !important; /* Quita sombras viejas */
+  padding: 0 !important; /* Saca los márgenes internos molestos */
+  border-radius: 15px !important; /* Le da un sutil redondeado a las esquinas de la foto */
+  overflow: hidden; /* Corta los bordes en punta de la imagen */
+  max-width: 500px !important; /* Tamaño ideal para que no se vea gigante en PC */
+  width: 90% !important; /* Ajuste perfecto para pantallas de celulares */
+}
+
+/* Cambia el color de la "X" de cerrar para que contraste con el fondo azul de tu imagen */
+.swal-argentina-imagen .swal2-close {
+  color: #ffffff !important;
+  font-size: 32px !important;
+}

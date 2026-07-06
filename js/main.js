@@ -570,16 +570,11 @@ if (contactForm) {
     observer.observe(hero);
   }
 
-  // --- NUEVA LÓGICA: Detección exacta del fin de scroll ---
   window.addEventListener("scroll", () => {
-    // Lo que ya bajó el usuario
     const scrollCima = window.scrollY || document.documentElement.scrollTop;
-    // El alto de la ventana del navegador
     const altoPantalla = window.innerHeight;
-    // El alto total de toda la página web
     const altoTotalWeb = document.documentElement.scrollHeight;
 
-    // Margen de 5 píxeles por si el navegador tiene mini errores de redondeo
     if (scrollCima + altoPantalla >= altoTotalWeb - 5) {
       floatingActions.classList.add("en-el-final");
     } else {
@@ -587,3 +582,25 @@ if (contactForm) {
     }
   });
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (sessionStorage.getItem("bienvenidaMostrada")) {
+    return;
+  }
+
+  sessionStorage.setItem("bienvenidaMostrada", "true");
+
+  Swal.fire({
+    imageUrl: "img/aviso-seleccion.webp",
+    imageWidth: "100%",
+    imageAlt: "Horario Selección Argentina - Grupo O'Higgins",
+    showConfirmButton: false,
+    showCloseButton: true,
+    customClass: {
+      popup: "swal-argentina-imagen",
+    },
+    backdrop: `
+      rgba(0, 0, 0, 0.7) 
+    `,
+  });
+});
