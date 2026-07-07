@@ -5173,8 +5173,6 @@ textarea.form-control {
   }
 }
 
-
-
 /* =============================================
    32. ANIVERSARIO 12 AÑOS
    ============================================= */
@@ -5196,13 +5194,6 @@ textarea.form-control {
   box-shadow: 0 20px 60px rgba(227, 6, 19, 0.08);
 }
 
-<<<<<<< HEAD
-/* Cambia el color de la "X" de cerrar para que contraste con el fondo azul de tu imagen */
-.swal-argentina-imagen .swal2-close {
-  color: #ffffff !important;
-  font-size: 32px !important;
-}
-=======
 /* Resplandor decorativo de fondo */
 .anniv-glow {
   position: absolute;
@@ -5482,4 +5473,3 @@ textarea.form-control {
     align-items: flex-start;
   }
 }
->>>>>>> dev
