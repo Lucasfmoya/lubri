@@ -583,24 +583,4 @@ if (contactForm) {
   });
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (sessionStorage.getItem("bienvenidaMostrada")) {
-    return;
-  }
 
-  sessionStorage.setItem("bienvenidaMostrada", "true");
-
-  Swal.fire({
-    imageUrl: "img/aviso-seleccion.webp",
-    imageWidth: "100%",
-    imageAlt: "Horario Selección Argentina - Grupo O'Higgins",
-    showConfirmButton: false,
-    showCloseButton: true,
-    customClass: {
-      popup: "swal-argentina-imagen",
-    },
-    backdrop: `
-      rgba(0, 0, 0, 0.7) 
-    `,
-  });
-});
