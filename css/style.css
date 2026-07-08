@@ -5266,17 +5266,6 @@ textarea.form-control {
   flex-shrink: 0;
 }
 
-.anniv-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--red);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 10px;
-}
 
 .anniv-title {
   font-size: 2.3rem;
