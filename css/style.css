@@ -5623,7 +5623,8 @@ textarea.form-control {
 
 .blog-article-hero-img img {
   width: 100%;
-  max-height: 480px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
   display: block;
 }
 
