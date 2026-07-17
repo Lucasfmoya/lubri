@@ -20,13 +20,6 @@ import {
   deleteDoc,
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-import { storage } from "./firebase-config.js";
 
 /* ─────────────────────────────────────────────
    ESTADO
@@ -103,205 +96,6 @@ const changePassUnavailable = document.getElementById("changePassUnavailable");
 const btnChangePass = document.getElementById("btnChangePass");
 
 const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
-
-/* Campeon */
-
-const sectionCampeon = document.getElementById("sectionCampeon");
-const dropZoneCampeon = document.getElementById("dropZoneCampeon");
-const fileInputCampeon = document.getElementById("fileInputCampeon");
-const fileInfoRowCampeon = document.getElementById("fileInfoRowCampeon");
-const fileInfoNameCampeon = document.getElementById("fileInfoNameCampeon");
-const btnQuitarArchivoCampeon = document.getElementById(
-  "btnQuitarArchivoCampeon",
-);
-const btnPublicarCampeon = document.getElementById("btnPublicarCampeon");
-const btnEliminarCampeon = document.getElementById("btnEliminarCampeon");
-const imgPreviewCampeon = document.getElementById("imgPreviewCampeon");
-const sinImagenCampeon = document.getElementById("sinImagenCampeon");
-const switchMostrarCampeon = document.getElementById("switchMostrarCampeon");
-const switchCampeonEstado = document.getElementById("switchCampeonEstado");
-
-const CAMPEON_DOC_REF = doc(db, "config", "campeon_mundial");
-let archivoCampeonSeleccionado = null;
-
-function limpiarArchivoCampeon() {
-  archivoCampeonSeleccionado = null;
-  if (fileInputCampeon) fileInputCampeon.value = "";
-  fileInfoRowCampeon?.classList.remove("visible");
-  if (fileInfoNameCampeon) fileInfoNameCampeon.textContent = "";
-  if (btnPublicarCampeon) btnPublicarCampeon.disabled = true;
-}
-
-function setArchivoCampeon(file) {
-  archivoCampeonSeleccionado = file;
-  if (fileInfoNameCampeon) fileInfoNameCampeon.textContent = file.name;
-  fileInfoRowCampeon?.classList.add("visible");
-  if (btnPublicarCampeon) btnPublicarCampeon.disabled = false;
-}
-
-dropZoneCampeon?.addEventListener("click", () => fileInputCampeon.click());
-dropZoneCampeon?.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropZoneCampeon.classList.add("dragover");
-});
-dropZoneCampeon?.addEventListener("dragleave", () => {
-  dropZoneCampeon.classList.remove("dragover");
-});
-dropZoneCampeon?.addEventListener("drop", (e) => {
-  e.preventDefault();
-  dropZoneCampeon.classList.remove("dragover");
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-    showToast("Solo se aceptan imágenes PNG, JPG o WEBP", "warning");
-    return;
-  }
-  setArchivoCampeon(file);
-});
-fileInputCampeon?.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (file) setArchivoCampeon(file);
-});
-btnQuitarArchivoCampeon?.addEventListener("click", () =>
-  limpiarArchivoCampeon(),
-);
-
-async function cargarEstadoCampeon() {
-  try {
-    const snap = await getDoc(CAMPEON_DOC_REF);
-    const data = snap.exists() ? snap.data() : {};
-    renderEstadoCampeon(data);
-  } catch (err) {
-    console.error(err);
-    showToast("No se pudo cargar el estado de la imagen", "error");
-  }
-}
-
-function renderEstadoCampeon(data) {
-  const tieneImagen = !!data.imageUrl;
-
-  if (tieneImagen) {
-    imgPreviewCampeon.src = data.imageUrl;
-    imgPreviewCampeon.classList.add("visible");
-    hide(sinImagenCampeon);
-    btnEliminarCampeon.disabled = false;
-  } else {
-    imgPreviewCampeon.classList.remove("visible");
-    show(sinImagenCampeon);
-    btnEliminarCampeon.disabled = true;
-  }
-
-  switchMostrarCampeon.disabled = !tieneImagen;
-  switchMostrarCampeon.classList.toggle("is-on", !!data.activo);
-  switchCampeonEstado.textContent = data.activo
-    ? "Activo — se muestra en el sitio"
-    : "Apagado";
-}
-
-btnPublicarCampeon?.addEventListener("click", async () => {
-  if (!archivoCampeonSeleccionado) {
-    showToast("Seleccioná una imagen primero", "warning");
-    return;
-  }
-
-  btnPublicarCampeon.disabled = true;
-  btnPublicarCampeon.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Publicando...`;
-
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (dataActual.storagePath) {
-      try {
-        await deleteObject(ref(storage, dataActual.storagePath));
-      } catch (e) {
-        console.warn("No se pudo borrar la imagen anterior:", e.message);
-      }
-    }
-
-    const ext = archivoCampeonSeleccionado.name.split(".").pop().toLowerCase();
-    const path = `campeon/imagen_campeon.${ext}`;
-    const storageRef = ref(storage, path);
-
-    await uploadBytes(storageRef, archivoCampeonSeleccionado);
-    const url = await getDownloadURL(storageRef);
-
-    await setDoc(
-      CAMPEON_DOC_REF,
-      { imageUrl: url, storagePath: path },
-      { merge: true },
-    );
-
-    showToast("Imagen publicada correctamente", "success");
-    limpiarArchivoCampeon();
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al publicar: " + err.message, "error");
-  } finally {
-    btnPublicarCampeon.innerHTML = `<i class="bi bi-cloud-upload-fill"></i> Publicar`;
-    btnPublicarCampeon.disabled = !archivoCampeonSeleccionado;
-  }
-});
-
-btnEliminarCampeon?.addEventListener("click", async () => {
-  const result = await Swal.fire({
-    title: "¿Eliminar la imagen?",
-    text: "Se apagará el aviso en el sitio y se borrará el archivo.",
-    icon: "warning",
-    background: "#0d1a3a",
-    color: "#fff",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#e30613",
-    cancelButtonColor: "#334155",
-  });
-  if (!result.isConfirmed) return;
-
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (dataActual.storagePath) {
-      try {
-        await deleteObject(ref(storage, dataActual.storagePath));
-      } catch (e) {
-        console.warn("El archivo ya no existía en Storage:", e.message);
-      }
-    }
-
-    await setDoc(
-      CAMPEON_DOC_REF,
-      { imageUrl: null, storagePath: null, activo: false },
-      { merge: true },
-    );
-
-    showToast("Imagen eliminada", "success");
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al eliminar: " + err.message, "error");
-  }
-});
-
-switchMostrarCampeon?.addEventListener("click", async () => {
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (!dataActual.imageUrl) {
-      showToast("Primero publicá una imagen", "warning");
-      return;
-    }
-
-    await updateDoc(CAMPEON_DOC_REF, { activo: !dataActual.activo });
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al actualizar: " + err.message, "error");
-  }
-});
 
 /* ═══════════════════════════════════════════
    HELPERS — show / hide
@@ -428,7 +222,6 @@ function ocultarTodasSecciones() {
   hide(sectionImportSide);
   hide(sectionSearch);
   hide(sectionSecurity);
-  hide(sectionCampeon);
 }
 
 /* ── Función central de navegación ── */
@@ -452,11 +245,6 @@ function mostrarSeccion(section) {
     if (topbarTitle) topbarTitle.textContent = "Buscar patente";
   } else if (section === "security") {
     show(sectionSecurity);
-  } else if (section === "campeon") {
-    show(sectionCampeon);
-    if (topbarTitle) topbarTitle.textContent = "Imagen de campeón";
-    cargarEstadoCampeon();
-
     if (topbarTitle) topbarTitle.textContent = "Seguridad";
   }
 }
@@ -489,6 +277,7 @@ document.querySelectorAll(".adm-eye-btn[data-target]").forEach((btn) => {
 
 /* Limpiar campos al cargar para evitar autocompletado */
 window.addEventListener("load", () => limpiarCamposLogin());
+
 
 /* ═══════════════════════════════════════════
    LOGIN — EMAIL / CONTRASEÑA

@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 import {
   initializeAppCheck,
   ReCaptchaV3Provider,
@@ -18,6 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+// ─── App Check ───────────────────────────────────────
 const RECAPTCHA_SITE_KEY = "6LcOHyMtAAAAAGodjXFp64RVmDP5Nm1hS8RUUJSW";
 
 if (!window.location.pathname.includes("admin")) {
@@ -26,7 +26,7 @@ if (!window.location.pathname.includes("admin")) {
     isTokenAutoRefreshEnabled: true,
   });
 }
+// ─────────────────────────────────────────────────────
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-export const storage = getStorage(app);
