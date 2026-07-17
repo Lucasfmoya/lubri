@@ -5266,7 +5266,6 @@ textarea.form-control {
   flex-shrink: 0;
 }
 
-
 .anniv-title {
   font-size: 2.3rem;
   font-weight: 900;
@@ -5463,40 +5462,94 @@ textarea.form-control {
   }
 }
 
-
-
 /* =============================================
-   35. SWEETALERT2 — ANUNCIOS
-============================================= */
-
-.swal2-container{
-    z-index:999999 !important;
+   35. ADMIN — SWITCH GENÉRICO PARA ANUNCIOS
+   ============================================= */
+.adm-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+.adm-body.dark-mode .adm-switch-row {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+.adm-switch-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+.adm-body.dark-mode .adm-switch-title {
+  color: #fff;
+}
+.adm-switch-sub {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+.adm-generic-toggle {
+  width: 40px;
+  height: 22px;
+  background: #cbd5e1;
+  border-radius: 11px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background 0.2s;
+}
+.adm-generic-toggle .adm-generic-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.adm-generic-toggle.is-on {
+  background: #e30613;
+}
+.adm-generic-toggle.is-on .adm-generic-thumb {
+  transform: translateX(18px);
+}
+.adm-generic-toggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.adm-campeon-preview {
+  width: 100%;
+  max-height: 160px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  display: none;
+}
+.adm-campeon-preview.visible {
+  display: block;
 }
 
-.swal-anuncio{
-
-    z-index:1000000 !important;
-
-    background:transparent !important;
-
-    box-shadow:none !important;
-
-    padding:0 !important;
-
-    border-radius:15px !important;
-
-    overflow:hidden;
-
-    width:90% !important;
-
-    max-width:500px !important;
-
+/* CAMPEON MUNDIAL — TEMPORAL */
+.swal-campeon-imagen {
+  z-index: 1000000 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 15px !important;
+  overflow: hidden;
+  max-width: 500px !important;
+  width: 90% !important;
 }
-
-.swal-anuncio .swal2-close{
-
-    color:#fff !important;
-
-    font-size:32px !important;
-
+.swal-campeon-imagen .swal2-close {
+  color: #ffffff !important;
+  font-size: 32px !important;
 }
