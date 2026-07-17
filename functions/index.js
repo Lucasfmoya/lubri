@@ -43,7 +43,7 @@ function setCORSHeaders(
     "https://lubricentro--ohiggins.firebaseapp.com",
     "https://www.lubricentroohiggins.com.ar",
     "https://lubricentroohiggins.com.ar",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
   ],
 ) {
   const origin = res.req?.headers?.origin;
