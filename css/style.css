@@ -5464,3 +5464,39 @@ textarea.form-control {
 }
 
 
+
+/* =============================================
+   35. SWEETALERT2 — ANUNCIOS
+============================================= */
+
+.swal2-container{
+    z-index:999999 !important;
+}
+
+.swal-anuncio{
+
+    z-index:1000000 !important;
+
+    background:transparent !important;
+
+    box-shadow:none !important;
+
+    padding:0 !important;
+
+    border-radius:15px !important;
+
+    overflow:hidden;
+
+    width:90% !important;
+
+    max-width:500px !important;
+
+}
+
+.swal-anuncio .swal2-close{
+
+    color:#fff !important;
+
+    font-size:32px !important;
+
+}
