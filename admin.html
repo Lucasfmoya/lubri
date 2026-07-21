@@ -63,8 +63,8 @@
         <button class="adm-nav-item" data-section="search">
           <i class="bi bi-search"></i> Buscar patente
         </button>
-        <button class="adm-nav-item" data-section="campeon">
-          <i class="bi bi-trophy-fill"></i> Imagen campeón
+        <button class="adm-nav-item" data-section="anuncio">
+          <i class="bi bi-megaphone-fill"></i> Anuncios
         </button>
         <button class="adm-nav-item" data-section="security">
           <i class="bi bi-shield-lock-fill"></i> Seguridad
@@ -428,21 +428,21 @@
                 </div>
               </div>
 
-              <!-- ── IMAGEN CAMPEÓN ── -->
-              <div class="adm-panel adm-hidden" id="sectionCampeon">
+              <!-- ── ANUNCIOS ── -->
+              <div class="adm-panel adm-hidden" id="sectionAnuncio">
                 <div class="adm-panel-head">
                   <div class="adm-panel-icon adm-icon-red">
-                    <i class="bi bi-trophy-fill"></i>
+                    <i class="bi bi-megaphone-fill"></i>
                   </div>
                   <div>
-                    <div class="adm-panel-head-title">Imagen de campeón</div>
+                    <div class="adm-panel-head-title">Anuncios</div>
                     <div class="adm-panel-head-sub">
-                      Se muestra a pantalla completa en index.html
+                      Publicá una imagen para mostrarla como aviso en index.html
                     </div>
                   </div>
                 </div>
                 <div class="adm-panel-body">
-                  <div class="adm-drop-zone" id="dropZoneCampeon">
+                  <div class="adm-drop-zone" id="dropZoneAnuncio">
                     <div class="adm-drop-icon-wrap">
                       <i class="bi bi-image-fill"></i>
                     </div>
@@ -454,17 +454,17 @@
 
                   <input
                     type="file"
-                    id="fileInputCampeon"
+                    id="fileInputAnuncio"
                     accept="image/png,image/jpeg,image/webp"
                     hidden
                   />
 
-                  <div class="adm-file-info-row" id="fileInfoRowCampeon">
+                  <div class="adm-file-info-row" id="fileInfoRowAnuncio">
                     <i class="bi bi-file-earmark-image-fill"></i>
-                    <span id="fileInfoNameCampeon"></span>
+                    <span id="fileInfoNameAnuncio"></span>
                     <button
                       class="adm-file-remove"
-                      id="btnQuitarArchivoCampeon"
+                      id="btnQuitarArchivoAnuncio"
                       title="Quitar archivo"
                     >
                       <i class="bi bi-x-lg"></i>
@@ -472,7 +472,7 @@
                   </div>
 
                   <button
-                    id="btnPublicarCampeon"
+                    id="btnPublicarAnuncio"
                     class="adm-upload-btn"
                     disabled
                   >
@@ -490,21 +490,21 @@
                         margin-bottom: 8px;
                       "
                     >
-                      Imagen publicada
+                      Anuncio publicado
                     </div>
                     <img
-                      id="imgPreviewCampeon"
-                      class="adm-campeon-preview"
-                      alt="Imagen de campeón publicada"
+                      id="imgPreviewAnuncio"
+                      class="adm-anuncio-preview"
+                      alt="Anuncio publicado"
                     />
                     <div
-                      id="sinImagenCampeon"
+                      id="sinImagenAnuncio"
                       style="font-size: 0.8rem; color: #94a3b8"
                     >
-                      Todavía no publicaste ninguna imagen.
+                      Todavía no publicaste ningún anuncio.
                     </div>
                     <button
-                      id="btnEliminarCampeon"
+                      id="btnEliminarAnuncio"
                       class="adm-upload-btn"
                       style="
                         background: #fff;
@@ -514,22 +514,22 @@
                       "
                       disabled
                     >
-                      <i class="bi bi-trash3-fill"></i> Eliminar imagen
+                      <i class="bi bi-trash3-fill"></i> Eliminar anuncio
                     </button>
                   </div>
 
                   <div class="adm-switch-row" style="margin-top: 20px">
                     <div>
                       <div class="adm-switch-title">Mostrar en el sitio</div>
-                      <div class="adm-switch-sub" id="switchCampeonEstado">
+                      <div class="adm-switch-sub" id="switchAnuncioEstado">
                         Apagado
                       </div>
                     </div>
                     <button
-                      id="switchMostrarCampeon"
+                      id="switchMostrarAnuncio"
                       class="adm-generic-toggle"
                       disabled
-                      aria-label="Mostrar imagen en el sitio"
+                      aria-label="Mostrar anuncio en el sitio"
                     >
                       <div class="adm-generic-thumb"></div>
                     </button>
@@ -618,6 +618,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="./js/anuncio.js"></script>
     <script type="module" src="./js/admin.js"></script>
   </body>
 </html>

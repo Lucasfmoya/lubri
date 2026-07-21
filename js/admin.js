@@ -34,6 +34,7 @@ import {
 let userToken = null;
 let archivo = null;
 let authReady = false;
+let archivoAnuncioSeleccionado = null;
 
 /* ─────────────────────────────────────────────
    ELEMENTOS — layout
@@ -76,6 +77,7 @@ const sectionImport = document.getElementById("sectionImport");
 const sectionImportSide = document.getElementById("sectionImportSide");
 const sectionSearch = document.getElementById("sectionSearch");
 const sectionSecurity = document.getElementById("sectionSecurity");
+const sectionAnuncio = document.getElementById("sectionAnuncio");
 
 /* ─────────────────────────────────────────────
    ELEMENTOS — importar
@@ -102,207 +104,26 @@ const changePassSection = document.getElementById("changePassSection");
 const changePassUnavailable = document.getElementById("changePassUnavailable");
 const btnChangePass = document.getElementById("btnChangePass");
 
-const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
-
 /* ─────────────────────────────────────────────
-   ELEMENTOS — Argentina mundial
+   ELEMENTOS — anuncios
 ───────────────────────────────────────────── */
-const sectionCampeon = document.getElementById("sectionCampeon");
-const dropZoneCampeon = document.getElementById("dropZoneCampeon");
-const fileInputCampeon = document.getElementById("fileInputCampeon");
-const fileInfoRowCampeon = document.getElementById("fileInfoRowCampeon");
-const fileInfoNameCampeon = document.getElementById("fileInfoNameCampeon");
-const btnQuitarArchivoCampeon = document.getElementById(
-  "btnQuitarArchivoCampeon",
+const dropZoneAnuncio = document.getElementById("dropZoneAnuncio");
+const fileInputAnuncio = document.getElementById("fileInputAnuncio");
+const fileInfoRowAnuncio = document.getElementById("fileInfoRowAnuncio");
+const fileInfoNameAnuncio = document.getElementById("fileInfoNameAnuncio");
+const btnQuitarArchivoAnuncio = document.getElementById(
+  "btnQuitarArchivoAnuncio",
 );
-const btnPublicarCampeon = document.getElementById("btnPublicarCampeon");
-const btnEliminarCampeon = document.getElementById("btnEliminarCampeon");
-const imgPreviewCampeon = document.getElementById("imgPreviewCampeon");
-const sinImagenCampeon = document.getElementById("sinImagenCampeon");
-const switchMostrarCampeon = document.getElementById("switchMostrarCampeon");
-const switchCampeonEstado = document.getElementById("switchCampeonEstado");
+const btnPublicarAnuncio = document.getElementById("btnPublicarAnuncio");
+const btnEliminarAnuncio = document.getElementById("btnEliminarAnuncio");
+const imgPreviewAnuncio = document.getElementById("imgPreviewAnuncio");
+const sinImagenAnuncio = document.getElementById("sinImagenAnuncio");
+const switchMostrarAnuncio = document.getElementById("switchMostrarAnuncio");
+const switchAnuncioEstado = document.getElementById("switchAnuncioEstado");
 
-const CAMPEON_DOC_REF = doc(db, "config", "campeon_mundial");
-let archivoCampeonSeleccionado = null;
+const ANUNCIO_DOC_REF = doc(db, "config", "anuncio");
 
-function limpiarArchivoCampeon() {
-  archivoCampeonSeleccionado = null;
-  if (fileInputCampeon) fileInputCampeon.value = "";
-  fileInfoRowCampeon?.classList.remove("visible");
-  if (fileInfoNameCampeon) fileInfoNameCampeon.textContent = "";
-  if (btnPublicarCampeon) btnPublicarCampeon.disabled = true;
-}
-
-function setArchivoCampeon(file) {
-  archivoCampeonSeleccionado = file;
-  if (fileInfoNameCampeon) fileInfoNameCampeon.textContent = file.name;
-  fileInfoRowCampeon?.classList.add("visible");
-  if (btnPublicarCampeon) btnPublicarCampeon.disabled = false;
-}
-
-dropZoneCampeon?.addEventListener("click", () => fileInputCampeon.click());
-dropZoneCampeon?.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropZoneCampeon.classList.add("dragover");
-});
-dropZoneCampeon?.addEventListener("dragleave", () => {
-  dropZoneCampeon.classList.remove("dragover");
-});
-dropZoneCampeon?.addEventListener("drop", (e) => {
-  e.preventDefault();
-  dropZoneCampeon.classList.remove("dragover");
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
-    showToast("Solo se aceptan imágenes PNG, JPG o WEBP", "warning");
-    return;
-  }
-  setArchivoCampeon(file);
-});
-fileInputCampeon?.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (file) setArchivoCampeon(file);
-});
-btnQuitarArchivoCampeon?.addEventListener("click", () =>
-  limpiarArchivoCampeon(),
-);
-
-async function cargarEstadoCampeon() {
-  try {
-    const snap = await getDoc(CAMPEON_DOC_REF);
-    const data = snap.exists() ? snap.data() : {};
-    renderEstadoCampeon(data);
-  } catch (err) {
-    console.error(err);
-    showToast("No se pudo cargar el estado de la imagen", "error");
-  }
-}
-
-function renderEstadoCampeon(data) {
-  const tieneImagen = !!data.imageUrl;
-
-  if (tieneImagen) {
-    imgPreviewCampeon.src = data.imageUrl;
-    imgPreviewCampeon.classList.add("visible");
-    hide(sinImagenCampeon);
-    btnEliminarCampeon.disabled = false;
-  } else {
-    imgPreviewCampeon.classList.remove("visible");
-    show(sinImagenCampeon);
-    btnEliminarCampeon.disabled = true;
-  }
-
-  switchMostrarCampeon.disabled = !tieneImagen;
-  switchMostrarCampeon.classList.toggle("is-on", !!data.activo);
-  switchCampeonEstado.textContent = data.activo
-    ? "Activo — se muestra en el sitio"
-    : "Apagado";
-}
-
-btnPublicarCampeon?.addEventListener("click", async () => {
-  if (!archivoCampeonSeleccionado) {
-    showToast("Seleccioná una imagen primero", "warning");
-    return;
-  }
-
-  btnPublicarCampeon.disabled = true;
-  btnPublicarCampeon.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Publicando...`;
-
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (dataActual.storagePath) {
-      try {
-        await deleteObject(ref(storage, dataActual.storagePath));
-      } catch (e) {
-        console.warn("No se pudo borrar la imagen anterior:", e.message);
-      }
-    }
-
-    const ext = archivoCampeonSeleccionado.name.split(".").pop().toLowerCase();
-    const path = `campeon/imagen_campeon.${ext}`;
-    const storageRef = ref(storage, path);
-
-    await uploadBytes(storageRef, archivoCampeonSeleccionado);
-    const url = await getDownloadURL(storageRef);
-
-    await setDoc(
-      CAMPEON_DOC_REF,
-      { imageUrl: url, storagePath: path },
-      { merge: true },
-    );
-
-    showToast("Imagen publicada correctamente", "success");
-    limpiarArchivoCampeon();
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al publicar: " + err.message, "error");
-  } finally {
-    btnPublicarCampeon.innerHTML = `<i class="bi bi-cloud-upload-fill"></i> Publicar`;
-    btnPublicarCampeon.disabled = !archivoCampeonSeleccionado;
-  }
-});
-
-btnEliminarCampeon?.addEventListener("click", async () => {
-  const result = await Swal.fire({
-    title: "¿Eliminar la imagen?",
-    text: "Se apagará el aviso en el sitio y se borrará el archivo.",
-    icon: "warning",
-    background: "#0d1a3a",
-    color: "#fff",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#e30613",
-    cancelButtonColor: "#334155",
-  });
-  if (!result.isConfirmed) return;
-
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (dataActual.storagePath) {
-      try {
-        await deleteObject(ref(storage, dataActual.storagePath));
-      } catch (e) {
-        console.warn("El archivo ya no existía en Storage:", e.message);
-      }
-    }
-
-    await setDoc(
-      CAMPEON_DOC_REF,
-      { imageUrl: null, storagePath: null, activo: false },
-      { merge: true },
-    );
-
-    showToast("Imagen eliminada", "success");
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al eliminar: " + err.message, "error");
-  }
-});
-
-switchMostrarCampeon?.addEventListener("click", async () => {
-  try {
-    const snapActual = await getDoc(CAMPEON_DOC_REF);
-    const dataActual = snapActual.exists() ? snapActual.data() : {};
-
-    if (!dataActual.imageUrl) {
-      showToast("Primero publicá una imagen", "warning");
-      return;
-    }
-
-    await updateDoc(CAMPEON_DOC_REF, { activo: !dataActual.activo });
-    cargarEstadoCampeon();
-  } catch (err) {
-    console.error(err);
-    showToast("Error al actualizar: " + err.message, "error");
-  }
-});
+const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
 
 /* ═══════════════════════════════════════════
    HELPERS — show / hide
@@ -429,7 +250,7 @@ function ocultarTodasSecciones() {
   hide(sectionImportSide);
   hide(sectionSearch);
   hide(sectionSecurity);
-  hide(sectionCampeon);
+  hide(sectionAnuncio);
 }
 
 /* ── Función central de navegación ── */
@@ -454,10 +275,10 @@ function mostrarSeccion(section) {
   } else if (section === "security") {
     show(sectionSecurity);
     if (topbarTitle) topbarTitle.textContent = "Seguridad";
-  } else if (section === "campeon") {
-    show(sectionCampeon);
-    if (topbarTitle) topbarTitle.textContent = "Imagen de campeón";
-    cargarEstadoCampeon();
+  } else if (section === "anuncio") {
+    show(sectionAnuncio);
+    if (topbarTitle) topbarTitle.textContent = "Anuncios";
+    cargarEstadoAnuncio();
   }
 }
 
@@ -1068,6 +889,189 @@ window.eliminarRegistro = async (id, fecha) => {
     showToast("Error al eliminar: " + err.message, "error");
   }
 };
+
+/* ═══════════════════════════════════════════
+   ANUNCIOS — subir / publicar / eliminar / switch
+═══════════════════════════════════════════ */
+
+function limpiarArchivoAnuncio() {
+  archivoAnuncioSeleccionado = null;
+  if (fileInputAnuncio) fileInputAnuncio.value = "";
+  fileInfoRowAnuncio?.classList.remove("visible");
+  if (fileInfoNameAnuncio) fileInfoNameAnuncio.textContent = "";
+  if (btnPublicarAnuncio) btnPublicarAnuncio.disabled = true;
+}
+
+function setArchivoAnuncio(file) {
+  archivoAnuncioSeleccionado = file;
+  if (fileInfoNameAnuncio) fileInfoNameAnuncio.textContent = file.name;
+  fileInfoRowAnuncio?.classList.add("visible");
+  if (btnPublicarAnuncio) btnPublicarAnuncio.disabled = false;
+}
+
+dropZoneAnuncio?.addEventListener("click", () => fileInputAnuncio.click());
+dropZoneAnuncio?.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZoneAnuncio.classList.add("dragover");
+});
+dropZoneAnuncio?.addEventListener("dragleave", () => {
+  dropZoneAnuncio.classList.remove("dragover");
+});
+dropZoneAnuncio?.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZoneAnuncio.classList.remove("dragover");
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+    showToast("Solo se aceptan imágenes PNG, JPG o WEBP", "warning");
+    return;
+  }
+  setArchivoAnuncio(file);
+});
+fileInputAnuncio?.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) setArchivoAnuncio(file);
+});
+btnQuitarArchivoAnuncio?.addEventListener("click", () =>
+  limpiarArchivoAnuncio(),
+);
+
+async function cargarEstadoAnuncio() {
+  try {
+    const snap = await getDoc(ANUNCIO_DOC_REF);
+    const data = snap.exists() ? snap.data() : {};
+    renderEstadoAnuncio(data);
+  } catch (err) {
+    console.error(err);
+    showToast("No se pudo cargar el estado del anuncio", "error");
+  }
+}
+
+function renderEstadoAnuncio(data) {
+  const tieneImagen = !!data.imageUrl;
+
+  if (tieneImagen) {
+    imgPreviewAnuncio.src = data.imageUrl;
+    imgPreviewAnuncio.classList.add("visible");
+    hide(sinImagenAnuncio);
+    btnEliminarAnuncio.disabled = false;
+  } else {
+    imgPreviewAnuncio.classList.remove("visible");
+    show(sinImagenAnuncio);
+    btnEliminarAnuncio.disabled = true;
+  }
+
+  switchMostrarAnuncio.disabled = !tieneImagen;
+  switchMostrarAnuncio.classList.toggle("is-on", !!data.activo);
+  switchAnuncioEstado.textContent = data.activo
+    ? "Activo — se muestra en el sitio"
+    : "Apagado";
+}
+
+btnPublicarAnuncio?.addEventListener("click", async () => {
+  if (!archivoAnuncioSeleccionado) {
+    showToast("Seleccioná una imagen primero", "warning");
+    return;
+  }
+
+  btnPublicarAnuncio.disabled = true;
+  btnPublicarAnuncio.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Publicando...`;
+
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (dataActual.storagePath) {
+      try {
+        await deleteObject(ref(storage, dataActual.storagePath));
+      } catch (e) {
+        console.warn("No se pudo borrar la imagen anterior:", e.message);
+      }
+    }
+
+    const ext = archivoAnuncioSeleccionado.name.split(".").pop().toLowerCase();
+    const path = `anuncios/imagen_anuncio.${ext}`;
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, archivoAnuncioSeleccionado);
+    const url = await getDownloadURL(storageRef);
+
+    await setDoc(
+      ANUNCIO_DOC_REF,
+      { imageUrl: url, storagePath: path },
+      { merge: true },
+    );
+
+    showToast("Anuncio publicado correctamente", "success");
+    limpiarArchivoAnuncio();
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al publicar: " + err.message, "error");
+  } finally {
+    btnPublicarAnuncio.innerHTML = `<i class="bi bi-cloud-upload-fill"></i> Publicar`;
+    btnPublicarAnuncio.disabled = !archivoAnuncioSeleccionado;
+  }
+});
+
+btnEliminarAnuncio?.addEventListener("click", async () => {
+  const result = await Swal.fire({
+    title: "¿Eliminar el anuncio?",
+    text: "Se apagará el aviso en el sitio y se borrará el archivo.",
+    icon: "warning",
+    background: "#0d1a3a",
+    color: "#fff",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#e30613",
+    cancelButtonColor: "#334155",
+  });
+  if (!result.isConfirmed) return;
+
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (dataActual.storagePath) {
+      try {
+        await deleteObject(ref(storage, dataActual.storagePath));
+      } catch (e) {
+        console.warn("El archivo ya no existía en Storage:", e.message);
+      }
+    }
+
+    await setDoc(
+      ANUNCIO_DOC_REF,
+      { imageUrl: null, storagePath: null, activo: false },
+      { merge: true },
+    );
+
+    showToast("Anuncio eliminado", "success");
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al eliminar: " + err.message, "error");
+  }
+});
+
+switchMostrarAnuncio?.addEventListener("click", async () => {
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (!dataActual.imageUrl) {
+      showToast("Primero publicá un anuncio", "warning");
+      return;
+    }
+
+    await updateDoc(ANUNCIO_DOC_REF, { activo: !dataActual.activo });
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al actualizar: " + err.message, "error");
+  }
+});
 
 /* ═══════════════════════════════════════════
    DARK / LIGHT MODE

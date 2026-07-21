@@ -29,13 +29,5 @@ service cloud.firestore {
     match /cache_resenas/{doc} {
       allow read, write: if false;
     }
-    match /config/{doc} {
-      allow read: if true;
-      allow write: if request.auth != null
-        && request.auth.token.email != null
-        && exists(
-          /databases/$(database)/documents/admins/$(request.auth.token.email)
-        );
-    }
   }
 }

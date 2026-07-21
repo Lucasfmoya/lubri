@@ -5524,7 +5524,7 @@ textarea.form-control {
   opacity: 0.4;
   cursor: not-allowed;
 }
-.adm-campeon-preview {
+.adm-anuncio-preview {
   width: 100%;
   max-height: 160px;
   object-fit: contain;
@@ -5534,12 +5534,12 @@ textarea.form-control {
   border: 1px solid #e2e8f0;
   display: none;
 }
-.adm-campeon-preview.visible {
+.adm-anuncio-preview.visible {
   display: block;
 }
 
-/* CAMPEON MUNDIAL — TEMPORAL */
-.swal-campeon-imagen {
+/* ANUNCIOS — imagen a pantalla completa */
+.swal-anuncio-imagen {
   z-index: 1000000 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -5549,7 +5549,7 @@ textarea.form-control {
   max-width: 500px !important;
   width: 90% !important;
 }
-.swal-campeon-imagen .swal2-close {
+.swal-anuncio-imagen .swal2-close {
   color: #ffffff !important;
   font-size: 32px !important;
 }
