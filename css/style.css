@@ -5266,7 +5266,6 @@ textarea.form-control {
   flex-shrink: 0;
 }
 
-
 .anniv-title {
   font-size: 2.3rem;
   font-weight: 900;
@@ -5463,8 +5462,6 @@ textarea.form-control {
   }
 }
 
-
-
 /* =============================================
    33. BLOG / CONSEJOS
    ============================================= */
@@ -5567,9 +5564,6 @@ textarea.form-control {
 .blog-card:hover .blog-card-link {
   gap: 10px;
 }
-
-
-
 
 /* =============================================
    34. ARTÍCULO DE BLOG (individual)
@@ -5798,5 +5792,4 @@ textarea.form-control {
     gap: 10px;
   }
 }
-
 
