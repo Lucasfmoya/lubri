@@ -31,8 +31,10 @@
    28.  Botón volver arriba
    29.  Animaciones — clases de entrada
    30.  @keyframes
-   31.  Media Queries
-   32.  Aniversario nº 12
+   31.  Media Queries 
+   32.  Aniversario nº 12 (con sus medias queries)
+   33. Admin — Switch genérico para anuncios (con sus medias queries)
+
    ============================================= */
 
 /* =============================================
@@ -5463,7 +5465,7 @@ textarea.form-control {
 }
 
 /* =============================================
-   35. ADMIN — SWITCH GENÉRICO PARA ANUNCIOS
+   33. ADMIN — SWITCH GENÉRICO PARA ANUNCIOS
    ============================================= */
 .adm-switch-row {
   display: flex;
@@ -5530,7 +5532,7 @@ textarea.form-control {
   object-fit: contain;
   border-radius: 10px;
   margin-bottom: 10px;
-  background: #f8fafc;
+  background: transparent;
   border: 1px solid #e2e8f0;
   display: none;
 }
@@ -5545,11 +5547,48 @@ textarea.form-control {
   box-shadow: none !important;
   padding: 0 !important;
   border-radius: 15px !important;
-  overflow: hidden;
+  overflow: hidden !important;
   max-width: 500px !important;
   width: 90% !important;
+  margin-top: 20px;
 }
+
 .swal-anuncio-imagen .swal2-close {
   color: #ffffff !important;
-  font-size: 32px !important;
+  font-size: 28px !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  border-radius: 50% !important;
+  width: 36px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: absolute !important;
+  top: 90px !important;
+  right: 10px !important;
+  transform: none !important;
+}
+.swal-anuncio-imagen .swal2-image {
+  max-width: 100% !important;
+  max-height: 80vh !important;
+  width: auto !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  padding-top: 80px;
+}
+
+@media (max-width: 480px) {
+  .swal-anuncio-imagen .swal2-close {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (min-width: 520px) and (max-width: 991px) {
+  .swal-anuncio-imagen .swal2-close {
+    top: 100px !important;
+    right: 40px !important;
+  }
 }

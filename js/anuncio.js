@@ -18,7 +18,6 @@ import {
 
     Swal.fire({
       imageUrl: data.imageUrl,
-      imageWidth: "100%",
       imageAlt: "Aviso - Lubricentro O'Higgins",
       showConfirmButton: false,
       showCloseButton: true,
