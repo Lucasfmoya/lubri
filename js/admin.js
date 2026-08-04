@@ -1,4 +1,4 @@
-import { db, auth } from "./firebase-config.js";
+import { db, auth, storage } from "./firebase-config.js";
 import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
@@ -12,6 +12,7 @@ import {
 import {
   doc,
   getDoc,
+  setDoc,
   collection,
   getCountFromServer,
   query,
@@ -20,6 +21,12 @@ import {
   deleteDoc,
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 /* ─────────────────────────────────────────────
    ESTADO
@@ -27,6 +34,7 @@ import {
 let userToken = null;
 let archivo = null;
 let authReady = false;
+let archivoAnuncioSeleccionado = null;
 
 /* ─────────────────────────────────────────────
    ELEMENTOS — layout
@@ -69,6 +77,7 @@ const sectionImport = document.getElementById("sectionImport");
 const sectionImportSide = document.getElementById("sectionImportSide");
 const sectionSearch = document.getElementById("sectionSearch");
 const sectionSecurity = document.getElementById("sectionSecurity");
+const sectionAnuncio = document.getElementById("sectionAnuncio");
 
 /* ─────────────────────────────────────────────
    ELEMENTOS — importar
@@ -94,6 +103,25 @@ const searchResults = document.getElementById("searchResults");
 const changePassSection = document.getElementById("changePassSection");
 const changePassUnavailable = document.getElementById("changePassUnavailable");
 const btnChangePass = document.getElementById("btnChangePass");
+
+/* ─────────────────────────────────────────────
+   ELEMENTOS — anuncios
+───────────────────────────────────────────── */
+const dropZoneAnuncio = document.getElementById("dropZoneAnuncio");
+const fileInputAnuncio = document.getElementById("fileInputAnuncio");
+const fileInfoRowAnuncio = document.getElementById("fileInfoRowAnuncio");
+const fileInfoNameAnuncio = document.getElementById("fileInfoNameAnuncio");
+const btnQuitarArchivoAnuncio = document.getElementById(
+  "btnQuitarArchivoAnuncio",
+);
+const btnPublicarAnuncio = document.getElementById("btnPublicarAnuncio");
+const btnEliminarAnuncio = document.getElementById("btnEliminarAnuncio");
+const imgPreviewAnuncio = document.getElementById("imgPreviewAnuncio");
+const sinImagenAnuncio = document.getElementById("sinImagenAnuncio");
+const switchMostrarAnuncio = document.getElementById("switchMostrarAnuncio");
+const switchAnuncioEstado = document.getElementById("switchAnuncioEstado");
+
+const ANUNCIO_DOC_REF = doc(db, "config", "anuncio");
 
 const FUNCTION_URL = "https://importarservicios-pbgzdzmh5q-uc.a.run.app";
 
@@ -222,6 +250,7 @@ function ocultarTodasSecciones() {
   hide(sectionImportSide);
   hide(sectionSearch);
   hide(sectionSecurity);
+  hide(sectionAnuncio);
 }
 
 /* ── Función central de navegación ── */
@@ -246,6 +275,10 @@ function mostrarSeccion(section) {
   } else if (section === "security") {
     show(sectionSecurity);
     if (topbarTitle) topbarTitle.textContent = "Seguridad";
+  } else if (section === "anuncio") {
+    show(sectionAnuncio);
+    if (topbarTitle) topbarTitle.textContent = "Anuncios";
+    cargarEstadoAnuncio();
   }
 }
 
@@ -277,7 +310,6 @@ document.querySelectorAll(".adm-eye-btn[data-target]").forEach((btn) => {
 
 /* Limpiar campos al cargar para evitar autocompletado */
 window.addEventListener("load", () => limpiarCamposLogin());
-
 
 /* ═══════════════════════════════════════════
    LOGIN — EMAIL / CONTRASEÑA
@@ -857,6 +889,189 @@ window.eliminarRegistro = async (id, fecha) => {
     showToast("Error al eliminar: " + err.message, "error");
   }
 };
+
+/* ═══════════════════════════════════════════
+   ANUNCIOS — subir / publicar / eliminar / switch
+═══════════════════════════════════════════ */
+
+function limpiarArchivoAnuncio() {
+  archivoAnuncioSeleccionado = null;
+  if (fileInputAnuncio) fileInputAnuncio.value = "";
+  fileInfoRowAnuncio?.classList.remove("visible");
+  if (fileInfoNameAnuncio) fileInfoNameAnuncio.textContent = "";
+  if (btnPublicarAnuncio) btnPublicarAnuncio.disabled = true;
+}
+
+function setArchivoAnuncio(file) {
+  archivoAnuncioSeleccionado = file;
+  if (fileInfoNameAnuncio) fileInfoNameAnuncio.textContent = file.name;
+  fileInfoRowAnuncio?.classList.add("visible");
+  if (btnPublicarAnuncio) btnPublicarAnuncio.disabled = false;
+}
+
+dropZoneAnuncio?.addEventListener("click", () => fileInputAnuncio.click());
+dropZoneAnuncio?.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZoneAnuncio.classList.add("dragover");
+});
+dropZoneAnuncio?.addEventListener("dragleave", () => {
+  dropZoneAnuncio.classList.remove("dragover");
+});
+dropZoneAnuncio?.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZoneAnuncio.classList.remove("dragover");
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+    showToast("Solo se aceptan imágenes PNG, JPG o WEBP", "warning");
+    return;
+  }
+  setArchivoAnuncio(file);
+});
+fileInputAnuncio?.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) setArchivoAnuncio(file);
+});
+btnQuitarArchivoAnuncio?.addEventListener("click", () =>
+  limpiarArchivoAnuncio(),
+);
+
+async function cargarEstadoAnuncio() {
+  try {
+    const snap = await getDoc(ANUNCIO_DOC_REF);
+    const data = snap.exists() ? snap.data() : {};
+    renderEstadoAnuncio(data);
+  } catch (err) {
+    console.error(err);
+    showToast("No se pudo cargar el estado del anuncio", "error");
+  }
+}
+
+function renderEstadoAnuncio(data) {
+  const tieneImagen = !!data.imageUrl;
+
+  if (tieneImagen) {
+    imgPreviewAnuncio.src = data.imageUrl;
+    imgPreviewAnuncio.classList.add("visible");
+    hide(sinImagenAnuncio);
+    btnEliminarAnuncio.disabled = false;
+  } else {
+    imgPreviewAnuncio.classList.remove("visible");
+    show(sinImagenAnuncio);
+    btnEliminarAnuncio.disabled = true;
+  }
+
+  switchMostrarAnuncio.disabled = !tieneImagen;
+  switchMostrarAnuncio.classList.toggle("is-on", !!data.activo);
+  switchAnuncioEstado.textContent = data.activo
+    ? "Activo — se muestra en el sitio"
+    : "Apagado";
+}
+
+btnPublicarAnuncio?.addEventListener("click", async () => {
+  if (!archivoAnuncioSeleccionado) {
+    showToast("Seleccioná una imagen primero", "warning");
+    return;
+  }
+
+  btnPublicarAnuncio.disabled = true;
+  btnPublicarAnuncio.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Publicando...`;
+
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (dataActual.storagePath) {
+      try {
+        await deleteObject(ref(storage, dataActual.storagePath));
+      } catch (e) {
+        console.warn("No se pudo borrar la imagen anterior:", e.message);
+      }
+    }
+
+    const ext = archivoAnuncioSeleccionado.name.split(".").pop().toLowerCase();
+    const path = `anuncios/imagen_anuncio.${ext}`;
+    const storageRef = ref(storage, path);
+
+    await uploadBytes(storageRef, archivoAnuncioSeleccionado);
+    const url = await getDownloadURL(storageRef);
+
+    await setDoc(
+      ANUNCIO_DOC_REF,
+      { imageUrl: url, storagePath: path },
+      { merge: true },
+    );
+
+    showToast("Anuncio publicado correctamente", "success");
+    limpiarArchivoAnuncio();
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al publicar: " + err.message, "error");
+  } finally {
+    btnPublicarAnuncio.innerHTML = `<i class="bi bi-cloud-upload-fill"></i> Publicar`;
+    btnPublicarAnuncio.disabled = !archivoAnuncioSeleccionado;
+  }
+});
+
+btnEliminarAnuncio?.addEventListener("click", async () => {
+  const result = await Swal.fire({
+    title: "¿Eliminar el anuncio?",
+    text: "Se apagará el aviso en el sitio y se borrará el archivo.",
+    icon: "warning",
+    background: "#0d1a3a",
+    color: "#fff",
+    showCancelButton: true,
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#e30613",
+    cancelButtonColor: "#334155",
+  });
+  if (!result.isConfirmed) return;
+
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (dataActual.storagePath) {
+      try {
+        await deleteObject(ref(storage, dataActual.storagePath));
+      } catch (e) {
+        console.warn("El archivo ya no existía en Storage:", e.message);
+      }
+    }
+
+    await setDoc(
+      ANUNCIO_DOC_REF,
+      { imageUrl: null, storagePath: null, activo: false },
+      { merge: true },
+    );
+
+    showToast("Anuncio eliminado", "success");
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al eliminar: " + err.message, "error");
+  }
+});
+
+switchMostrarAnuncio?.addEventListener("click", async () => {
+  try {
+    const snapActual = await getDoc(ANUNCIO_DOC_REF);
+    const dataActual = snapActual.exists() ? snapActual.data() : {};
+
+    if (!dataActual.imageUrl) {
+      showToast("Primero publicá un anuncio", "warning");
+      return;
+    }
+
+    await updateDoc(ANUNCIO_DOC_REF, { activo: !dataActual.activo });
+    cargarEstadoAnuncio();
+  } catch (err) {
+    console.error(err);
+    showToast("Error al actualizar: " + err.message, "error");
+  }
+});
 
 /* ═══════════════════════════════════════════
    DARK / LIGHT MODE

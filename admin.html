@@ -63,6 +63,9 @@
         <button class="adm-nav-item" data-section="search">
           <i class="bi bi-search"></i> Buscar patente
         </button>
+        <button class="adm-nav-item" data-section="anuncio">
+          <i class="bi bi-megaphone-fill"></i> Anuncios
+        </button>
         <button class="adm-nav-item" data-section="security">
           <i class="bi bi-shield-lock-fill"></i> Seguridad
         </button>
@@ -422,6 +425,115 @@
                   >
                     <i class="bi bi-key-fill"></i> Actualizar contraseña
                   </button>
+                </div>
+              </div>
+
+              <!-- ── ANUNCIOS ── -->
+              <div class="adm-panel adm-hidden" id="sectionAnuncio">
+                <div class="adm-panel-head">
+                  <div class="adm-panel-icon adm-icon-red">
+                    <i class="bi bi-megaphone-fill"></i>
+                  </div>
+                  <div>
+                    <div class="adm-panel-head-title">Anuncios</div>
+                    <div class="adm-panel-head-sub">
+                      Publicá una imagen para mostrarla como aviso en index.html
+                    </div>
+                  </div>
+                </div>
+                <div class="adm-panel-body">
+                  <div class="adm-drop-zone" id="dropZoneAnuncio">
+                    <div class="adm-drop-icon-wrap">
+                      <i class="bi bi-image-fill"></i>
+                    </div>
+                    <div class="adm-drop-title">Arrastrá tu imagen acá</div>
+                    <div class="adm-drop-hint">
+                      o hacé click para seleccionar — .png / .jpg / .webp
+                    </div>
+                  </div>
+
+                  <input
+                    type="file"
+                    id="fileInputAnuncio"
+                    accept="image/png,image/jpeg,image/webp"
+                    hidden
+                  />
+
+                  <div class="adm-file-info-row" id="fileInfoRowAnuncio">
+                    <i class="bi bi-file-earmark-image-fill"></i>
+                    <span id="fileInfoNameAnuncio"></span>
+                    <button
+                      class="adm-file-remove"
+                      id="btnQuitarArchivoAnuncio"
+                      title="Quitar archivo"
+                    >
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+
+                  <button
+                    id="btnPublicarAnuncio"
+                    class="adm-upload-btn"
+                    disabled
+                  >
+                    <i class="bi bi-cloud-upload-fill"></i> Publicar
+                  </button>
+
+                  <div style="margin-top: 18px">
+                    <div
+                      style="
+                        font-size: 0.65rem;
+                        font-weight: 700;
+                        letter-spacing: 1.5px;
+                        text-transform: uppercase;
+                        color: #94a3b8;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Anuncio publicado
+                    </div>
+                    <img
+                      id="imgPreviewAnuncio"
+                      class="adm-anuncio-preview"
+                      alt="Anuncio publicado"
+                    />
+                    <div
+                      id="sinImagenAnuncio"
+                      style="font-size: 0.8rem; color: #94a3b8"
+                    >
+                      Todavía no publicaste ningún anuncio.
+                    </div>
+                    <button
+                      id="btnEliminarAnuncio"
+                      class="adm-upload-btn"
+                      style="
+                        background: #fff;
+                        border: 1px solid #e2e8f0;
+                        color: #e30613;
+                        margin-top: 10px;
+                      "
+                      disabled
+                    >
+                      <i class="bi bi-trash3-fill"></i> Eliminar anuncio
+                    </button>
+                  </div>
+
+                  <div class="adm-switch-row" style="margin-top: 20px">
+                    <div>
+                      <div class="adm-switch-title">Mostrar en el sitio</div>
+                      <div class="adm-switch-sub" id="switchAnuncioEstado">
+                        Apagado
+                      </div>
+                    </div>
+                    <button
+                      id="switchMostrarAnuncio"
+                      class="adm-generic-toggle"
+                      disabled
+                      aria-label="Mostrar anuncio en el sitio"
+                    >
+                      <div class="adm-generic-thumb"></div>
+                    </button>
+                  </div>
                 </div>
               </div>
 
