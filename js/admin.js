@@ -552,7 +552,31 @@ btnSubir?.addEventListener("click", async () => {
     const data = await archivo.arrayBuffer();
     const wb = XLSX.read(data);
     const sheet = wb.Sheets[wb.SheetNames[0]];
-    const json = XLSX.utils.sheet_to_json(sheet);
+    const crudo = XLSX.utils.sheet_to_json(sheet);
+
+    const reg = /^[A-Z]{3}[0-9]{3}$|^[A-Z]{2}[0-9]{3}[A-Z]{2}$/;
+    const esPatente = (v) =>
+      reg.test(
+        String(v ?? "")
+          .trim()
+          .toUpperCase(),
+      );
+
+    let intercambiadas = 0;
+    const json = crudo.map((fila) => {
+      // Si en PATENTE no hay una patente pero en FECHA sí, están cruzadas
+      if (!esPatente(fila.PATENTE) && esPatente(fila.FECHA)) {
+        intercambiadas++;
+        return { ...fila, PATENTE: fila.FECHA, FECHA: fila.PATENTE };
+      }
+      return fila;
+    });
+
+    if (intercambiadas > 0) {
+      logMsg(
+        `Columnas PATENTE/FECHA intercambiadas automáticamente en ${intercambiadas} filas`,
+      );
+    }
 
     logMsg(`Filas leídas del Excel: ${json.length}`);
 
