@@ -569,6 +569,7 @@ btnSubir?.addEventListener("click", async () => {
     if (!res.ok) throw new Error(result.error || `HTTP ${res.status}`);
 
     const count = result.total;
+    const omitidos = result.omitidos || 0;
     const dateStr = new Date().toLocaleDateString("es-AR", {
       day: "2-digit",
       month: "2-digit",
@@ -582,7 +583,20 @@ btnSubir?.addEventListener("click", async () => {
     if (statLastDate) statLastDate.textContent = dateStr;
 
     logMsg(`Importados correctamente: ${count} registros`, "success");
-    showToast(`${count} registros importados`, "success");
+
+    if (omitidos > 0) {
+      logMsg(
+        `Atención: ${omitidos} filas omitidas (fecha, patente o km inválidos)`,
+        "error",
+      );
+      showToast(
+        `${count} importados, pero ${omitidos} filas se omitieron. Revisá el Excel.`,
+        "warning",
+      );
+    } else {
+      showToast(`${count} registros importados`, "success");
+    }
+
     cargarStats();
   } catch (err) {
     console.error(err);
@@ -596,7 +610,6 @@ btnSubir?.addEventListener("click", async () => {
     }
   }
 });
-
 /* ═══════════════════════════════════════════
    BUSCAR POR PATENTE
 ═══════════════════════════════════════════ */

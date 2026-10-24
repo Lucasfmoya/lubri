@@ -7,26 +7,43 @@ const db = admin.firestore();
 /* =========================
    📅 NORMALIZAR FECHA
 ========================= */
+
+// Devuelve true si "AAAA-MM-DD" es una fecha real del calendario
+function esFechaValida(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
+  const f = new Date(iso + "T00:00:00Z");
+  return !isNaN(f) && f.toISOString().slice(0, 10) === iso;
+}
+
 function normalizarFecha(valor) {
   if (!valor) return null;
 
-  if (typeof valor === "string" && /^\d{4}-\d{2}-\d{2}$/.test(valor)) {
-    return valor;
+  // Ya viene en formato ISO
+  if (typeof valor === "string") {
+    const limpio = valor.trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(limpio)) {
+      return esFechaValida(limpio) ? limpio : null;
+    }
   }
 
+  // Número serial de Excel
   if (typeof valor === "number") {
     const fecha = new Date(Math.round((valor - 25569) * 86400 * 1000));
     const y = fecha.getUTCFullYear();
     const m = String(fecha.getUTCMonth() + 1).padStart(2, "0");
     const d = String(fecha.getUTCDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
+    const iso = `${y}-${m}-${d}`;
+    return esFechaValida(iso) ? iso : null;
   }
 
+  // Texto DD/MM/AAAA
   if (typeof valor === "string") {
-    const partes = valor.split("/");
+    const partes = valor.trim().split("/");
     if (partes.length === 3) {
       const [d, m, y] = partes;
-      return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+      if (y.length !== 4) return null; // año de 2 dígitos = ambiguo, se omite
+      const iso = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+      return esFechaValida(iso) ? iso : null;
     }
   }
 
@@ -43,7 +60,7 @@ function setCORSHeaders(
     "https://lubricentro--ohiggins.firebaseapp.com",
     "https://www.lubricentroohiggins.com.ar",
     "https://lubricentroohiggins.com.ar",
-    "http://127.0.0.1:5500"
+    "http://127.0.0.1:5500",
   ],
 ) {
   const origin = res.req?.headers?.origin;
